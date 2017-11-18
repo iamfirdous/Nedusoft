@@ -34,7 +34,7 @@ public class NavigationDrawerActivity extends AppCompatActivity
 //            }
 //        });
 
-        //This is really a super cool feature
+        //This is really a super cool feature.. I know..
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
