@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-import com.nexusinfo.nedusoft.ui.activities.NavigationDrawerActivity;
+import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,7 +13,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(MainActivity.this, NavigationDrawerActivity.class);
+        Intent intent = new Intent(MainActivity.this, StudentDetailsActivity.class);
         startActivity(intent);
+        finish();
     }
 }

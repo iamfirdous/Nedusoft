@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Nedusoft</string>
-    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="title_activity_student_details">Student details</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+    <string name="action_logout">Logout</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

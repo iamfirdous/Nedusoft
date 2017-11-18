@@ -6,7 +6,7 @@
         android:allowBackup="true"
         android:icon="@mipmap/nedusoft_slider_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/nedusoft_slider_logo"
         android:supportsRtl="true"
         android:theme="@style/NedusoftTheme">
         <activity android:name=".MainActivity">
@@ -16,10 +16,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activities.StudentDetailsActivity" />
         <activity
-            android:name=".ui.activities.NavigationDrawerActivity"
-            android:label="@string/title_activity_navigation_drawer"
+            android:name=".ui.activities.StudentDetailsActivity"
+            android:label="@string/title_activity_student_details"
             android:theme="@style/NedusoftTheme.NoActionBar"></activity>
     </application>
 
