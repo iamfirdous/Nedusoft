@@ -8,31 +8,31 @@
             <item
                 android:id="@+id/nav_personal"
                 android:icon="@drawable/ic_menu_personal_outline_black_24dp"
-                android:title="Personal" />
+                android:title="@string/title_personal_fragment" />
             <item
                 android:id="@+id/nav_family"
                 android:icon="@drawable/ic_menu_family_outline_black_24dp"
-                android:title="Family" />
+                android:title="@string/title_family_fragment" />
             <item
                 android:id="@+id/nav_hospital"
                 android:icon="@drawable/ic_menu_hospital_black_24dp"
-                android:title="Hospital" />
+                android:title="@string/title_hospital_fragment" />
             <item
                 android:id="@+id/nav_fee_master"
                 android:icon="@drawable/ic_menu_fee_master_black_24dp"
-                android:title="FeeMaster" />
+                android:title="@string/title_feemaster_fragment" />
             <item
                 android:id="@+id/nav_attendance"
                 android:icon="@drawable/ic_menu_attendence_black_24dp"
-                android:title="Attendance" />
+                android:title="@string/title_attendance_fragment" />
             <item
                 android:id="@+id/nav_document"
                 android:icon="@drawable/ic_menu_document_black_24dp"
-                android:title="Documents" />
+                android:title="@string/title_documents_fragment" />
             <item
                 android:id="@+id/nav_marks"
                 android:icon="@drawable/ic_menu_marks"
-                android:title="Marks" />
+                android:title="@string/title_marks_fragment" />
         </menu>
     </item>
 

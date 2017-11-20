@@ -24,6 +24,7 @@ public class FamilyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        getActivity().setTitle(R.string.title_family_fragment);
         return inflater.inflate(R.layout.fragment_family, container, false);
     }
 
