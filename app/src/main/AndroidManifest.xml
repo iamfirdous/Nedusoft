@@ -20,7 +20,12 @@
             android:name=".ui.activities.StudentDetailsActivity"
             android:label="@string/title_activity_student_details"
             android:theme="@style/NedusoftTheme.NoActionBar" />
-        <activity android:name=".ui.activities.SchoolCodeRequestActivity"></activity>
+        <activity
+            android:name=".ui.activities.SchoolCodeRequestActivity"
+            android:label="@string/title_activity_school_code_request" />
+        <activity
+            android:name=".ui.activities.LoginActivity"
+            android:label="@string/title_activity_login"/>
     </application>
 
 </manifest>

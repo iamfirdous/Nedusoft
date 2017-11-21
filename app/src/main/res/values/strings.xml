@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Nedusoft</string>
     <string name="title_activity_student_details">Student details</string>
+    <string name="title_activity_school_code_request">School Code</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
@@ -19,6 +20,8 @@
     <string name="title_attendance_fragment">Attendance</string>
     <string name="title_documents_fragment">Documents</string>
     <string name="title_marks_fragment">Marks</string>
+    <string name="school_code_info">For school code, please check SMS received from school or circular given by school.</string>
+    <string name="title_activity_login">Login</string>
 
     <string-array name="personal">
         <item>Year</item>
