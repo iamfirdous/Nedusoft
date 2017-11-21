@@ -19,7 +19,8 @@
         <activity
             android:name=".ui.activities.StudentDetailsActivity"
             android:label="@string/title_activity_student_details"
-            android:theme="@style/NedusoftTheme.NoActionBar"></activity>
+            android:theme="@style/NedusoftTheme.NoActionBar" />
+        <activity android:name=".ui.activities.SchoolCodeRequestActivity"></activity>
     </application>
 
 </manifest>

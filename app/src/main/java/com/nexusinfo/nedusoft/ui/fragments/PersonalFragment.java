@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.ScrollView;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
@@ -54,5 +55,4 @@ public class PersonalFragment extends Fragment {
 
         return view;
     }
-
 }

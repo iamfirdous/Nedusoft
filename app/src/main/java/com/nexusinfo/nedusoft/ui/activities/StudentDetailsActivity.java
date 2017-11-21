@@ -93,8 +93,7 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_personal:
-                //if(mNavigationView.getMenu().findItem(id).isChecked())
-                    mManager.beginTransaction().replace(R.id.content_student_details, new PersonalFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_student_details, new PersonalFragment()).commit();
                 break;
             case R.id.nav_family:
                 mManager.beginTransaction().replace(R.id.content_student_details, new FamilyFragment()).commit();
