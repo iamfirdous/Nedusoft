@@ -25,6 +25,8 @@ public class StudentDetailsActivity extends AppCompatActivity
 
     private FragmentManager mManager;
     private DrawerLayout mDrawerLayout;
+    private ActionBarDrawerToggle mToggle;
+    private NavigationView mNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,15 +34,6 @@ public class StudentDetailsActivity extends AppCompatActivity
         setContentView(R.layout.activity_student_details);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
 
         mManager = getSupportFragmentManager();
         mDrawerLayout = findViewById(R.id.drawer_layout);
@@ -51,13 +44,13 @@ public class StudentDetailsActivity extends AppCompatActivity
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
 
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        mToggle = new ActionBarDrawerToggle(
                 this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        mDrawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
+        mDrawerLayout.addDrawerListener(mToggle);
+        mToggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
+        mNavigationView = findViewById(R.id.nav_view);
+        mNavigationView.setNavigationItemSelectedListener(this);
     }
 
     @Override
@@ -100,7 +93,8 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_personal:
-                mManager.beginTransaction().replace(R.id.content_student_details, new PersonalFragment()).commit();
+                //if(mNavigationView.getMenu().findItem(id).isChecked())
+                    mManager.beginTransaction().replace(R.id.content_student_details, new PersonalFragment()).commit();
                 break;
             case R.id.nav_family:
                 mManager.beginTransaction().replace(R.id.content_student_details, new FamilyFragment()).commit();

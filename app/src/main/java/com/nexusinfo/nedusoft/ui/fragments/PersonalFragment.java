@@ -3,6 +3,9 @@ package com.nexusinfo.nedusoft.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,10 @@ import android.widget.ListView;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
+import com.nexusinfo.nedusoft.ui.adapters.PersonalDetailsAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -22,6 +29,9 @@ public class PersonalFragment extends Fragment {
         // Required empty public constructor
     }
 
+    private List<String> list;
+    private ListView listViewPersonal;
+    private PersonalDetailsAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,11 +41,16 @@ public class PersonalFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
 
-        ListView listView = view.findViewById(R.id.listView_personal);
-        String[] list = getResources().getStringArray(R.array.personal);
+        list = new ArrayList<>();
+        listViewPersonal = view.findViewById(R.id.listView_personal);
+        adapter = new PersonalDetailsAdapter(getContext(), list, null);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), R.layout.listitem_personal, R.id.textView_label, list);
-        listView.setAdapter(adapter);
+        for (String listItem : getResources().getStringArray(R.array.personal)){
+            list.add(listItem);
+        }
+
+        listViewPersonal.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
         return view;
     }
