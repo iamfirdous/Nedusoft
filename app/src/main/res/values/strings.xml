@@ -24,6 +24,7 @@
     <string name="title_activity_login">Login</string>
 
     <string-array name="personal">
+        <item>For header</item>
         <item>Year</item>
         <item>University</item>
         <item>Course</item>

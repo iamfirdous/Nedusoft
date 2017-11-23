@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="12dp"
-        app:cardCornerRadius="6dp">
+        app:cardCornerRadius="@dimen/card_corner_radius">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -77,12 +77,6 @@
                         android:hint="Enter password"/>
 
                 </android.support.design.widget.TextInputLayout>
-
-                <EditText
-                    android:layout_width="0dp"
-                    android:layout_height="0dp">
-                    <requestFocus/>
-                </EditText>
 
                 <Button
                     android:id="@+id/button_login"
