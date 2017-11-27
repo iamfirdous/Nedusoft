@@ -24,7 +24,6 @@ public class SchoolCodeRequestActivity extends AppCompatActivity {
     ProgressBar progressBar;
     Button button;
     EditText editText;
-    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
