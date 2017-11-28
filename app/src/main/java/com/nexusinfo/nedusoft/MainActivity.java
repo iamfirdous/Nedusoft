@@ -1,17 +1,15 @@
 package com.nexusinfo.nedusoft;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.nexusinfo.nedusoft.utils.InternetConnectivityReceiver;
 import com.nexusinfo.nedusoft.utils.MyApplication;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener{
 
     private TextView tvError;
 
@@ -23,17 +21,7 @@ public class MainActivity extends AppCompatActivity {
         tvError = findViewById(R.id.textView_error_mainActivity);
         tvError.setVisibility(View.INVISIBLE);
 
-        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeInfo = manager.getActiveNetworkInfo();
-
-        boolean isConnected = activeInfo != null && activeInfo.isConnected();
-
-        if(isConnected){
-            showError(true);
-        }
-        else {
-            showError(true);
-        }
+        showError(InternetConnectivityReceiver.isConnected());
 //        Intent intent = new Intent(MainActivity.this, SchoolCodeRequestActivity.class);
 //        startActivity(intent);
 //        finish();
@@ -43,16 +31,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MyApplication.activityResumed();
+
+        MyApplication.getInstance().setConnectivityListener(this);
     }
 
-    @Override
-    protected void onPause() {
-        super.onPause();
-        MyApplication.activityPaused();
-    }
-
-    public void showError(boolean isConnected) {
+    private void showError(boolean isConnected) {
 
         if (!isConnected) {
             tvError.setVisibility(View.VISIBLE);
@@ -63,5 +46,10 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "We indeed have Internet connection!!", Toast.LENGTH_LONG).show();
         }
 
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(boolean isConnected) {
+        showError(isConnected);
     }
 }
