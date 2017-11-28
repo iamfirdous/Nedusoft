@@ -14,7 +14,6 @@ import com.nexusinfo.nedusoft.utils.MyApplication;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tvError;
-    //Hello
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
