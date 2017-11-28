@@ -1,15 +1,17 @@
 package com.nexusinfo.nedusoft;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.nexusinfo.nedusoft.utils.InternetConnectivityReceiver;
 import com.nexusinfo.nedusoft.utils.MyApplication;
 
-public class MainActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener{
+public class MainActivity extends AppCompatActivity {
 
     private TextView tvError;
 
@@ -21,7 +23,17 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         tvError = findViewById(R.id.textView_error_mainActivity);
         tvError.setVisibility(View.INVISIBLE);
 
-        showError(InternetConnectivityReceiver.isConnected());
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeInfo = manager.getActiveNetworkInfo();
+
+        boolean isConnected = activeInfo != null && activeInfo.isConnected();
+
+        if(isConnected){
+            showError(true);
+        }
+        else {
+            showError(false);
+        }
 //        Intent intent = new Intent(MainActivity.this, SchoolCodeRequestActivity.class);
 //        startActivity(intent);
 //        finish();
@@ -31,12 +43,18 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
     @Override
     protected void onResume() {
         super.onResume();
-
-        MyApplication.getInstance().setConnectivityListener(this);
+        MyApplication.activityResumed();
     }
 
-    private void showError(boolean isConnected) {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MyApplication.activityPaused();
+    }
 
+    public void showError(boolean isConnected) {
+        tvError = findViewById(R.id.textView_error_mainActivity);
+        tvError.setVisibility(View.INVISIBLE);
         if (!isConnected) {
             tvError.setVisibility(View.VISIBLE);
             tvError.setText(R.string.errorMessageForInternet);
@@ -46,10 +64,5 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
             Toast.makeText(this, "We indeed have Internet connection!!", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    @Override
-    public void onNetworkConnectionChanged(boolean isConnected) {
-        showError(isConnected);
     }
 }
