@@ -10,7 +10,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.nexusinfo.nedusoft.ConnectionClass;
+import com.nexusinfo.nedusoft.connection.SchoolCodeConnection;
 import com.nexusinfo.nedusoft.R;
 
 import java.sql.Connection;
@@ -60,12 +60,12 @@ public class SchoolCodeRequestActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try{
                 List<String> list = new ArrayList<>();
-                Connection conn = ConnectionClass.getConnection();
+                Connection conn = SchoolCodeConnection.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM " + ConnectionClass.NEDUSOFT_TABLE);
+                ResultSet rs = stmt.executeQuery("SELECT * FROM " + SchoolCodeConnection.NEDUSOFT_TABLE);
                 if(rs != null){
                     while (rs.next()){
-                        list.add(rs.getString(ConnectionClass.DATABASE_NAME));
+                        list.add(rs.getString(SchoolCodeConnection.DATABASE_NAME));
                     }
                     publishProgress(list.get(0), list.get(1));
                 }

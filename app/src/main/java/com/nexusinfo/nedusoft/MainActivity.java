@@ -1,17 +1,19 @@
 package com.nexusinfo.nedusoft;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.nexusinfo.nedusoft.utils.InternetConnectivityReceiver;
-import com.nexusinfo.nedusoft.utils.MyApplication;
+import com.nexusinfo.nedusoft.receivers.InternetConnectivityReceiver;
+import com.nexusinfo.nedusoft.ui.activities.SchoolCodeRequestActivity;
 
 public class MainActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener{
 
-    private TextView tvError;
+    private TextView tvError, tvLoading;
+    private ImageView ivRefresh;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,31 +21,40 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         setContentView(R.layout.activity_main);
 
         tvError = findViewById(R.id.textView_error_mainActivity);
+        tvLoading = findViewById(R.id.textView_loading);
+        ivRefresh = findViewById(R.id.imageView_refresh_mainActivity);
+
+        ivRefresh.setVisibility(View.GONE);
         tvError.setVisibility(View.INVISIBLE);
 
+        ivRefresh.setOnClickListener(view -> {
+            ivRefresh.setVisibility(View.GONE);
+            tvLoading.setVisibility(View.VISIBLE);
+            showError(InternetConnectivityReceiver.isConnected());
+        });
+
         showError(InternetConnectivityReceiver.isConnected());
-//        Intent intent = new Intent(MainActivity.this, SchoolCodeRequestActivity.class);
-//        startActivity(intent);
-//        finish();
 
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
         MyApplication.getInstance().setConnectivityListener(this);
     }
 
     private void showError(boolean isConnected) {
 
         if (!isConnected) {
+            tvLoading.setVisibility(View.GONE);
             tvError.setVisibility(View.VISIBLE);
             tvError.setText(R.string.errorMessageForInternet);
+            ivRefresh.setVisibility(View.VISIBLE);
         }
         else {
-            tvError.setVisibility(View.INVISIBLE);
-            Toast.makeText(this, "We indeed have Internet connection!!", Toast.LENGTH_LONG).show();
+            Intent schoolCodeIntent = new Intent(MainActivity.this, SchoolCodeRequestActivity.class);
+            startActivity(schoolCodeIntent);
+            finish();
         }
 
     }

@@ -1,10 +1,12 @@
-package com.nexusinfo.nedusoft.utils;
+package com.nexusinfo.nedusoft.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+
+import com.nexusinfo.nedusoft.MyApplication;
 
 /**
  * Created by lukhman on 11/28/2017.

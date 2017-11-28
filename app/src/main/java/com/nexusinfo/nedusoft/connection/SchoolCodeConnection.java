@@ -1,4 +1,4 @@
-package com.nexusinfo.nedusoft;
+package com.nexusinfo.nedusoft.connection;
 
 import android.os.StrictMode;
 import android.util.Log;
@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * Created by lukhman on 11/23/2017.
  */
 
-public class ConnectionClass {
+public class SchoolCodeConnection {
     public static final String IP_ADDRESS = "198.204.247.107";
     public static final String MASTER_DB = "master";
     public static final String USERNAME = "sa";
