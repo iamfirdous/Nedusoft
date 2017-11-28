@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    android:id="@+id/linearLayout_mainActivity"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.nexusinfo.nedusoft.MainActivity">
+    tools:context="com.nexusinfo.nedusoft.MainActivity"
+    android:weightSum="10">
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textView_error_mainActivity"
+        style="@style/NedusoftTheme.TextViewActivityError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is an error" />
+
+    <ImageView
+        android:id="@+id/imageView_nedusoft_logo"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="150dp"
+        android:layout_weight="9"
+        android:src="@mipmap/nedusoft_slider_logo" />
+
+    <ProgressBar
+        android:id="@+id/progressBar_splash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="10dp"
+        android:layout_gravity="center" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>
+
