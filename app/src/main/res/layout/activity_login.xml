@@ -21,10 +21,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
+                <TextView
+                    android:id="@+id/textView_error_loginActivity"
+                    style="@style/NedusoftTheme.TextViewActivityError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="This is an error" />
+
                 <ImageView
                     android:id="@+id/imageView_nedusoft_logo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_below="@id/textView_error_loginActivity"
                     android:layout_marginTop="20dp"
                     android:src="@mipmap/nedusoft_slider_logo" />
 
