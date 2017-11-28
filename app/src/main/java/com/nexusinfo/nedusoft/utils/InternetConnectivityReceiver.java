@@ -6,36 +6,56 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.nexusinfo.nedusoft.MainActivity;
+
 /**
  * Created by lukhman on 11/28/2017.
  */
 
 public class InternetConnectivityReceiver extends BroadcastReceiver {
 
-    public static InternetConnectivityReceiverListener listener;
+
 
     public InternetConnectivityReceiver() {
-        super();
     }
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeInfo = manager.getActiveNetworkInfo();
 
-        boolean isConnected = activeInfo != null && activeInfo.isConnectedOrConnecting();
+        if(MyApplication.isActivityVisible()){
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeInfo = manager.getActiveNetworkInfo();
 
-        if(listener != null){
-            listener.onNetworkConnectionChanged(isConnected);
+            boolean isConnected = activeInfo != null && activeInfo.isConnected();
+
+            if(isConnected){
+                new MainActivity().showError(true);
+            }
+            else {
+                new MainActivity().showError(false);
+            }
+
         }
+
+
+//        if(listener != null){
+//            listener.onNetworkConnectionChanged(isConnected);
+//        }
     }
 
-    public static boolean isConnected() {
-        NetworkInfo activeInfo = ((ConnectivityManager) MyApplication.getInstance().getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE)).getActiveNetworkInfo();
-        return activeInfo != null && activeInfo.isConnectedOrConnecting();
-    }
 
-    public interface InternetConnectivityReceiverListener {
-        void onNetworkConnectionChanged(boolean isConnected);
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

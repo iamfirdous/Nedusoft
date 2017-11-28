@@ -8,20 +8,24 @@ import android.app.Application;
 
 public class MyApplication extends Application {
 
-    private static MyApplication mApplication;
-
     @Override
     public void onCreate() {
         super.onCreate();
-
-        mApplication = this;
     }
 
-    public static synchronized MyApplication getInstance() {
-        return mApplication;
+    public static boolean activityVisible;
+
+    public static boolean isActivityVisible() {
+        return activityVisible;
     }
 
-    public void setConnectivityListener(InternetConnectivityReceiver.InternetConnectivityReceiverListener listener) {
-        InternetConnectivityReceiver.listener = listener;
+    public static void activityResumed() {
+        activityVisible = true;
+
+    }
+
+    public static void activityPaused() {
+        activityVisible = false;
+
     }
 }
