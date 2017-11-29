@@ -1,6 +1,9 @@
-package com.nexusinfo.nedusoft.utils;
+package com.nexusinfo.nedusoft;
 
 import android.app.Application;
+import android.os.SystemClock;
+
+import com.nexusinfo.nedusoft.receivers.InternetConnectivityReceiver;
 
 /**
  * Created by lukhman on 11/28/2017.

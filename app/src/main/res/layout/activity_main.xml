@@ -10,27 +10,5 @@
     tools:context="com.nexusinfo.nedusoft.MainActivity"
     android:weightSum="10">
 
-    <TextView
-        android:id="@+id/textView_error_mainActivity"
-        style="@style/NedusoftTheme.TextViewActivityError"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="This is an error" />
-
-    <ImageView
-        android:id="@+id/imageView_nedusoft_logo"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:padding="150dp"
-        android:layout_weight="9"
-        android:src="@mipmap/nedusoft_slider_logo" />
-
-    <ProgressBar
-        android:id="@+id/progressBar_splash"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_gravity="center" />
-
 </LinearLayout>
 

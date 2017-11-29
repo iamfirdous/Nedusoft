@@ -23,6 +23,7 @@
     <string name="school_code_info">For school code, please check SMS received from school or circular given by school.</string>
     <string name="title_activity_login">Login</string>
     <string name="errorMessageForInternet">Please check your Internet connection!</string>
+    <string name="errorMessageForWrongCredentials">Incorrect login name or password</string>
 
     <string-array name="personal">
         <item>For header</item>
