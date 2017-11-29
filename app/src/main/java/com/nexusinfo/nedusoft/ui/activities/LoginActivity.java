@@ -33,8 +33,6 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
     private UserModel user;
     private DatabaseConnection databaseConnection;
 
-    private boolean isConnected;
-
     private String loginName, password;
 
     @Override
@@ -54,13 +52,11 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
         user = (UserModel) getIntent().getSerializableExtra("User");
         databaseConnection = new DatabaseConnection(user.getSchoolDBName());
 
-        isConnected = InternetConnectivityReceiver.isConnected();
-
-        showError(isConnected);
+        showError(InternetConnectivityReceiver.isConnected());
 
         buttonLogin.setOnClickListener(view -> {
 
-            if(!isConnected){
+            if(!InternetConnectivityReceiver.isConnected()){
                 tvError.setVisibility(View.VISIBLE);
                 tvError.setText(R.string.errorMessageForInternet);
             }

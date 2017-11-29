@@ -29,8 +29,6 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
     private EditText etSchoolCode;
     private TextView tvError;
 
-    private boolean isConnected;
-
     private String schoolCode, dbName;
 
     @Override
@@ -46,13 +44,11 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
 
         tvError.setVisibility(View.INVISIBLE);
 
-        isConnected = InternetConnectivityReceiver.isConnected();
-
-        showError(isConnected);
+        showError(InternetConnectivityReceiver.isConnected());
 
         buttonSubmit.setOnClickListener(view -> {
 
-            if(!isConnected){
+            if(!InternetConnectivityReceiver.isConnected()){
                 tvError.setVisibility(View.VISIBLE);
                 tvError.setText(R.string.errorMessageForInternet);
             }
