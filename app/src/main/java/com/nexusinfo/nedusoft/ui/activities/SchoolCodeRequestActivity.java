@@ -131,7 +131,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
                     if(count < 1) {
                         publishProgress("NoData");
                         cancel(true);
-                        Log.e("Error", "No data for given code");
+                        Log.e("Error", "No data for given school code");
                     }
                 }
                 else {
