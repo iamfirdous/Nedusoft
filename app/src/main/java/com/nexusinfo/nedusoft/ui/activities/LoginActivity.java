@@ -179,6 +179,7 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
                 Intent studentDetailsIntent = new Intent(LoginActivity.this, StudentDetailsActivity.class);
                 startActivity(studentDetailsIntent);
+                finish();
             }
             else {
                 Log.e("LocalDBProblem", "Data not added");

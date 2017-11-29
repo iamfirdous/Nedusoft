@@ -169,7 +169,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
             Intent loginIntent = new Intent(SchoolCodeRequestActivity.this, LoginActivity.class);
             loginIntent.putExtra("User", user);
             startActivity(loginIntent);
-//            finish();
+            finish();
 
             loadFinish();
         }
