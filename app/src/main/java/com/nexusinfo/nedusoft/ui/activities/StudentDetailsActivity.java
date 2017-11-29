@@ -1,5 +1,6 @@
 package com.nexusinfo.nedusoft.ui.activities;
 
+import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -11,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.fragments.AttendanceFragment;
 import com.nexusinfo.nedusoft.ui.fragments.DocumentFragment;
@@ -78,8 +80,16 @@ public class StudentDetailsActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (id) {
+            case R.id.action_logout:
+                new LocalDBHelper(this).deleteData();
+                Intent logout = new Intent(this, SchoolCodeRequestActivity.class);
+                startActivity(logout);
+                finish();
+                break;
+
+            case R.id.action_settings:
+                break;
         }
 
         return super.onOptionsItemSelected(item);

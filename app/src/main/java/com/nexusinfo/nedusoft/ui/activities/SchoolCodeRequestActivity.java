@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.MyApplication;
 import com.nexusinfo.nedusoft.R;
@@ -28,6 +29,8 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
     private EditText etSchoolCode;
     private TextView tvError;
 
+    private boolean isConnected;
+
     private String schoolCode, dbName;
 
     @Override
@@ -43,12 +46,13 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
 
         tvError.setVisibility(View.INVISIBLE);
 
-        showError(InternetConnectivityReceiver.isConnected());
+        isConnected = InternetConnectivityReceiver.isConnected();
+
+        showError(isConnected);
 
         buttonSubmit.setOnClickListener(view -> {
-            boolean connAvailable = InternetConnectivityReceiver.isConnected();
 
-            if(!connAvailable){
+            if(!isConnected){
                 tvError.setVisibility(View.VISIBLE);
                 tvError.setText(R.string.errorMessageForInternet);
             }
@@ -88,8 +92,6 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
 
     class CheckSchoolCodeTask extends AsyncTask<String, String, UserModel>{
 
-        boolean code = false;
-
         @Override
         protected void onPreExecute() {
 
@@ -100,9 +102,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
                 cancel(true);
             }
             else {
-                progressBar.setVisibility(View.VISIBLE);
-                buttonSubmit.setEnabled(false);
-                etSchoolCode.setEnabled(false);
+                loadStart();
             }
         }
 
@@ -110,29 +110,28 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
         protected UserModel doInBackground(String... strings) {
             UserModel user = null;
             try{
-                if(isCancelled())
-                    return null;
                 user = new UserModel();
-                Connection conn = SchoolCodeConnection.getConnection();
+
+                SchoolCodeConnection schoolCodeConnection = new SchoolCodeConnection();
+
+                Connection conn = schoolCodeConnection.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM " + SchoolCodeConnection.NEDUSOFT_TABLE + " WHERE " + SchoolCodeConnection.UNIQUE_ID + " = " + Integer.parseInt(schoolCode));
+                ResultSet rs = stmt.executeQuery("SELECT * FROM " + SchoolCodeConnection.TABLE_NEDUSOFT + " WHERE " + SchoolCodeConnection.COL_UNIQUE_ID + " = '" + schoolCode + "'");
                 if(rs != null){
                     int count = 0;
                     while (rs.next()){
-                        schoolCode = rs.getString(SchoolCodeConnection.UNIQUE_ID);
-                        dbName = rs.getString(SchoolCodeConnection.DATABASE_NAME);
+                        schoolCode = rs.getString(SchoolCodeConnection.COL_UNIQUE_ID);
+                        dbName = rs.getString(SchoolCodeConnection.COL_DATABASE_NAME);
                         count++;
                     }
 
                     user.setSchoolCode(schoolCode);
                     user.setSchoolDBName(dbName);
 
-                    if(count < 1){
-                        code = false;
+                    if(count < 1) {
+                        publishProgress("NoData");
+                        cancel(true);
                         Log.e("Error", "No data for given code");
-                    }
-                    else {
-                        code = true;
                     }
                 }
                 else {
@@ -140,6 +139,8 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
                 }
             }
             catch (Exception e){
+                publishProgress("Exception");
+                cancel(true);
                 Log.e("Exception", e.toString());
             }
             return user;
@@ -147,21 +148,39 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
 
         @Override
         protected void onProgressUpdate(String... values) {
-
+            if(values[0].equals("Exception")){
+                Toast.makeText(SchoolCodeRequestActivity.this, "Some error occurred.", Toast.LENGTH_LONG).show();
+                loadFinish();
+            }
+            if(values[0].equals("NoData")){
+                etSchoolCode.setError("Invalid school code");
+                loadFinish();
+            }
         }
 
         @Override
         protected void onPostExecute(UserModel user) {
 
-            if(code){
-                Intent loginIntent = new Intent(SchoolCodeRequestActivity.this, LoginActivity.class);
-                loginIntent.putExtra("User", user);
-                startActivity(loginIntent);
-            }
-            else {
-                etSchoolCode.setError("School code is incorrect");
+            if(isCancelled()){
+                return;
             }
 
+            Log.e("Data", "School code: " + user.getSchoolCode() + " School DB: " + user.getSchoolDBName());
+            Intent loginIntent = new Intent(SchoolCodeRequestActivity.this, LoginActivity.class);
+            loginIntent.putExtra("User", user);
+            startActivity(loginIntent);
+//            finish();
+
+            loadFinish();
+        }
+
+        private void loadStart(){
+            progressBar.setVisibility(View.VISIBLE);
+            buttonSubmit.setEnabled(false);
+            etSchoolCode.setEnabled(false);
+        }
+
+        private void loadFinish(){
             progressBar.setVisibility(View.GONE);
             buttonSubmit.setEnabled(true);
             etSchoolCode.setEnabled(true);

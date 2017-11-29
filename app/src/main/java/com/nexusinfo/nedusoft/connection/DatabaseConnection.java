@@ -1,34 +1,37 @@
 package com.nexusinfo.nedusoft.connection;
 
+import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
+
+import com.nexusinfo.nedusoft.LocalDBHelper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by lukhman on 11/23/2017.
+ * Created by lukhman on 11/29/2017.
  */
 
-public class SchoolCodeConnection extends BaseConnection {
+public class DatabaseConnection extends BaseConnection {
 
     //Tables
-    public static final String TABLE_NEDUSOFT = "Nedusoft";
+    public static final String TABLE_MSTUDENT = "MStudent";
 
-    //Columns for TABLE_NEDUSOFT
-    public static final String COL_ID = "ID";
-    public static final String COL_UNIQUE_ID = "UniqueID";
-    public static final String COL_DOMAIN_NAME = "DomainName";
-    public static final String COL_DATABASE_NAME = "DatabaseName";
-    public static final String COL_SCHOOL_NAME = "SchoolName";
-    public static final String COL_COMPANY_ID = "cmpid";
-    public static final String COL_BARCODE = "brcode";
+    //Columns for MSTUDENT
+    public static final String COL_ROLL_NO = "RollNo";
+    public static final String COL_PASSWORD = "Password";
 
-    public SchoolCodeConnection() {
-        DB = "master";
+    public DatabaseConnection(Context context) {
+        DB = new LocalDBHelper(context).getDatabaseName();
     }
 
+    public DatabaseConnection(String databaseName) {
+        DB = databaseName;
+    }
+
+    @Override
     public Connection getConnection() {
         Connection conn = null;
         try{
@@ -48,5 +51,10 @@ public class SchoolCodeConnection extends BaseConnection {
         }
 
         return conn;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString() + " DB Name: " + DB;
     }
 }
