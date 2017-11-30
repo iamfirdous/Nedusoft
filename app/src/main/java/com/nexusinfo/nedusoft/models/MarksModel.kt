@@ -1,9 +1,9 @@
 package com.nexusinfo.nedusoft.models
 
-import java.util.Date
+import java.util.*
 
 /**
- * Created by lukhman on 11/23/2017.
+ * Created by firdous on 11/23/2017.
  */
 
 class MarksModel {

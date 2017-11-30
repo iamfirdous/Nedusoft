@@ -6,7 +6,7 @@ import android.os.SystemClock;
 import com.nexusinfo.nedusoft.receivers.InternetConnectivityReceiver;
 
 /**
- * Created by lukhman on 11/28/2017.
+ * Created by firdous on 11/28/2017.
  */
 
 public class MyApplication extends Application {

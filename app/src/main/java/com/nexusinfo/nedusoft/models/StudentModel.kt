@@ -3,7 +3,7 @@ package com.nexusinfo.nedusoft.models
 import java.util.Date
 
 /**
- * Created by lukhman on 11/23/2017.
+ * Created by firdous on 11/23/2017.
  */
 
 class StudentModel {

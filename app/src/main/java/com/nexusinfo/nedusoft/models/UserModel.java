@@ -3,7 +3,7 @@ package com.nexusinfo.nedusoft.models;
 import java.io.Serializable;
 
 /**
- * Created by lukhman on 11/28/2017.
+ * Created by firdous on 11/28/2017.
  */
 
 public class UserModel implements Serializable{

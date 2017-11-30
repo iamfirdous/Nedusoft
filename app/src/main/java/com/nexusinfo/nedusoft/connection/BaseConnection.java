@@ -3,7 +3,7 @@ package com.nexusinfo.nedusoft.connection;
 import java.sql.Connection;
 
 /**
- * Created by lukhman on 11/29/2017.
+ * Created by firdous on 11/29/2017.
  */
 
 public abstract class BaseConnection {

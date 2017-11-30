@@ -125,23 +125,19 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
 
             try{
                 Connection conn = databaseConnection.getConnection();
-                Statement stmt1 = conn.createStatement();
-                Statement stmt2 = conn.createStatement();
-                ResultSet loginRs = stmt1.executeQuery("SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLL_NO + " = '" + loginName + "'");
-                ResultSet passwordRs = stmt2.executeQuery("SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_PASSWORD + " = '" + password + "'");
+                Statement stmt = conn.createStatement();
 
-                boolean wrongLogin = true, wrongPassword = true;
+                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLL_NO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + password + "'";
+                ResultSet rs = stmt.executeQuery(query);
 
-                while (loginRs.next()){
-                    user.setUserID(loginRs.getString(DatabaseConnection.COL_ROLL_NO));
-                    wrongLogin = false;
+                boolean wrongCredentials = true;
+
+                while (rs.next()){
+                    user.setUserID(rs.getString(DatabaseConnection.COL_ROLL_NO));
+                    wrongCredentials = false;
                 }
 
-                while (passwordRs.next()){
-                    wrongPassword = false;
-                }
-
-                if(wrongLogin || wrongPassword){
+                if(wrongCredentials){
                     publishProgress("WrongCredentials");
                     cancel(true);
                 }

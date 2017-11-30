@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.nexusinfo.nedusoft.models.UserModel;
 
 /**
- * Created by lukhman on 11/28/2017.
+ * Created by firdous on 11/28/2017.
  */
 
 public class LocalDBHelper extends SQLiteOpenHelper {

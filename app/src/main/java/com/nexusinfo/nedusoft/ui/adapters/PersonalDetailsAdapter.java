@@ -16,7 +16,7 @@ import com.nexusinfo.nedusoft.R;
 import java.util.List;
 
 /**
- * Created by lukhman on 11/21/2017.
+ * Created by firdous on 11/21/2017.
  */
 
 public class PersonalDetailsAdapter extends ArrayAdapter<String> {

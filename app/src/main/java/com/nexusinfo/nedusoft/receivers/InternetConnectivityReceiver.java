@@ -9,7 +9,7 @@ import android.net.NetworkInfo;
 import com.nexusinfo.nedusoft.MyApplication;
 
 /**
- * Created by lukhman on 11/28/2017.
+ * Created by firdous on 11/28/2017.
  */
 
 public class InternetConnectivityReceiver extends BroadcastReceiver {

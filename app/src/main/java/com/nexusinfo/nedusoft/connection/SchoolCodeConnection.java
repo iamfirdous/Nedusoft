@@ -8,7 +8,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * Created by lukhman on 11/23/2017.
+ * Created by firdous on 11/23/2017.
  */
 
 public class SchoolCodeConnection extends BaseConnection {
