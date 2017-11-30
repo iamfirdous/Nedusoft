@@ -13,6 +13,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.MainActivity;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.fragments.AttendanceFragment;
 import com.nexusinfo.nedusoft.ui.fragments.DocumentFragment;
@@ -83,7 +84,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         switch (id) {
             case R.id.action_logout:
                 new LocalDBHelper(this).deleteData();
-                Intent logout = new Intent(this, SchoolCodeRequestActivity.class);
+                Intent logout = new Intent(this, MainActivity.class);
                 startActivity(logout);
                 finish();
                 break;

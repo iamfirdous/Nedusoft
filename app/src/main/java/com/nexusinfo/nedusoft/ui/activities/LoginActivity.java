@@ -120,8 +120,6 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
 
         @Override
         protected UserModel doInBackground(String... strings) {
-            Log.e("Check", "School code: " + user.getSchoolCode() + " School DB: " + user.getSchoolDBName());
-            Log.e("Check", databaseConnection.toString());
 
             try{
                 Connection conn = databaseConnection.getConnection();
