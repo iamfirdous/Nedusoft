@@ -125,13 +125,13 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
                 Connection conn = databaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
 
-                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLL_NO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + password + "'";
+                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + password + "'";
                 ResultSet rs = stmt.executeQuery(query);
 
                 boolean wrongCredentials = true;
 
                 while (rs.next()){
-                    user.setUserID(rs.getString(DatabaseConnection.COL_ROLL_NO));
+                    user.setUserID(rs.getString(DatabaseConnection.COL_ROLLNO));
                     wrongCredentials = false;
                 }
 

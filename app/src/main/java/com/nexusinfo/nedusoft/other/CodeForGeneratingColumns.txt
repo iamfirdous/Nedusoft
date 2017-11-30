@@ -1,0 +1,70 @@
+    public ArrayList<String> getItems(){
+        ArrayList<String> items = new ArrayList<>();
+
+        try{
+            Connection conn = new DatabaseConnection("IPS_LiveDB").getConnection();
+
+            Statement stmt = conn.createStatement();
+            String query = "SELECT * FROM " + "TStudentAttendance";
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int count = rsmd.getColumnCount();
+
+            for(int i = 1; i <= count; i++) {
+                items.add(rsmd.getColumnName(i));
+            }
+        }
+        catch (Exception e){
+            Log.e("Exception", e.toString());
+        }
+
+        return items;
+    }
+
+    public ArrayList<String> getItemsCaps(){
+        ArrayList<String> itemsCaps = new ArrayList<>();
+
+        try{
+            Connection conn = new DatabaseConnection("IPS_LiveDB").getConnection();
+
+            Statement stmt = conn.createStatement();
+            String query = "SELECT * FROM " + "TStudentAttendance";
+            ResultSet rs = stmt.executeQuery(query);
+            ResultSetMetaData rsmd = rs.getMetaData();
+
+            int count = rsmd.getColumnCount();
+
+            for(int i = 1; i <= count; i++) {
+                itemsCaps.add(rsmd.getColumnName(i).toUpperCase());
+            }
+        }
+        catch (Exception e){
+            Log.e("Exception", e.toString());
+        }
+
+        return itemsCaps;
+    }
+
+    class Task extends AsyncTask<String, String, String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ArrayList<String> items = getItems();
+            ArrayList<String> itemsCaps = getItemsCaps();
+
+            int count = items.size();
+
+            StringBuffer out = new StringBuffer();
+
+            out.append("\n//Columns for TSTUDENT_ATTENDANCE\n");
+
+            for(int i = 0; i < count; i++) {
+                out.append("public static final String COL_" + itemsCaps.get(i) + " = \"" + items.get(i) + "\";\n");
+            }
+
+            Log.e("Generated code: ", "\n\n" + out);
+
+            return null;
+        }
+    }
