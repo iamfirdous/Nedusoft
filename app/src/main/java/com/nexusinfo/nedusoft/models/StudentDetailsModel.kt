@@ -45,7 +45,7 @@ class StudentDetailsModel {
     //[Display(Name = "Medium of Instruction")]
     var mediumofInstruction: String? = null
     //[Display(Name = "Language-I")]
-    var iLanguage: String? = null
+    var ILanguage: String? = null
     var languageID_I: String? = null
     var nationality: Int = 0
     var religion: String? = null
@@ -86,11 +86,11 @@ class StudentDetailsModel {
     var transportFeeid: Int = 0
     var cmpid: String? = null
     //[Display(Name = "Language-II")]
-    var iiLanguage: String? = null
+    var IILanguage: String? = null
 
     var languageID_II: String? = null
     //[Display(Name = "Language-III")]
-    var iiiLanguage: String? = null
+    var IIILanguage: String? = null
     var languageID_III: String? = null
     var waiver: String? = null
     var scholarship: String? = null
