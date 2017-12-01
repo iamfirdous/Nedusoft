@@ -57,11 +57,17 @@ public class LocalDBHelper extends SQLiteOpenHelper {
         return (cursor.getCount() > 0);
     }
 
-    public String getDatabaseName(){
+    public UserModel getUser(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         cursor.moveToFirst();
-        return cursor.getString(2);
+
+        UserModel user = new UserModel();
+        user.setUserID(cursor.getString(0));
+        user.setSchoolCode(cursor.getString(1));
+        user.setSchoolDBName(cursor.getString(2));
+
+        return user;
     }
 
     public boolean deleteData(){

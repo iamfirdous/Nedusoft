@@ -1,17 +1,21 @@
 package com.nexusinfo.nedusoft.ui.fragments;
 
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.adapters.PersonalDetailsAdapter;
+import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -24,7 +28,7 @@ public class PersonalFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private List<String> labels;
+    private List<String> labels, contents;
     private ListView listViewPersonal;
     private PersonalDetailsAdapter adapter;
 
@@ -37,15 +41,19 @@ public class PersonalFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
 
         labels = new ArrayList<>();
-        listViewPersonal = view.findViewById(R.id.listView_personal);
-        adapter = new PersonalDetailsAdapter(getContext(), labels, null);
+        contents  = new ArrayList<>();
 
-        for (String listItem : getResources().getStringArray(R.array.personal)){
-            labels.add(listItem);
-        }
+        listViewPersonal = view.findViewById(R.id.listView_personal);
+        adapter = new PersonalDetailsAdapter(getContext(), labels, contents);
+
+        Collections.addAll(labels, getResources().getStringArray(R.array.personal));
 
         listViewPersonal.setAdapter(adapter);
         adapter.notifyDataSetChanged();
+
+        StudentDetailsViewModel model = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
+
+        Toast.makeText(getContext(), "" + model.getStudent(getContext()).getFirstName(), Toast.LENGTH_LONG).show();
 
         return view;
     }
