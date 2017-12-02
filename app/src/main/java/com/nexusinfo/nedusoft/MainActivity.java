@@ -14,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(new LocalDBHelper(this).isDataExist()){
+        if(LocalDBHelper.getInstance(this).isDataExist()){
             Intent studentDetailsIntent = new Intent(MainActivity.this, StudentDetailsActivity.class);
             startActivity(studentDetailsIntent);
             finish();

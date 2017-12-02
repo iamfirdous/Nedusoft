@@ -22,6 +22,16 @@ public class LocalDBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SCHOOL_CODE = "SchoolCode";
     private static final String COLUMN_SCHOOL_DATABASE = "SchoolDatabaseName";
 
+    private static LocalDBHelper mInstance;
+
+    public static LocalDBHelper getInstance(Context context) {
+
+        if(mInstance == null){
+            mInstance = new LocalDBHelper(context);
+        }
+        return mInstance;
+    }
+
 
     public LocalDBHelper(Context context) {
         super(context, DATABASE_NAME, null, 1);

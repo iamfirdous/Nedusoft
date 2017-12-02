@@ -239,7 +239,7 @@ public class DatabaseConnection extends BaseConnection {
     public static final String COL_REMARKSID = "RemarksId";
 
     public DatabaseConnection(Context context) {
-        DB = new LocalDBHelper(context).getUser().getSchoolDBName();
+        DB = LocalDBHelper.getInstance(context).getUser().getSchoolDBName();
     }
 
     public DatabaseConnection(String databaseName) {

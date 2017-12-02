@@ -165,7 +165,7 @@ public class LoginActivity extends AppCompatActivity  implements InternetConnect
 
         @Override
         protected void onPostExecute(UserModel userModel) {
-            if (new LocalDBHelper(LoginActivity.this).addData(user)) {
+            if (LocalDBHelper.getInstance(LoginActivity.this).addData(user)) {
                 Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
                 Intent studentDetailsIntent = new Intent(LoginActivity.this, StudentDetailsActivity.class);
                 startActivity(studentDetailsIntent);

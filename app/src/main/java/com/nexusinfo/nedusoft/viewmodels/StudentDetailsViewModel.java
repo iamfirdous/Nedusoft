@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 /**
  * Created by firdous on 12/1/2017.
@@ -33,7 +34,7 @@ public class StudentDetailsViewModel extends ViewModel {
         System.out.println(buffer.toString());
 
         try{
-            String userID = new LocalDBHelper(context).getUser().getUserID();
+            String userID = LocalDBHelper.getInstance(context).getUser().getUserID();
             DatabaseConnection databaseConnection = new DatabaseConnection(context);
             Connection conn = databaseConnection.getConnection();
 
@@ -156,7 +157,7 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setRouteID(rs.getInt(DatabaseConnection.COL_ROUTEID));
                 studentDetailsModel.setScholarship(rs.getString(DatabaseConnection.COL_SCHOLARSHIP));
                 studentDetailsModel.setSchoolTransport(rs.getString(DatabaseConnection.COL_SCHOOLTRANSPORT));
-                studentDetailsModel.setSection(rs.getString(DatabaseConnection.COL_SECTIONNAME));  // <----------- Have to ask about this
+                studentDetailsModel.setSection(rs.getString(DatabaseConnection.COL_SECTIONNAME));  //TODO <----------- Have to ask about this
                 studentDetailsModel.setSectionID(rs.getInt(DatabaseConnection.COL_SECTIONID));
 //TODO                studentDetailsModel.setSemester(rs.getString(DatabaseConnection.COL_SEMESTER));
                 studentDetailsModel.setSemesterId(rs.getInt(DatabaseConnection.COL_SEMESTERID));
@@ -196,6 +197,66 @@ public class StudentDetailsViewModel extends ViewModel {
 
 
         return studentDetailsModel;
+    }
+
+    public ArrayList<String> getStudentPersonalDetails(Context context){
+        ArrayList<String> personalDetails = new ArrayList<>();
+        StudentDetailsModel m = getStudent(context);
+
+        personalDetails.add("For header");
+        personalDetails.add(m.getYearName());
+        personalDetails.add(m.getUniversityName());
+        personalDetails.add(m.getCourseName());
+        personalDetails.add(m.getBranchName());    //TODO <----------- Have to ask about this
+        personalDetails.add(m.getCombination());   //TODO <----------- Have to ask about this
+//TODO        personalDetails.add(m.getClass());
+        personalDetails.add(m.getSection());
+        personalDetails.add(m.getRollNo());
+        personalDetails.add(m.getCategory());     //TODO <----------- Have to ask about this
+        personalDetails.add(m.getAdmissionNo());
+        personalDetails.add(m.getQuota());
+        personalDetails.add(m.getFirstName());
+        personalDetails.add(m.getMiddleName());
+        personalDetails.add(m.getLastName());
+        personalDetails.add(m.getDob());
+        personalDetails.add(m.getPlaceofBirth());
+        personalDetails.add(m.getGender());
+        personalDetails.add(m.getReligion());
+        personalDetails.add(m.getCaste());
+        personalDetails.add(m.getSubCaste());
+        personalDetails.add(m.getNationalityName());
+        personalDetails.add(m.getMotherTounge());
+        personalDetails.add(m.get);<item>Category</item>
+        <item>Medium of\nInstruction</item>
+        <item>UID</item>
+        <item>Last Institute</item>
+        <item>Language - I</item>
+        <item>Language - II</item>
+        <item>Language - III</item>
+        <item>ExamPassed</item>
+        <item>Year of\nPassing</item>
+        <item>No. of\nAttempts</item>
+        <item>Max Marks</item>
+        <item>Obtained Marks</item>
+        <item>Percentage</item>
+        <item>Grade Scored</item>
+        <item>TC No.</item>
+        <item>Dice No.</item>
+        <item>Sports National</item>
+        <item>Sports State</item>
+        <item>Sports Level</item>
+        <item>Waiver</item>
+        <item>Passport</item>
+        <item>Scholarship</item>
+        <item>Remarks</item>
+        <item>Other Activity</item>
+        <item>Student Mobile</item>
+        <item>Country</item>
+        <item>City</item>
+        <item>Pin Code</item>
+        <item>Address Line-1</item>
+        <item>Address Line-2</item>
+        <item>Status</item>
     }
 
 }

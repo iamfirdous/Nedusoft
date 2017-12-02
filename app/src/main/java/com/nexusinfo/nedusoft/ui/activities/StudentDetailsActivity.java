@@ -83,7 +83,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_logout:
-                new LocalDBHelper(this).deleteData();
+                LocalDBHelper.getInstance(this).deleteData();
                 Intent logout = new Intent(this, MainActivity.class);
                 startActivity(logout);
                 finish();
