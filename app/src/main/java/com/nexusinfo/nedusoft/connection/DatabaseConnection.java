@@ -21,6 +21,7 @@ public class DatabaseConnection extends BaseConnection {
     public static final String VIEW_STUDENT_DETAILS_FOR_REPORT = "View_StudentDetailsForReport";
     public static final String TABLE_MMARKS = "MMarks";
     public static final String TABLE_MFEE_BAL_RCPT = "MFeeBalRcpt";
+    public static final String TABLE_MQUOATA = "MQuota";
 
     //Columns for VIEW_STUDENT_DETAILS_FOR_REPORT
     public static final String COL_STUDENTID = "StudentID";
@@ -185,42 +186,42 @@ public class DatabaseConnection extends BaseConnection {
     public static final String COL_CONTACTPERSON = "ContactPerson";
     public static final String COL_SCHOOLTRANSPORT = "SchoolTransport";
     public static final String COL_EXT = "Ext";
+
+
     public static final String COL_ADMISSIONDATE = "AdmissionDate";
-
-
     //Columns for TABLE_MMARKS
      public static final String COL_MID = "MId";
-     public static final String COL_CLASSID = "classId";
-     public static final String COL_SUBJECTID = "subjectid";
-     public static final String COL_FACULTYID = "facultyId";
-     public static final String COL_EXAMID = "examid";
-     public static final String COL_ASSESMENT = "Assesment";
-     public static final String COL_ISSUEDATE = "IssueDate";
-     public static final String COL_STUDENTID_MARKS = "studentid";
-     public static final String COL_ACTUALMARKS = "actualmarks";
-     public static final String COL_MARKSOBTAINED = "marksObtained";
-     public static final String COL_MAXMARK = "maxmark";
-     public static final String COL_PASSMARK = "passmark";
-     public static final String COL_PERCENTAGE_MARKS = "percentage";
-     public static final String COL_STATUS_MARKS = "status";
-     public static final String COL_CLASSORIG = "ClassOrig";
-     public static final String COL_BRCODE_MARKS = "brcode";
-     public static final String COL_CMPID_MARKS = "cmpid";
-     public static final String COL_STATS = "stats";
-     public static final String COL_YEARID_MARKS = "YearId";
+    public static final String COL_CLASSID = "classId";
+    public static final String COL_SUBJECTID = "subjectid";
+    public static final String COL_FACULTYID = "facultyId";
+    public static final String COL_EXAMID = "examid";
+    public static final String COL_ASSESMENT = "Assesment";
+    public static final String COL_ISSUEDATE = "IssueDate";
+    public static final String COL_STUDENTID_MARKS = "studentid";
+    public static final String COL_ACTUALMARKS = "actualmarks";
+    public static final String COL_MARKSOBTAINED = "marksObtained";
+    public static final String COL_MAXMARK = "maxmark";
+    public static final String COL_PASSMARK = "passmark";
+    public static final String COL_PERCENTAGE_MARKS = "percentage";
+    public static final String COL_STATUS_MARKS = "status";
+    public static final String COL_CLASSORIG = "ClassOrig";
+    public static final String COL_BRCODE_MARKS = "brcode";
+    public static final String COL_CMPID_MARKS = "cmpid";
+    public static final String COL_STATS = "stats";
 
+     public static final String COL_YEARID_MARKS = "YearId";
     //Columns for TABLE_MFEE_BAL_RCPT
      public static final String COL_FBSLNO = "FBslno";
-     public static final String COL_FSTUDENTID = "FStudentId";
-     public static final String COL_FEERCVD = "FeeRcvd";
-     public static final String COL_FEEBFINE = "FeeBFine";
-     public static final String COL_FEEBBANKCHARGE = "FeeBBankCharge";
-     public static final String COL_FEEBCONCESSION = "FeeBConcession";
-     public static final String COL_FEEBAL = "FeeBal";
-     public static final String COL_FEETYPE = "Feetype";
-     public static final String COL_STDFEE_ID = "StdFee_ID";
-     public static final String COL_FYEAR_ID = "FYear_id";
+    public static final String COL_FSTUDENTID = "FStudentId";
+    public static final String COL_FEERCVD = "FeeRcvd";
+    public static final String COL_FEEBFINE = "FeeBFine";
+    public static final String COL_FEEBBANKCHARGE = "FeeBBankCharge";
+    public static final String COL_FEEBCONCESSION = "FeeBConcession";
+    public static final String COL_FEEBAL = "FeeBal";
+    public static final String COL_FEETYPE = "Feetype";
+    public static final String COL_STDFEE_ID = "StdFee_ID";
 
+     public static final String COL_FYEAR_ID = "FYear_id";
     //Columns for TSTUDENT_ATTENDANCE
     public static final String COL_ATTENDANCEID = "AttendanceId";
     public static final String COL_ATTENDANCEDATE = "AttendanceDate";
@@ -237,6 +238,12 @@ public class DatabaseConnection extends BaseConnection {
     public static final String COL_UPDATEDON = "UpdatedOn";
     public static final String COL_STATUSID = "StatusId";
     public static final String COL_REMARKSID = "RemarksId";
+
+    //Other Table Columns
+    public static final String COL_QUOTANAME = "QuotaName";
+    public static final String COL_SEMESTER = "Semseter";
+    public static final String COL_ADMISSIONTYPENAME = "TypeName";
+
 
     public DatabaseConnection(Context context) {
         DB = LocalDBHelper.getInstance(context).getUser().getSchoolDBName();

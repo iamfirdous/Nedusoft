@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.R;
+import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
 import com.nexusinfo.nedusoft.ui.adapters.PersonalDetailsAdapter;
 import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
@@ -39,9 +39,10 @@ public class PersonalFragment extends Fragment {
         getActivity().setTitle(R.string.title_personal_fragment);
 
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
+        StudentDetailsViewModel viewModel = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
 
         labels = new ArrayList<>();
-        contents  = new ArrayList<>();
+        contents  = ((StudentDetailsActivity)getActivity()).studentDetailsViewModel.getStudentPersonalDetails(getContext());
 
         listViewPersonal = view.findViewById(R.id.listView_personal);
         adapter = new PersonalDetailsAdapter(getContext(), labels, contents);
@@ -51,9 +52,6 @@ public class PersonalFragment extends Fragment {
         listViewPersonal.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
-        StudentDetailsViewModel model = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
-
-        Toast.makeText(getContext(), "" + model.getStudent(getContext()).getFirstName(), Toast.LENGTH_LONG).show();
 
         return view;
     }

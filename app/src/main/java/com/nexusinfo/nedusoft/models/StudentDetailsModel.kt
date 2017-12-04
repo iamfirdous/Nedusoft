@@ -235,4 +235,7 @@ class StudentDetailsModel {
     var lastYear: Int = 0
     var lastSyllabus: Int = 0
     var applicationStatus: String? = null
+
+    var admissionTypeID: Int? = null
+    var admissionType: String? = null
 }

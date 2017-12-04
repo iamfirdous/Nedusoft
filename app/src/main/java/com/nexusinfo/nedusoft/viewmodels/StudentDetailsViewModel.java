@@ -28,20 +28,31 @@ public class StudentDetailsViewModel extends ViewModel {
         Field fields[] = StudentDetailsModel.class.getDeclaredFields();
         StringBuffer buffer = new StringBuffer();
 
-        for(Field f : fields){
-            buffer.append("studentDetailsModel.set"+f.getName().replaceFirst(f.getName().substring(0, 1), f.getName().substring(0, 1).toUpperCase())+"();\n");
-        }
-        System.out.println(buffer.toString());
+//        for(Field f : fields){
+//            buffer.append("studentDetailsModel.set"+f.getName().replaceFirst(f.getName().substring(0, 1), f.getName().substring(0, 1).toUpperCase())+"();\n");
+//        }
+//        System.out.println(buffer.toString());
 
         try{
             String userID = LocalDBHelper.getInstance(context).getUser().getUserID();
             DatabaseConnection databaseConnection = new DatabaseConnection(context);
             Connection conn = databaseConnection.getConnection();
 
-            Statement stmt = conn.createStatement();
-            String query = "SELECT * FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
-            Log.e("Query: ", query);
-            ResultSet rs = stmt.executeQuery(query);
+            Statement stmt2 = conn.createStatement();
+            String query2 = "SELECT * FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " " +
+                                "LEFT JOIN MSemester ON View_StudentDetailsForReport.ExamPassed = MSemester.SemesterID " +
+                                "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
+            Log.e("Query2: ", query2);
+            ResultSet rsForEP = stmt2.executeQuery(query2);
+
+            Statement stmt1 = conn.createStatement();
+            String query1 = "SELECT * FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " " +
+                                "LEFT JOIN MQuota ON View_StudentDetailsForReport.QuotaID = MQuota.QuotaID " +
+                                "LEFT JOIN MSemester ON View_StudentDetailsForReport.SemesterID = MSemester.SemesterID " +
+                                "LEFT JOIN CSystemType ON View_StudentDetailsForReport.AdmissionTypeID = CSystemType.TypeID " +
+                                "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
+            Log.e("Query1: ", query1);
+            ResultSet rs = stmt1.executeQuery(query1);
 
             while (rs.next()){
                 studentDetailsModel.setACross(rs.getString(DatabaseConnection.COL_CROSS));
@@ -79,7 +90,15 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setEmerNo3(rs.getString(DatabaseConnection.COL_EMGNO3));
                 studentDetailsModel.setExamName(rs.getString(DatabaseConnection.COL_EXAMNAME));
                 studentDetailsModel.setExamPassed(rs.getInt(DatabaseConnection.COL_EXAMPASSED));
-//                studentDetailsModel.setExampassedName();
+
+                while (rsForEP.next()) {
+                    studentDetailsModel.setExampassedName(rsForEP.getString(DatabaseConnection.COL_SEMESTER));
+                    if (studentDetailsModel.getExampassedName() != null)
+                        Log.e("Value", studentDetailsModel.getExampassedName());
+                    else
+                        Log.e("Value", "Null");
+                }
+
                 studentDetailsModel.setExt(rs.getString(DatabaseConnection.COL_EXT));
                 studentDetailsModel.setExtension(rs.getString(DatabaseConnection.COL_EXTENSION));
                 studentDetailsModel.setExtraCurriculam(rs.getString(DatabaseConnection.COL_EXTRACURRICULAM));
@@ -132,23 +151,23 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setMotherTounge(rs.getString(DatabaseConnection.COL_MOTHERTOUNGE));
                 studentDetailsModel.setMotherprofession(rs.getString(DatabaseConnection.COL_MOTHERPROFESSION));
                 studentDetailsModel.setMothersName(rs.getString(DatabaseConnection.COL_MOTHERSNAME));
-//TODO                studentDetailsModel.setMsg();
+//                studentDetailsModel.setMsg(rs.getString(DatabaseConnection.COL_FEEDBACK));
                 studentDetailsModel.setNationality(rs.getInt(DatabaseConnection.COL_NATIONALITY));
-//TODO                studentDetailsModel.setNationalityName(rs.getString(DatabaseConnection.COL_NATIONALITY));
+//                studentDetailsModel.setNationalityName(rs.getString(DatabaseConnection.COL_NATIONALITY));
                 studentDetailsModel.setNoofAttempts(rs.getString(DatabaseConnection.COL_NOOFATTEMPTS));
                 studentDetailsModel.setObtainedMarks(rs.getInt(DatabaseConnection.COL_OBTAINEDMARKS));
                 studentDetailsModel.setOtherActivity(rs.getString(DatabaseConnection.COL_OTHERACTIVITY));
-//TODO                studentDetailsModel.setParentsNo(rs.getString(DatabaseConnection.COL_));
+//                studentDetailsModel.setParentsNo(rs.getString(DatabaseConnection.COL_));
                 studentDetailsModel.setPassport(rs.getString(DatabaseConnection.COL_PASSPORT));
-//TODO                studentDetailsModel.setPercent(rs.getFloat(DatabaseConnection.COL_PERCENTAGE));
+//                studentDetailsModel.setPercent(rs.getFloat(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPercentage(rs.getDouble(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPhotoID(rs.getInt(DatabaseConnection.COL_PHOTOID));
                 studentDetailsModel.setPlaceofBirth(rs.getString(DatabaseConnection.COL_PLACEOFBIRTH));
                 studentDetailsModel.setPolicy(rs.getString(DatabaseConnection.COL_POLICY));
                 studentDetailsModel.setPostalCode(rs.getString(DatabaseConnection.COL_POSTALCODE));
-//TODO                studentDetailsModel.setQuota(rs.getString(DatabaseConnection.COL_QUOTA));
+//                studentDetailsModel.setQuota(rs.getString(DatabaseConnection.COL_Q));
                 studentDetailsModel.setQuotaID(rs.getInt(DatabaseConnection.COL_QUOTAID));
-//TODO                studentDetailsModel.setQuotaName(rs.getString(DatabaseConnection.COL_QUOTANAME));
+                studentDetailsModel.setQuotaName(rs.getString(DatabaseConnection.COL_QUOTANAME));
                 studentDetailsModel.setReligion(rs.getString(DatabaseConnection.COL_RELIGION));
                 studentDetailsModel.setRemarks(rs.getString(DatabaseConnection.COL_REMARKS));
                 studentDetailsModel.setResidentContact(rs.getString(DatabaseConnection.COL_RESIDENTCONTACT));
@@ -157,9 +176,9 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setRouteID(rs.getInt(DatabaseConnection.COL_ROUTEID));
                 studentDetailsModel.setScholarship(rs.getString(DatabaseConnection.COL_SCHOLARSHIP));
                 studentDetailsModel.setSchoolTransport(rs.getString(DatabaseConnection.COL_SCHOOLTRANSPORT));
-                studentDetailsModel.setSection(rs.getString(DatabaseConnection.COL_SECTIONNAME));  //TODO <----------- Have to ask about this
+                studentDetailsModel.setSection(rs.getString(DatabaseConnection.COL_SECTIONNAME));
                 studentDetailsModel.setSectionID(rs.getInt(DatabaseConnection.COL_SECTIONID));
-//TODO                studentDetailsModel.setSemester(rs.getString(DatabaseConnection.COL_SEMESTER));
+                studentDetailsModel.setSemester(rs.getString(DatabaseConnection.COL_SEMESTER));
                 studentDetailsModel.setSemesterId(rs.getInt(DatabaseConnection.COL_SEMESTERID));
                 studentDetailsModel.setSiblingClassI(rs.getString(DatabaseConnection.COL_SIBLINGCLASSI));
                 studentDetailsModel.setSiblingClassII(rs.getString(DatabaseConnection.COL_SIBLINGCLASSII));
@@ -177,8 +196,8 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setStudentMobile(rs.getString(DatabaseConnection.COL_STUDENTMOBILE));
                 studentDetailsModel.setSubCaste(rs.getString(DatabaseConnection.COL_SUBCASTE));
                 studentDetailsModel.setTcno(rs.getString(DatabaseConnection.COL_TCNO));
-//TODO                studentDetailsModel.setTotalClass(rs.getInt(DatabaseConnection.COL_TOTALCLASS));
-//TODO                studentDetailsModel.setTotalPresents(rs.getInt(DatabaseConnection.COL_TOTALPRESENTS));
+//                studentDetailsModel.setTotalClass(rs.getInt(DatabaseConnection.COL_TOTALCLASS));
+//                studentDetailsModel.setTotalPresents(rs.getInt(DatabaseConnection.COL_TOTALPRESENTS));
                 studentDetailsModel.setTransportFeeid(rs.getInt(DatabaseConnection.COL_TRANSPORTFEEID));
                 studentDetailsModel.setUid(rs.getString(DatabaseConnection.COL_UID));
                 studentDetailsModel.setUniversityID(rs.getInt(DatabaseConnection.COL_UNIVERSITYID));
@@ -188,7 +207,10 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setYearID(rs.getInt(DatabaseConnection.COL_YEARID));
                 studentDetailsModel.setYearName(rs.getString(DatabaseConnection.COL_YEARNAME));
                 studentDetailsModel.setYearofPassing(rs.getString(DatabaseConnection.COL_YEAROFPASSING));
-//TODO                studentDetailsModel.setYop(rs.getString(DatabaseConnection.COL_YOP));
+//                studentDetailsModel.setYop(rs.getString(DatabaseConnection.COL_YOP));
+
+                studentDetailsModel.setAdmissionTypeID(rs.getInt(DatabaseConnection.COL_ADMISSIONTYPEID));
+                studentDetailsModel.setAdmissionType(rs.getString(DatabaseConnection.COL_ADMISSIONTYPENAME));
             }
         }
         catch (Exception e){
@@ -207,12 +229,12 @@ public class StudentDetailsViewModel extends ViewModel {
         personalDetails.add(m.getYearName());
         personalDetails.add(m.getUniversityName());
         personalDetails.add(m.getCourseName());
-        personalDetails.add(m.getBranchName());    //TODO <----------- Have to ask about this
-        personalDetails.add(m.getCombination());   //TODO <----------- Have to ask about this
-//TODO        personalDetails.add(m.getClass());
+        personalDetails.add(m.getBranchName());
+        personalDetails.add(m.getCombination());
+        personalDetails.add(m.getSemester());
         personalDetails.add(m.getSection());
         personalDetails.add(m.getRollNo());
-        personalDetails.add(m.getCategory());     //TODO <----------- Have to ask about this
+        personalDetails.add(m.getAdmissionType());
         personalDetails.add(m.getAdmissionNo());
         personalDetails.add(m.getQuota());
         personalDetails.add(m.getFirstName());
@@ -226,37 +248,39 @@ public class StudentDetailsViewModel extends ViewModel {
         personalDetails.add(m.getSubCaste());
         personalDetails.add(m.getNationalityName());
         personalDetails.add(m.getMotherTounge());
-        personalDetails.add(m.get);<item>Category</item>
-        <item>Medium of\nInstruction</item>
-        <item>UID</item>
-        <item>Last Institute</item>
-        <item>Language - I</item>
-        <item>Language - II</item>
-        <item>Language - III</item>
-        <item>ExamPassed</item>
-        <item>Year of\nPassing</item>
-        <item>No. of\nAttempts</item>
-        <item>Max Marks</item>
-        <item>Obtained Marks</item>
-        <item>Percentage</item>
-        <item>Grade Scored</item>
-        <item>TC No.</item>
-        <item>Dice No.</item>
-        <item>Sports National</item>
-        <item>Sports State</item>
-        <item>Sports Level</item>
-        <item>Waiver</item>
-        <item>Passport</item>
-        <item>Scholarship</item>
-        <item>Remarks</item>
-        <item>Other Activity</item>
-        <item>Student Mobile</item>
-        <item>Country</item>
-        <item>City</item>
-        <item>Pin Code</item>
-        <item>Address Line-1</item>
-        <item>Address Line-2</item>
-        <item>Status</item>
+        personalDetails.add(m.getCategory());
+        personalDetails.add(m.getMediumofInstruction());
+        personalDetails.add(m.getUid());
+        personalDetails.add(m.getLastInstitute());
+        personalDetails.add(m.getILanguage());
+        personalDetails.add(m.getIILanguage());
+        personalDetails.add(m.getIIILanguage());
+        personalDetails.add(m.getExampassedName());
+        personalDetails.add(m.getYearofPassing());
+        personalDetails.add(m.getNoofAttempts());
+        personalDetails.add(m.getMaxMarks());
+        personalDetails.add("" + m.getObtainedMarks());
+        personalDetails.add("" + m.getPercentage());
+        personalDetails.add(m.getGradeScored());
+        personalDetails.add(m.getTcno());
+        personalDetails.add(m.getDiceNo());
+        personalDetails.add(m.getSportsNational());
+        personalDetails.add(m.getSportsState());
+        personalDetails.add(m.getSportsLevel());
+        personalDetails.add(m.getWaiver());
+        personalDetails.add(m.getPassport());
+        personalDetails.add(m.getScholarship());
+        personalDetails.add(m.getRemarks());
+        personalDetails.add(m.getOtherActivity());
+        personalDetails.add(m.getStudentMobile());
+        personalDetails.add(m.getCountry());
+        personalDetails.add(m.getCity());
+        personalDetails.add(m.getPostalCode());
+        personalDetails.add(m.getAddressLine1());
+        personalDetails.add(m.getAddressLine2());
+        personalDetails.add(m.getStatus());
+
+        return  personalDetails;
     }
 
 }

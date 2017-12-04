@@ -3,7 +3,6 @@ package com.nexusinfo.nedusoft.ui.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nexusinfo.nedusoft.R;
+import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
 
 import java.util.List;
 
@@ -81,11 +81,20 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
 
         switch (type){
             case TYPE_PERSONAL_HEADER:
-
+                viewHolder.tvName.setText(StudentDetailsActivity.getStudentFullName(contents));
+                viewHolder.tvRollNo.setText(contents.get(8));
                 break;
 
             case TYPE_PERSONAL:
                 viewHolder.tvLabel.setText(labels.get(position));
+
+                if(contents.get(position) != null) {
+                    viewHolder.tvContent.setText(contents.get(position));
+                }
+                else {
+                    viewHolder.tvContent.setText("");
+                }
+
                 break;
         }
 

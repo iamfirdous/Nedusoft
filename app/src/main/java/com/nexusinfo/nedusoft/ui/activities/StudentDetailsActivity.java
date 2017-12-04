@@ -1,9 +1,10 @@
 package com.nexusinfo.nedusoft.ui.activities;
 
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -11,6 +12,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.MainActivity;
@@ -22,6 +25,10 @@ import com.nexusinfo.nedusoft.ui.fragments.FeeMasterFragment;
 import com.nexusinfo.nedusoft.ui.fragments.HospitalFragment;
 import com.nexusinfo.nedusoft.ui.fragments.MarksFragment;
 import com.nexusinfo.nedusoft.ui.fragments.PersonalFragment;
+import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentDetailsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -30,6 +37,11 @@ public class StudentDetailsActivity extends AppCompatActivity
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mToggle;
     private NavigationView mNavigationView;
+
+    private View header;
+    private TextView tvStudentName, tvRollNo;
+
+    public StudentDetailsViewModel studentDetailsViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +66,18 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
+
+        studentDetailsViewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
+
+        header = mNavigationView.getHeaderView(0);
+        tvStudentName = header.findViewById(R.id.textView_student_name_drawer);
+        tvRollNo = header.findViewById(R.id.textView_student_roll_no_drawer);
+
+        ArrayList<String> contents = studentDetailsViewModel.getStudentPersonalDetails(this);
+
+        tvStudentName.setText(getStudentFullName(contents));
+        tvRollNo.setText(contents.get(8));
+
     }
 
     @Override
@@ -135,5 +159,28 @@ public class StudentDetailsActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public StudentDetailsViewModel getStudentDetailsViewModel() {
+        return studentDetailsViewModel;
+    }
+
+    public void setStudentDetailsViewModel(StudentDetailsViewModel studentDetailsViewModel) {
+        this.studentDetailsViewModel = studentDetailsViewModel;
+    }
+
+    public static String getStudentFullName(List<String> contents) {
+        String name;
+
+        if(contents.get(13) != null && contents.get(14) != null)
+            name = contents.get(12) + " " + contents.get(13) + " " + contents.get(14);
+        else if(contents.get(14) == null)
+            name = contents.get(12) + " " + contents.get(13);
+        else if(contents.get(13) == null)
+            name = contents.get(12) + " " + contents.get(14);
+        else
+            name = contents.get(12);
+
+        return name;
     }
 }
