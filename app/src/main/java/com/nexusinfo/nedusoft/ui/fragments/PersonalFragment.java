@@ -35,14 +35,15 @@ public class PersonalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         getActivity().setTitle(R.string.title_personal_fragment);
 
+        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
         StudentDetailsViewModel viewModel = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
 
         labels = new ArrayList<>();
-        contents  = ((StudentDetailsActivity)getActivity()).studentDetailsViewModel.getStudentPersonalDetails(getContext());
+        contents  = StudentDetailsActivity.getStudentPersonalDetails();
 
         listViewPersonal = view.findViewById(R.id.listView_personal);
         adapter = new PersonalDetailsAdapter(getContext(), labels, contents);

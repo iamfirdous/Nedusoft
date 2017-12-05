@@ -75,11 +75,10 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
             }
             convertView.setTag(viewHolder);
         }
-        else {
+        else
             viewHolder = (ViewHolder) convertView.getTag();
-        }
 
-        switch (type){
+        switch (type) {
             case TYPE_PERSONAL_HEADER:
                 viewHolder.tvName.setText(StudentDetailsActivity.getStudentFullName(contents));
                 viewHolder.tvRollNo.setText(contents.get(8));
@@ -88,12 +87,10 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
             case TYPE_PERSONAL:
                 viewHolder.tvLabel.setText(labels.get(position));
 
-                if(contents.get(position) != null) {
+                if (contents.get(position) != null && !contents.get(position).equals(""))
                     viewHolder.tvContent.setText(contents.get(position));
-                }
-                else {
-                    viewHolder.tvContent.setText("");
-                }
+                else
+                    viewHolder.tvContent.setText("-");
 
                 break;
         }

@@ -41,13 +41,14 @@ public class StudentDetailsActivity extends AppCompatActivity
     private View header;
     private TextView tvStudentName, tvRollNo;
 
-    public StudentDetailsViewModel studentDetailsViewModel;
+    public static StudentDetailsViewModel studentDetailsViewModel;
+    public static ArrayList<String> studentPersonalDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_details);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         mManager = getSupportFragmentManager();
@@ -68,21 +69,18 @@ public class StudentDetailsActivity extends AppCompatActivity
         mNavigationView.setNavigationItemSelectedListener(this);
 
         studentDetailsViewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
+        studentPersonalDetails = studentDetailsViewModel.getStudentPersonalDetails(this);
 
         header = mNavigationView.getHeaderView(0);
         tvStudentName = header.findViewById(R.id.textView_student_name_drawer);
         tvRollNo = header.findViewById(R.id.textView_student_roll_no_drawer);
 
-        ArrayList<String> contents = studentDetailsViewModel.getStudentPersonalDetails(this);
-
-        tvStudentName.setText(getStudentFullName(contents));
-        tvRollNo.setText(contents.get(8));
-
+        tvStudentName.setText(getStudentFullName(studentPersonalDetails));
+        tvRollNo.setText(studentPersonalDetails.get(8));
     }
 
     @Override
     public void onBackPressed() {
-
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
         } else {
@@ -156,17 +154,13 @@ public class StudentDetailsActivity extends AppCompatActivity
 //                break;
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-    public StudentDetailsViewModel getStudentDetailsViewModel() {
-        return studentDetailsViewModel;
-    }
-
-    public void setStudentDetailsViewModel(StudentDetailsViewModel studentDetailsViewModel) {
-        this.studentDetailsViewModel = studentDetailsViewModel;
+    public static ArrayList<String> getStudentPersonalDetails() {
+        return studentPersonalDetails;
     }
 
     public static String getStudentFullName(List<String> contents) {

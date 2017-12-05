@@ -10,7 +10,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/cardview_margin"
         android:layout_marginRight="@dimen/cardview_margin"
-        android:layout_marginBottom="@dimen/cardview_margin"
         app:cardCornerRadius="@dimen/card_corner_radius">
 
         <TextView

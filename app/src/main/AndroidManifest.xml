@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.nexusinfo.nedusoft">
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -13,7 +14,8 @@
         android:roundIcon="@mipmap/nedusoft_slider_logo"
         android:supportsRtl="true"
         android:theme="@style/NedusoftTheme">
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,8 +26,8 @@
         <activity
             android:name=".ui.activities.StudentDetailsActivity"
             android:label="@string/title_activity_student_details"
-            android:theme="@style/NedusoftTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/NedusoftTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.SchoolCodeRequestActivity"
             android:label="@string/title_activity_school_code_request"
@@ -44,6 +46,7 @@
                 <action android:name="android.net.wifi.STATE_CHANGE" />
             </intent-filter>
         </receiver>
+
     </application>
 
 </manifest>
