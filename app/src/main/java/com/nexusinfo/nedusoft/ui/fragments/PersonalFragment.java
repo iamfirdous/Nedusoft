@@ -11,7 +11,7 @@ import android.widget.ListView;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
-import com.nexusinfo.nedusoft.ui.adapters.PersonalDetailsAdapter;
+import com.nexusinfo.nedusoft.ui.adapters.PersonalAdapter;
 import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
 import java.util.ArrayList;
@@ -30,7 +30,7 @@ public class PersonalFragment extends Fragment {
 
     private List<String> labels, contents;
     private ListView listViewPersonal;
-    private PersonalDetailsAdapter adapter;
+    private PersonalAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -46,9 +46,9 @@ public class PersonalFragment extends Fragment {
         contents  = StudentDetailsActivity.getStudentPersonalDetails();
 
         listViewPersonal = view.findViewById(R.id.listView_personal);
-        adapter = new PersonalDetailsAdapter(getContext(), labels, contents);
+        adapter = new PersonalAdapter(getContext(), labels, contents);
 
-        Collections.addAll(labels, getResources().getStringArray(R.array.personal));
+        Collections.addAll(labels, getResources().getStringArray(R.array.labels_personal));
 
         listViewPersonal.setAdapter(adapter);
         adapter.notifyDataSetChanged();

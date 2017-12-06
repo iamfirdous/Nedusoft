@@ -3,6 +3,7 @@ package com.nexusinfo.nedusoft.ui.adapters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.Space;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by firdous on 11/21/2017.
  */
 
-public class PersonalDetailsAdapter extends ArrayAdapter<String> {
+public class PersonalAdapter extends ArrayAdapter<String> {
 
     private static final int TYPE_PERSONAL_HEADER = 0;
     private static final int TYPE_PERSONAL = 1;
@@ -27,7 +28,7 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
     private List<String> labels, contents;
     private LayoutInflater inflater;
 
-    public PersonalDetailsAdapter(@NonNull Context context, List<String> labels, List<String> contents) {
+    public PersonalAdapter(@NonNull Context context, List<String> labels, List<String> contents) {
         super(context, R.layout.listitem_personal, labels);
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -69,14 +70,16 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
 
                 case TYPE_PERSONAL:
                     convertView = inflater.inflate(R.layout.listitem_personal, parent, false);
-                    viewHolder.tvLabel = convertView.findViewById(R.id.textView_label);
-                    viewHolder.tvContent = convertView.findViewById(R.id.textView_content);
+                    viewHolder.tvLabel = convertView.findViewById(R.id.textView_label_personal);
+                    viewHolder.tvContent = convertView.findViewById(R.id.textView_content_personal);
+                    viewHolder.space = convertView.findViewById(R.id.space_personal_bottom);
                     break;
             }
             convertView.setTag(viewHolder);
         }
         else
             viewHolder = (ViewHolder) convertView.getTag();
+
 
         switch (type) {
             case TYPE_PERSONAL_HEADER:
@@ -92,6 +95,11 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
                 else
                     viewHolder.tvContent.setText("-");
 
+                viewHolder.space.setVisibility(View.GONE);
+
+                if(position == labels.size() - 1)
+                    viewHolder.space.setVisibility(View.INVISIBLE);
+
                 break;
         }
 
@@ -99,8 +107,11 @@ public class PersonalDetailsAdapter extends ArrayAdapter<String> {
     }
 
     public static class ViewHolder{
-        public TextView tvLabel, tvContent;
+        //Header
         public ImageView ivPhoto;
         public TextView tvName, tvRollNo;
+        //Other
+        public TextView tvLabel, tvContent;
+        public Space space;
     }
 }

@@ -236,7 +236,7 @@ public class StudentDetailsViewModel extends ViewModel {
         personalDetails.add(m.getRollNo());
         personalDetails.add(m.getAdmissionType());
         personalDetails.add(m.getAdmissionNo());
-        personalDetails.add(m.getQuota());
+        personalDetails.add(m.getQuotaName());
         personalDetails.add(m.getFirstName());
         personalDetails.add(m.getMiddleName());
         personalDetails.add(m.getLastName());

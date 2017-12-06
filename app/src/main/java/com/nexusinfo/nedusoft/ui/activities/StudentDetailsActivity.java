@@ -166,14 +166,18 @@ public class StudentDetailsActivity extends AppCompatActivity
     public static String getStudentFullName(List<String> contents) {
         String name;
 
-        if(contents.get(13) != null && contents.get(14) != null)
-            name = contents.get(12) + " " + contents.get(13) + " " + contents.get(14);
-        else if(contents.get(14) == null)
-            name = contents.get(12) + " " + contents.get(13);
-        else if(contents.get(13) == null)
-            name = contents.get(12) + " " + contents.get(14);
-        else
+        if(contents.get(13) == null && contents.get(14) == null) {
             name = contents.get(12);
+        }
+        else if(contents.get(14) == null) {
+            name = contents.get(12) + " " + contents.get(13);
+        }
+        else if(contents.get(13) == null) {
+            name = contents.get(12) + " " + contents.get(14);
+        }
+        else {
+            name = contents.get(12) + " " + contents.get(13) + " " + contents.get(14);
+        }
 
         return name;
     }

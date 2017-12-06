@@ -2,17 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/fragment_margin"
     android:background="@color/colorActivityBackground"
     tools:context="com.nexusinfo.nedusoft.ui.fragments.FamilyFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ListView
+        android:id="@+id/listView_family"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:textColor="#FF000000"
-        android:text="Family" />
+        android:scrollbars="none"
+        android:divider="@null"
+        android:dividerHeight="0dp"
+        tools:listitem="@layout/listitem_family" />
 
 </FrameLayout>
