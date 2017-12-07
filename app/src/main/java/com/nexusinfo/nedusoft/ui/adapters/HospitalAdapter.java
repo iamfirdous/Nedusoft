@@ -16,16 +16,16 @@ import com.nexusinfo.nedusoft.R;
 import java.util.List;
 
 /**
- * Created by firdous on 12/6/2017.
+ * Created by firdous on 12/7/2017.
  */
 
-public class FamilyAdapter extends ArrayAdapter<String> {
+public class HospitalAdapter extends ArrayAdapter<String> {
 
     private List<String> labels, contents;
     private LayoutInflater inflater;
 
-    public FamilyAdapter(@NonNull Context context, List<String> labels, List<String> contents) {
-        super(context, R.layout.listitem_family, labels);
+    public HospitalAdapter(@NonNull Context context, List<String> labels, List<String> contents) {
+        super(context, R.layout.listitem_hospital, labels);
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.labels = labels;
@@ -41,13 +41,12 @@ public class FamilyAdapter extends ArrayAdapter<String> {
         if(convertView == null){
             viewHolder = new ViewHolder();
 
-            convertView = inflater.inflate(R.layout.listitem_family, parent, false);
-            viewHolder.imageViewHeader = convertView.findViewById(R.id.imageView_family_header);
-            viewHolder.tvLabelHeader = convertView.findViewById(R.id.textView_family_header_label);
-            viewHolder.tvLabel = convertView.findViewById(R.id.textView_label_family);
-            viewHolder.tvContent = convertView.findViewById(R.id.textView_content_family);
-            viewHolder.spaceTop = convertView.findViewById(R.id.space_family_top);
-            viewHolder.spaceBottom = convertView.findViewById(R.id.space_family_bottom);
+            convertView = inflater.inflate(R.layout.listitem_hospital, parent, false);
+            viewHolder.imageViewHeader = convertView.findViewById(R.id.imageView_hospital_header);
+            viewHolder.tvLabel = convertView.findViewById(R.id.textView_label_hospital);
+            viewHolder.tvContent = convertView.findViewById(R.id.textView_content_hospital);
+            viewHolder.spaceTop = convertView.findViewById(R.id.space_hospital_top);
+            viewHolder.spaceBottom = convertView.findViewById(R.id.space_hospital_bottom);
 
             convertView.setTag(viewHolder);
         }
@@ -55,7 +54,6 @@ public class FamilyAdapter extends ArrayAdapter<String> {
             viewHolder = (ViewHolder) convertView.getTag();
 
         viewHolder.imageViewHeader.setVisibility(View.GONE);
-        viewHolder.tvLabelHeader.setVisibility(View.GONE);
         viewHolder.spaceTop.setVisibility(View.GONE);
         viewHolder.spaceBottom.setVisibility(View.GONE);
 
@@ -68,30 +66,6 @@ public class FamilyAdapter extends ArrayAdapter<String> {
 
         if(position == 0){
             viewHolder.imageViewHeader.setVisibility(View.VISIBLE);
-            viewHolder.tvLabelHeader.setVisibility(View.VISIBLE);
-
-            viewHolder.imageViewHeader.setImageResource(R.drawable.ic_father_face);
-            viewHolder.tvLabelHeader.setText("Father's details");
-
-            viewHolder.spaceTop.setVisibility(View.INVISIBLE);
-        }
-
-        if(position == 10){
-            viewHolder.imageViewHeader.setVisibility(View.VISIBLE);
-            viewHolder.tvLabelHeader.setVisibility(View.VISIBLE);
-
-            viewHolder.imageViewHeader.setImageResource(R.drawable.ic_mother_face);
-            viewHolder.tvLabelHeader.setText("Mother's details");
-
-            viewHolder.spaceTop.setVisibility(View.INVISIBLE);
-        }
-
-        if(position == 20){
-            viewHolder.imageViewHeader.setVisibility(View.INVISIBLE);
-            viewHolder.tvLabelHeader.setVisibility(View.VISIBLE);
-
-            viewHolder.tvLabelHeader.setText("Siblings");
-
             viewHolder.spaceTop.setVisibility(View.INVISIBLE);
         }
 
@@ -104,9 +78,9 @@ public class FamilyAdapter extends ArrayAdapter<String> {
     public static class ViewHolder{
         //Header
         public ImageView imageViewHeader;
-        public TextView tvLabelHeader;
         //Other
         public TextView tvLabel, tvContent;
         public Space spaceTop, spaceBottom;
     }
+
 }

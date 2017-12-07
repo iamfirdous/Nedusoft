@@ -1,7 +1,6 @@
 package com.nexusinfo.nedusoft.ui.fragments;
 
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.ListView;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
 import com.nexusinfo.nedusoft.ui.adapters.PersonalAdapter;
-import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,7 +38,6 @@ public class PersonalFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_personal, container, false);
-        StudentDetailsViewModel viewModel = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
 
         labels = new ArrayList<>();
         contents  = StudentDetailsActivity.getStudentPersonalDetails();
@@ -52,7 +49,6 @@ public class PersonalFragment extends Fragment {
 
         listViewPersonal.setAdapter(adapter);
         adapter.notifyDataSetChanged();
-
 
         return view;
     }

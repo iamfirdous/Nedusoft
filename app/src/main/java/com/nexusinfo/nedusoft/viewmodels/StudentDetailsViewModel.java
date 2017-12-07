@@ -22,18 +22,17 @@ public class StudentDetailsViewModel extends ViewModel {
 
     private StudentDetailsModel studentDetailsModel;
 
-    public StudentDetailsModel getStudent(Context context) {
+    public StudentDetailsModel getStudent(Context context) throws Exception{
 
         studentDetailsModel = new StudentDetailsModel();
         Field fields[] = StudentDetailsModel.class.getDeclaredFields();
         StringBuffer buffer = new StringBuffer();
 
 //        for(Field f : fields){
-//            buffer.append("studentDetailsModel.set"+f.getName().replaceFirst(f.getName().substring(0, 1), f.getName().substring(0, 1).toUpperCase())+"();\n");
+//            buffer.append("model.set"+f.getName().replaceFirst(f.getName().substring(0, 1), f.getName().substring(0, 1).toUpperCase())+"();\n");
 //        }
 //        System.out.println(buffer.toString());
 
-        try{
             String userID = LocalDBHelper.getInstance(context).getUser().getUserID();
             DatabaseConnection databaseConnection = new DatabaseConnection(context);
             Connection conn = databaseConnection.getConnection();
@@ -63,21 +62,21 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setAdmissionNo(rs.getString(DatabaseConnection.COL_ADMISSIONNO));
                 studentDetailsModel.setAdressIdPermanent(rs.getInt(DatabaseConnection.COL_ADRESSIDPERMANENT));
                 studentDetailsModel.setAdressIdPresent(rs.getInt(DatabaseConnection.COL_ADRESSIDPRESENT));
-//                studentDetailsModel.setAppDate();
+//                model.setAppDate();
                 studentDetailsModel.setApplicationID(rs.getInt(DatabaseConnection.COL_APPLICATIONID));
-//                studentDetailsModel.setApplicationStatus();
+//                model.setApplicationStatus();
                 studentDetailsModel.setBranchId(rs.getInt(DatabaseConnection.COL_BRANCHID));
                 studentDetailsModel.setBranchName(rs.getString(DatabaseConnection.COL_BRANCHNAME));
                 studentDetailsModel.setBrcode(rs.getString(DatabaseConnection.COL_BRCODE));
                 studentDetailsModel.setCaste(rs.getString(DatabaseConnection.COL_CASTE));
                 studentDetailsModel.setCategory(rs.getString(DatabaseConnection.COL_TYPEDESC));
                 studentDetailsModel.setCategoryID(rs.getString(DatabaseConnection.COL_CATEGORYID));
-//                studentDetailsModel.setChildId();
+//                model.setChildId();
                 studentDetailsModel.setCity(rs.getString(DatabaseConnection.COL_CITY));
                 studentDetailsModel.setCmpid(rs.getString(DatabaseConnection.COL_CMPID));
                 studentDetailsModel.setCombination(rs.getString(DatabaseConnection.COL_COMBINATION));
                 studentDetailsModel.setCombinationID(rs.getInt(DatabaseConnection.COL_COMBINATIONID));
-//                studentDetailsModel.setCountry();
+//                model.setCountry();
                 studentDetailsModel.setCountryStateId(rs.getInt(DatabaseConnection.COL_COUNTRYSTATEID));
                 studentDetailsModel.setCourseID(rs.getInt(DatabaseConnection.COL_COURSEID));
                 studentDetailsModel.setCourseName(rs.getString(DatabaseConnection.COL_COURSENAME));
@@ -108,7 +107,7 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setFatherCmpName(rs.getString(DatabaseConnection.COL_FATHERCMPNAME));
                 studentDetailsModel.setFatherCmpNo(rs.getString(DatabaseConnection.COL_FATHEROFFICENO));
                 studentDetailsModel.setFatherEmail(rs.getString(DatabaseConnection.COL_FATHEREMAIL));
-//                studentDetailsModel.setFatherId();
+//                model.setFatherId();
                 studentDetailsModel.setFatherLastName(rs.getString(DatabaseConnection.COL_FATHERLASTNAME));
                 studentDetailsModel.setFatherMiddleName(rs.getString(DatabaseConnection.COL_FATHERMIDDLENAME));
                 studentDetailsModel.setFatherMobile(rs.getString(DatabaseConnection.COL_FATHERMOBILE));
@@ -126,7 +125,7 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setILanguage(rs.getString(DatabaseConnection.COL_LANGUAGE_I));
                 studentDetailsModel.setIILanguage(rs.getString(DatabaseConnection.COL_LANGUAGEII));
                 studentDetailsModel.setIIILanguage(rs.getString(DatabaseConnection.COL_LANGAUGEIII));
-//                studentDetailsModel.setInCase();
+//                model.setInCase();
                 studentDetailsModel.setIncome(rs.getString(DatabaseConnection.COL_INCOME));
                 studentDetailsModel.setLanguageID_I(rs.getString(DatabaseConnection.COL_LANGUAGEID_I));
                 studentDetailsModel.setLanguageID_II(rs.getString(DatabaseConnection.COL_LANGUAGEID_II));
@@ -151,21 +150,21 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setMotherTounge(rs.getString(DatabaseConnection.COL_MOTHERTOUNGE));
                 studentDetailsModel.setMotherprofession(rs.getString(DatabaseConnection.COL_MOTHERPROFESSION));
                 studentDetailsModel.setMothersName(rs.getString(DatabaseConnection.COL_MOTHERSNAME));
-//                studentDetailsModel.setMsg(rs.getString(DatabaseConnection.COL_FEEDBACK));
+//                model.setMsg(rs.getString(DatabaseConnection.COL_FEEDBACK));
                 studentDetailsModel.setNationality(rs.getInt(DatabaseConnection.COL_NATIONALITY));
-//                studentDetailsModel.setNationalityName(rs.getString(DatabaseConnection.COL_NATIONALITY));
+//                model.setNationalityName(rs.getString(DatabaseConnection.COL_NATIONALITY));
                 studentDetailsModel.setNoofAttempts(rs.getString(DatabaseConnection.COL_NOOFATTEMPTS));
                 studentDetailsModel.setObtainedMarks(rs.getInt(DatabaseConnection.COL_OBTAINEDMARKS));
                 studentDetailsModel.setOtherActivity(rs.getString(DatabaseConnection.COL_OTHERACTIVITY));
-//                studentDetailsModel.setParentsNo(rs.getString(DatabaseConnection.COL_));
+//                model.setParentsNo(rs.getString(DatabaseConnection.COL_));
                 studentDetailsModel.setPassport(rs.getString(DatabaseConnection.COL_PASSPORT));
-//                studentDetailsModel.setPercent(rs.getFloat(DatabaseConnection.COL_PERCENTAGE));
+//                model.setPercent(rs.getFloat(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPercentage(rs.getDouble(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPhotoID(rs.getInt(DatabaseConnection.COL_PHOTOID));
                 studentDetailsModel.setPlaceofBirth(rs.getString(DatabaseConnection.COL_PLACEOFBIRTH));
                 studentDetailsModel.setPolicy(rs.getString(DatabaseConnection.COL_POLICY));
                 studentDetailsModel.setPostalCode(rs.getString(DatabaseConnection.COL_POSTALCODE));
-//                studentDetailsModel.setQuota(rs.getString(DatabaseConnection.COL_Q));
+//                model.setQuota(rs.getString(DatabaseConnection.COL_Q));
                 studentDetailsModel.setQuotaID(rs.getInt(DatabaseConnection.COL_QUOTAID));
                 studentDetailsModel.setQuotaName(rs.getString(DatabaseConnection.COL_QUOTANAME));
                 studentDetailsModel.setReligion(rs.getString(DatabaseConnection.COL_RELIGION));
@@ -196,8 +195,8 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setStudentMobile(rs.getString(DatabaseConnection.COL_STUDENTMOBILE));
                 studentDetailsModel.setSubCaste(rs.getString(DatabaseConnection.COL_SUBCASTE));
                 studentDetailsModel.setTcno(rs.getString(DatabaseConnection.COL_TCNO));
-//                studentDetailsModel.setTotalClass(rs.getInt(DatabaseConnection.COL_TOTALCLASS));
-//                studentDetailsModel.setTotalPresents(rs.getInt(DatabaseConnection.COL_TOTALPRESENTS));
+//                model.setTotalClass(rs.getInt(DatabaseConnection.COL_TOTALCLASS));
+//                model.setTotalPresents(rs.getInt(DatabaseConnection.COL_TOTALPRESENTS));
                 studentDetailsModel.setTransportFeeid(rs.getInt(DatabaseConnection.COL_TRANSPORTFEEID));
                 studentDetailsModel.setUid(rs.getString(DatabaseConnection.COL_UID));
                 studentDetailsModel.setUniversityID(rs.getInt(DatabaseConnection.COL_UNIVERSITYID));
@@ -207,23 +206,16 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setYearID(rs.getInt(DatabaseConnection.COL_YEARID));
                 studentDetailsModel.setYearName(rs.getString(DatabaseConnection.COL_YEARNAME));
                 studentDetailsModel.setYearofPassing(rs.getString(DatabaseConnection.COL_YEAROFPASSING));
-//                studentDetailsModel.setYop(rs.getString(DatabaseConnection.COL_YOP));
+//                model.setYop(rs.getString(DatabaseConnection.COL_YOP));
 
                 studentDetailsModel.setAdmissionTypeID(rs.getInt(DatabaseConnection.COL_ADMISSIONTYPEID));
                 studentDetailsModel.setAdmissionType(rs.getString(DatabaseConnection.COL_ADMISSIONTYPENAME));
             }
-        }
-        catch (Exception e){
-            Log.e("Exception", e.toString());
-        }
-
-
         return studentDetailsModel;
     }
 
-    public ArrayList<String> getStudentPersonalDetails(Context context){
+    public ArrayList<String> getStudentPersonalDetails(StudentDetailsModel m){
         ArrayList<String> personalDetails = new ArrayList<>();
-        StudentDetailsModel m = getStudent(context);
 
         personalDetails.add("For header");
         personalDetails.add(m.getYearName());
@@ -281,6 +273,51 @@ public class StudentDetailsViewModel extends ViewModel {
         personalDetails.add(m.getStatus());
 
         return  personalDetails;
+    }
+
+    public ArrayList<String> getStudentFamilyDetails(StudentDetailsModel m){
+        ArrayList<String> familyDetails = new ArrayList<>();
+
+        familyDetails.add(m.getFathersName());
+        familyDetails.add(m.getFatherMiddleName());
+        familyDetails.add(m.getFatherLastName());
+        familyDetails.add(m.getFatherQualification());
+        familyDetails.add(m.getFatherprofession());
+        familyDetails.add(m.getFatherAnnualIncome());
+        familyDetails.add(m.getFatherCmpName());
+        familyDetails.add(m.getFatherCmpAddress());
+        familyDetails.add(m.getFatherMobile());
+        familyDetails.add(m.getFatherEmail());
+        familyDetails.add(m.getMothersName());
+        familyDetails.add(m.getMotherMiddleName());
+        familyDetails.add(m.getMotherLastName());
+        familyDetails.add(m.getMotherQualification());
+        familyDetails.add(m.getMotherprofession());
+        familyDetails.add(m.getManualIncome());
+        familyDetails.add(m.getMotherCmpName());
+        familyDetails.add(m.getMotherCmpAddress());
+        familyDetails.add(m.getMotherMobile());
+        familyDetails.add(m.getMotherEmail());
+        familyDetails.add(m.getSiblingNameI());
+        familyDetails.add(m.getSiblingClassI());
+        familyDetails.add(m.getSiblingDOBI());
+        familyDetails.add(m.getSiblingNameII());
+        familyDetails.add(m.getSiblingClassII());
+        familyDetails.add(m.getSiblingDOBII());
+
+        return familyDetails;
+    }
+
+    public ArrayList<String> getStudentHospitalDetails(StudentDetailsModel m) {
+        ArrayList<String> hospitalDetails = new ArrayList<>();
+
+        hospitalDetails.add(m.getHospitalname());
+        hospitalDetails.add(m.getDoctorname());
+        hospitalDetails.add(m.getMedicalInsurance());
+        hospitalDetails.add(m.getPolicy());
+        hospitalDetails.add(m.getFileno());
+
+        return hospitalDetails;
     }
 
 }

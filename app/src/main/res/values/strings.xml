@@ -16,7 +16,7 @@
     <string name="title_personal_fragment">Personal</string>
     <string name="title_family_fragment">Family</string>
     <string name="title_hospital_fragment">Hospital</string>
-    <string name="title_feemaster_fragment">FeeMaster</string>
+    <string name="title_fee_details_fragment">Fee details</string>
     <string name="title_attendance_fragment">Attendance</string>
     <string name="title_documents_fragment">Documents</string>
     <string name="title_marks_fragment">Marks</string>
@@ -83,7 +83,6 @@
     </string-array>
 
     <string-array name="labels_family">
-
         <item>First Name</item>
         <item>Middle Name</item>
         <item>Last Name</item>
@@ -94,7 +93,6 @@
         <item>Company\nAddress</item>
         <item>Mobile</item>
         <item>Email</item>
-
         <item>First Name</item>
         <item>Middle Name</item>
         <item>Last Name</item>
@@ -105,14 +103,20 @@
         <item>Company\nAddress</item>
         <item>Mobile</item>
         <item>Email</item>
-
         <item>Sibling-I Name</item>
         <item>Class</item>
         <item>DOB</item>
-
         <item>Sibling-II Name</item>
         <item>Class</item>
         <item>DOB</item>
-
     </string-array>
+
+    <string-array name="labels_hospital">
+        <item>Hospital\nName</item>
+        <item>Doctor</item>
+        <item>Insurance</item>
+        <item>Policy</item>
+        <item>File no.</item>
+    </string-array>
+
 </resources>

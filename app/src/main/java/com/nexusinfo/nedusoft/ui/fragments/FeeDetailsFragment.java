@@ -12,10 +12,10 @@ import com.nexusinfo.nedusoft.R;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FeeMasterFragment extends Fragment {
+public class FeeDetailsFragment extends Fragment {
 
 
-    public FeeMasterFragment() {
+    public FeeDetailsFragment() {
         // Required empty public constructor
     }
 
@@ -24,8 +24,8 @@ public class FeeMasterFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        getActivity().setTitle(R.string.title_feemaster_fragment);
-        return inflater.inflate(R.layout.fragment_fee_master, container, false);
+        getActivity().setTitle(R.string.title_fee_details_fragment);
+        return inflater.inflate(R.layout.fragment_fee_details, container, false);
     }
 
 }

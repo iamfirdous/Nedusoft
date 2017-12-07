@@ -2,6 +2,7 @@ package com.nexusinfo.nedusoft.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
@@ -10,18 +11,21 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.MainActivity;
 import com.nexusinfo.nedusoft.R;
+import com.nexusinfo.nedusoft.models.StudentDetailsModel;
 import com.nexusinfo.nedusoft.ui.fragments.AttendanceFragment;
 import com.nexusinfo.nedusoft.ui.fragments.DocumentFragment;
 import com.nexusinfo.nedusoft.ui.fragments.FamilyFragment;
-import com.nexusinfo.nedusoft.ui.fragments.FeeMasterFragment;
+import com.nexusinfo.nedusoft.ui.fragments.FeeDetailsFragment;
 import com.nexusinfo.nedusoft.ui.fragments.HospitalFragment;
 import com.nexusinfo.nedusoft.ui.fragments.MarksFragment;
 import com.nexusinfo.nedusoft.ui.fragments.PersonalFragment;
@@ -41,7 +45,8 @@ public class StudentDetailsActivity extends AppCompatActivity
     private View header;
     private TextView tvStudentName, tvRollNo;
 
-    public static StudentDetailsViewModel studentDetailsViewModel;
+    public static StudentDetailsViewModel viewModel;
+    public static StudentDetailsModel model;
     public static ArrayList<String> studentPersonalDetails;
 
     @Override
@@ -54,7 +59,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         mManager = getSupportFragmentManager();
         mDrawerLayout = findViewById(R.id.drawer_layout);
 
-        mManager.beginTransaction().replace(R.id.content_student_details, new PersonalFragment()).commit();
+        mManager.beginTransaction().replace(R.id.content_main, new PersonalFragment()).commit();
 
         if (!mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.openDrawer(GravityCompat.START);
@@ -68,8 +73,26 @@ public class StudentDetailsActivity extends AppCompatActivity
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        studentDetailsViewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
-        studentPersonalDetails = studentDetailsViewModel.getStudentPersonalDetails(this);
+        viewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
+
+        FetchData task = new FetchData();
+        task.execute();
+
+        try{
+            model = task.get();
+        }
+        catch (Exception e) {
+            Log.e("Exception", e.toString());
+        }
+
+        if(task.isCancelled()){
+            Toast.makeText(this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
+            //TODO: Try without finish()
+            finish();
+            return;
+        }
+
+        studentPersonalDetails = getStudentPersonalDetails();
 
         header = mNavigationView.getHeaderView(0);
         tvStudentName = header.findViewById(R.id.textView_student_name_drawer);
@@ -126,25 +149,25 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         switch (id){
             case R.id.nav_personal:
-                mManager.beginTransaction().replace(R.id.content_student_details, new PersonalFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new PersonalFragment()).commit();
                 break;
             case R.id.nav_family:
-                mManager.beginTransaction().replace(R.id.content_student_details, new FamilyFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new FamilyFragment()).commit();
                 break;
             case R.id.nav_hospital:
-                mManager.beginTransaction().replace(R.id.content_student_details, new HospitalFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new HospitalFragment()).commit();
                 break;
             case R.id.nav_fee_master:
-                mManager.beginTransaction().replace(R.id.content_student_details, new FeeMasterFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new FeeDetailsFragment()).commit();
                 break;
             case R.id.nav_attendance:
-                mManager.beginTransaction().replace(R.id.content_student_details, new AttendanceFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new AttendanceFragment()).commit();
                 break;
             case R.id.nav_document:
-                mManager.beginTransaction().replace(R.id.content_student_details, new DocumentFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new DocumentFragment()).commit();
                 break;
             case R.id.nav_marks:
-                mManager.beginTransaction().replace(R.id.content_student_details, new MarksFragment()).commit();
+                mManager.beginTransaction().replace(R.id.content_main, new MarksFragment()).commit();
                 break;
 //            case R.id.nav_share:
 //
@@ -159,8 +182,42 @@ public class StudentDetailsActivity extends AppCompatActivity
         return true;
     }
 
+    class FetchData extends AsyncTask<String, String, StudentDetailsModel> {
+
+        @Override
+        protected void onPreExecute() {
+        }
+
+        @Override
+        protected StudentDetailsModel doInBackground(String... strings) {
+
+            try {
+                model = viewModel.getStudent(StudentDetailsActivity.this);
+            }
+            catch (Exception e){
+                Log.e("Exception", e.toString());
+                cancel(true);
+            }
+
+            return model;
+        }
+
+        @Override
+        protected void onPostExecute(StudentDetailsModel studentDetailsModel) {
+
+        }
+    }
+
     public static ArrayList<String> getStudentPersonalDetails() {
-        return studentPersonalDetails;
+        return viewModel.getStudentPersonalDetails(model);
+    }
+
+    public static ArrayList<String> getStudentFamilyDetails() {
+        return viewModel.getStudentFamilyDetails(model);
+    }
+
+    public static ArrayList<String> getStudentHospitalDetails() {
+        return viewModel.getStudentHospitalDetails(model);
     }
 
     public static String getStudentFullName(List<String> contents) {

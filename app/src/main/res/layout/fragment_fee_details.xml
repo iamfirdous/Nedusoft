@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:padding="@dimen/fragment_margin"
     android:background="@color/colorActivityBackground"
-    tools:context="com.nexusinfo.nedusoft.ui.fragments.FeeMasterFragment">
+    tools:context="com.nexusinfo.nedusoft.ui.fragments.FeeDetailsFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
