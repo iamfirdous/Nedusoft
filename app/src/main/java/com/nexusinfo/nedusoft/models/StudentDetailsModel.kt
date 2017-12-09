@@ -1,5 +1,6 @@
 package com.nexusinfo.nedusoft.models
 
+import java.sql.ResultSet
 import java.util.*
 
 /**
@@ -238,4 +239,6 @@ class StudentDetailsModel {
 
     var admissionTypeID: Int? = null
     var admissionType: String? = null
+
+    var resultSetForFee: ResultSet? = null
 }

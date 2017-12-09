@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableRow_fee_details"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.nexusinfo.nedusoft.ui.fragments.FeeDetailsFragment"
+    tools:showIn="@layout/fragment_fee_details">
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView_fee_description"
+        style="@style/NedusoftTheme.TextViewLabel"
+        android:layout_margin="12dp"
+        android:text="Miscellaneous"/>
+
+    <TextView
+        android:id="@+id/textView_total_fee"
+        style="@style/NedusoftTheme.TextViewContent"
+        android:layout_margin="12dp"
+        android:layout_gravity="right"
+        android:text="4634" />
+
+    <TextView
+        android:id="@+id/textView_paid_fee"
+        style="@style/NedusoftTheme.TextViewContent"
+        android:layout_margin="12dp"
+        android:layout_gravity="right"
+        android:text="4643"/>
+
+    <TextView
+        android:id="@+id/textView_balance_fee"
+        style="@style/NedusoftTheme.TextViewContent"
+        android:layout_margin="12dp"
+        android:layout_gravity="right"
+        android:text="8745"/>
+
+</TableRow>

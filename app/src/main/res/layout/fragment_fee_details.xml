@@ -80,34 +80,6 @@
 
                         </TableRow>
 
-                        <TableRow>
-
-                            <TextView
-                                android:id="@+id/textView_header11"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:text="Fee description"/>
-
-                            <TextView
-                                android:id="@+id/textView_header12"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:text="Total" />
-
-                            <TextView
-                                android:id="@+id/textView_header13"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:text="Paid"/>
-
-                            <TextView
-                                android:id="@+id/textView_header14"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:text="Balance"/>
-
-                        </TableRow>
-
                     </TableLayout>
 
                 </HorizontalScrollView>

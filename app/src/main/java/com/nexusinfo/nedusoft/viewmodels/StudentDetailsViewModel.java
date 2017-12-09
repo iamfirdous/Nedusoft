@@ -10,6 +10,7 @@ import com.nexusinfo.nedusoft.models.StudentDetailsModel;
 
 import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -21,9 +22,11 @@ import java.util.ArrayList;
 public class StudentDetailsViewModel extends ViewModel {
 
     private StudentDetailsModel studentDetailsModel;
+    private Context context;
 
     public StudentDetailsModel getStudent(Context context) throws Exception{
 
+        this.context = context;
         studentDetailsModel = new StudentDetailsModel();
         Field fields[] = StudentDetailsModel.class.getDeclaredFields();
         StringBuffer buffer = new StringBuffer();
@@ -211,6 +214,15 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setAdmissionTypeID(rs.getInt(DatabaseConnection.COL_ADMISSIONTYPEID));
                 studentDetailsModel.setAdmissionType(rs.getString(DatabaseConnection.COL_ADMISSIONTYPENAME));
             }
+
+        PreparedStatement stmtForFee = conn.prepareStatement("EXEC SPFeeRptBalanceAmt_GD3 ?,?,?");
+        stmtForFee.setEscapeProcessing(true);
+        stmtForFee.setQueryTimeout(90);
+        stmtForFee.setString(1, "" + studentDetailsModel.getStudentID());
+        stmtForFee.setString(2, "" + studentDetailsModel.getFeeId());
+        stmtForFee.setString(3, "" + studentDetailsModel.getYearID());
+        studentDetailsModel.setResultSetForFee(stmtForFee.executeQuery());
+
         return studentDetailsModel;
     }
 
@@ -319,5 +331,14 @@ public class StudentDetailsViewModel extends ViewModel {
 
         return hospitalDetails;
     }
+
+//    public ResultSet getStudentFeeDetails(StudentDetailsModel m) throws Exception{
+//        String userID = LocalDBHelper.getInstance(context).getUser().getUserID();
+//        DatabaseConnection databaseConnection = new DatabaseConnection(context);
+//        Connection conn = databaseConnection.getConnection();
+//
+//
+//        return stmt.executeQuery();
+//    }
 
 }

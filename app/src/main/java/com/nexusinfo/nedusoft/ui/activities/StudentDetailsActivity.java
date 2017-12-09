@@ -220,6 +220,10 @@ public class StudentDetailsActivity extends AppCompatActivity
         return viewModel.getStudentHospitalDetails(model);
     }
 
+    public static StudentDetailsModel getStudent() {
+        return model;
+    }
+
     public static String getStudentFullName(List<String> contents) {
         String name;
 
