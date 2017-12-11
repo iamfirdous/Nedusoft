@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,22 @@ public class StudentDetailsActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_details);
+
+        viewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
+
+        FetchData task = new FetchData();
+        task.execute();
+
+        if(task.isCancelled()){
+            Toast.makeText(this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
+            //TODO: Try without finish()
+            finish();
+            return;
+        }
+
+    }
+
+    public void initializeUI () {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -72,25 +89,6 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         mNavigationView = findViewById(R.id.nav_view);
         mNavigationView.setNavigationItemSelectedListener(this);
-
-        viewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
-
-        FetchData task = new FetchData();
-        task.execute();
-
-        try{
-            model = task.get();
-        }
-        catch (Exception e) {
-            Log.e("Exception", e.toString());
-        }
-
-        if(task.isCancelled()){
-            Toast.makeText(this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
-            //TODO: Try without finish()
-            finish();
-            return;
-        }
 
         studentPersonalDetails = getStudentPersonalDetails();
 
@@ -182,29 +180,46 @@ public class StudentDetailsActivity extends AppCompatActivity
         return true;
     }
 
-    class FetchData extends AsyncTask<String, String, StudentDetailsModel> {
+    class FetchData extends AsyncTask<String, String, String> {
+
+        LinearLayout layout = findViewById(R.id.linlaHeaderProgress);
 
         @Override
         protected void onPreExecute() {
+            layout.setVisibility(View.VISIBLE);
         }
 
         @Override
-        protected StudentDetailsModel doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
 
             try {
-                model = viewModel.getStudent(StudentDetailsActivity.this);
+                if(model == null)
+                    viewModel.setStudent(StudentDetailsActivity.this);
             }
             catch (Exception e){
                 Log.e("Exception", e.toString());
+                publishProgress("Exception");
                 cancel(true);
             }
 
-            return model;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(StudentDetailsModel studentDetailsModel) {
+        protected void onProgressUpdate(String... values) {
+            if(values[0].equals("Exception")){
+                layout.setVisibility(View.GONE);
+                Toast.makeText(StudentDetailsActivity.this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
+                //TODO: Try without finish()
+                finish();
+            }
+        }
 
+        @Override
+        protected void onPostExecute(String s) {
+            model = viewModel.getStudent();
+            layout.setVisibility(View.GONE);
+            initializeUI();
         }
     }
 
@@ -220,8 +235,13 @@ public class StudentDetailsActivity extends AppCompatActivity
         return viewModel.getStudentHospitalDetails(model);
     }
 
-    public static StudentDetailsModel getStudent() {
-        return model;
+    public static ArrayList<StudentDetailsModel.Row> getStudentFeeDetails() {
+        return model.getFeeDetails();
+    }
+
+    public static int[] getStudentAttendance() {
+        int[] a = {model.getTotalClass(), model.getTotalPresents()};
+        return a;
     }
 
     public static String getStudentFullName(List<String> contents) {

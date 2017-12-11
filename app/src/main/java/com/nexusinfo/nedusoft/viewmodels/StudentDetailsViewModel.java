@@ -24,7 +24,7 @@ public class StudentDetailsViewModel extends ViewModel {
     private StudentDetailsModel studentDetailsModel;
     private Context context;
 
-    public StudentDetailsModel getStudent(Context context) throws Exception{
+    public void setStudent(Context context) throws Exception{
 
         this.context = context;
         studentDetailsModel = new StudentDetailsModel();
@@ -221,8 +221,64 @@ public class StudentDetailsViewModel extends ViewModel {
         stmtForFee.setString(1, "" + studentDetailsModel.getStudentID());
         stmtForFee.setString(2, "" + studentDetailsModel.getFeeId());
         stmtForFee.setString(3, "" + studentDetailsModel.getYearID());
-        studentDetailsModel.setResultSetForFee(stmtForFee.executeQuery());
 
+        ResultSet rsForFee = stmtForFee.executeQuery();
+
+        ArrayList<StudentDetailsModel.Row> rows = new ArrayList<>();
+
+        while (rsForFee.next()) {
+            StudentDetailsModel.Row row = new StudentDetailsModel.Row();
+            row.setFeeDesc(rsForFee.getString("FeeDescription"));
+            float total, paid;
+            total = rsForFee.getFloat("total_Amt");
+            paid = rsForFee.getFloat("Fpaidamt");
+            row.setTotal(total);
+            row.setPaid(paid);
+            row.setBalance(total - paid);
+
+            rows.add(row);
+        }
+
+
+        if(rows.size() != 0) {
+            studentDetailsModel.setFeeDetails(rows);
+        }
+        else {
+            Statement stmtForFeeNull = conn.createStatement();
+            rsForFee = stmtForFeeNull.executeQuery("SELECT * FROM View_FeeMasterDetails WHERE FeeID = " + studentDetailsModel.getFeeId());
+
+            while (rsForFee.next()) {
+                StudentDetailsModel.Row row = new StudentDetailsModel.Row();
+                row.setFeeDesc(rsForFee.getString("FeeDescription"));
+                float total = rsForFee.getFloat("total_Amt");
+                row.setTotal(total);
+                row.setPaid(0);
+                row.setBalance(total);
+
+                rows.add(row);
+            }
+
+            studentDetailsModel.setFeeDetails(rows);
+        }
+
+        Statement stmtForAttendance = conn.createStatement();
+        ResultSet rsForAttendance = stmtForAttendance.executeQuery("SELECT * FROM TStudentAttendance WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
+
+        int totalClass = 0, totalPresents = 0;
+
+        while (rsForAttendance.next()) {
+            totalClass++;
+
+            if (rsForAttendance.getInt("StatusID") == 1078) {
+                totalPresents++;
+            }
+        }
+
+        studentDetailsModel.setTotalClass(totalClass);
+        studentDetailsModel.setTotalPresents(totalPresents);
+    }
+
+    public StudentDetailsModel getStudent() {
         return studentDetailsModel;
     }
 
@@ -331,14 +387,5 @@ public class StudentDetailsViewModel extends ViewModel {
 
         return hospitalDetails;
     }
-
-//    public ResultSet getStudentFeeDetails(StudentDetailsModel m) throws Exception{
-//        String userID = LocalDBHelper.getInstance(context).getUser().getUserID();
-//        DatabaseConnection databaseConnection = new DatabaseConnection(context);
-//        Connection conn = databaseConnection.getConnection();
-//
-//
-//        return stmt.executeQuery();
-//    }
 
 }

@@ -3,7 +3,6 @@ package com.nexusinfo.nedusoft.ui.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +11,10 @@ import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.nexusinfo.nedusoft.R;
+import com.nexusinfo.nedusoft.models.StudentDetailsModel;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -28,7 +27,7 @@ public class FeeDetailsFragment extends Fragment {
     }
 
     private TextView tvFeeDesc, tvTotal, tvPaid, tvBalance;
-    private TableRow row;
+    private TableRow tableRow;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,26 +38,21 @@ public class FeeDetailsFragment extends Fragment {
 
         TableLayout tl = view.findViewById(R.id.tableLayout_fee_details);
 
-        ResultSet rs = StudentDetailsActivity.getStudent().getResultSetForFee();
+        ArrayList<StudentDetailsModel.Row> rows = StudentDetailsActivity.getStudentFeeDetails();
 
-        try {
-            while (rs.next()){
-                row = (TableRow) inflater.inflate(R.layout.rowitem_fee_details_table, container, false);
-                tvFeeDesc = row.findViewById(R.id.textView_fee_description);
-                tvTotal = row.findViewById(R.id.textView_total_fee);
-                tvPaid = row. findViewById(R.id.textView_paid_fee);
-                tvBalance = row. findViewById(R.id.textView_balance_fee);
+        for (StudentDetailsModel.Row row : rows) {
+            tableRow = (TableRow) inflater.inflate(R.layout.rowitem_fee_details_table, container, false);
+            tvFeeDesc = tableRow.findViewById(R.id.textView_fee_description);
+            tvTotal = tableRow.findViewById(R.id.textView_total_fee);
+            tvPaid = tableRow. findViewById(R.id.textView_paid_fee);
+            tvBalance = tableRow. findViewById(R.id.textView_balance_fee);
 
-                tvFeeDesc.setText(rs.getString("FeeDescription"));
-                tvTotal.setText("" + rs.getFloat("total_Amt"));
-                tvPaid.setText("" + rs.getFloat("Fpaidamt"));
-                tvBalance.setText("" + (rs.getFloat("total_Amt") - rs.getFloat("Fpaidamt")));
+            tvFeeDesc.setText(row.getFeeDesc());
+            tvTotal.setText("" + row.getTotal());
+            tvPaid.setText("" + row.getPaid());
+            tvBalance.setText("" + row.getBalance());
 
-                tl.addView(row);
-            }
-
-        } catch (SQLException e) {
-            Log.e("Error", e.toString());
+            tl.addView(tableRow);
         }
 
         return view;
