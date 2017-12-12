@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/NedusoftTheme">
         <activity
-            android:name=".MainActivity">
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,14 +26,16 @@
         <activity
             android:name=".ui.activities.StudentDetailsActivity"
             android:label="@string/title_activity_student_details"
-            
+            android:screenOrientation="portrait"
             android:theme="@style/NedusoftTheme.NoActionBar" />
         <activity
             android:name=".ui.activities.SchoolCodeRequestActivity"
-            android:label="@string/title_activity_school_code_request" />
+            android:label="@string/title_activity_school_code_request"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".ui.activities.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"/>
 
         <receiver
             android:name=".receivers.InternetConnectivityReceiver"

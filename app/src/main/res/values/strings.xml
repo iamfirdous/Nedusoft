@@ -24,6 +24,7 @@
     <string name="title_activity_login">Login</string>
     <string name="errorMessageForInternet">Please check your Internet connection!</string>
     <string name="errorMessageForWrongCredentials">Incorrect login name or password</string>
+    <string name="select_exam_prompt">Select exam</string>
 
     <string-array name="labels_personal">
         <item>For header</item>

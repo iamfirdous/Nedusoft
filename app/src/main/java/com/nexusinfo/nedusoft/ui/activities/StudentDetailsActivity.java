@@ -66,7 +66,6 @@ public class StudentDetailsActivity extends AppCompatActivity
             finish();
             return;
         }
-
     }
 
     public void initializeUI () {
@@ -193,7 +192,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         protected String doInBackground(String... strings) {
 
             try {
-                if(model == null)
+                if(viewModel.getStudent() == null)
                     viewModel.setStudent(StudentDetailsActivity.this);
             }
             catch (Exception e){
