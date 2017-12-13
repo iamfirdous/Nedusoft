@@ -2,6 +2,7 @@ package com.nexusinfo.nedusoft.viewmodels;
 
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
+import android.support.v4.util.ArraySet;
 import android.util.Log;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
@@ -224,41 +225,41 @@ public class StudentDetailsViewModel extends ViewModel {
 
         ResultSet rsForFee = stmtForFee.executeQuery();
 
-        ArrayList<StudentDetailsModel.Row> rows = new ArrayList<>();
+        ArrayList<StudentDetailsModel.FeeRow> feeRows = new ArrayList<>();
 
         while (rsForFee.next()) {
-            StudentDetailsModel.Row row = new StudentDetailsModel.Row();
-            row.setFeeDesc(rsForFee.getString("FeeDescription"));
+            StudentDetailsModel.FeeRow feeRow = new StudentDetailsModel.FeeRow();
+            feeRow.setFeeDesc(rsForFee.getString("FeeDescription"));
             float total, paid;
             total = rsForFee.getFloat("total_Amt");
             paid = rsForFee.getFloat("Fpaidamt");
-            row.setTotal(total);
-            row.setPaid(paid);
-            row.setBalance(total - paid);
+            feeRow.setTotal(total);
+            feeRow.setPaid(paid);
+            feeRow.setBalance(total - paid);
 
-            rows.add(row);
+            feeRows.add(feeRow);
         }
 
 
-        if(rows.size() != 0) {
-            studentDetailsModel.setFeeDetails(rows);
+        if(feeRows.size() != 0) {
+            studentDetailsModel.setFeeDetails(feeRows);
         }
         else {
             Statement stmtForFeeNull = conn.createStatement();
             rsForFee = stmtForFeeNull.executeQuery("SELECT * FROM View_FeeMasterDetails WHERE FeeID = " + studentDetailsModel.getFeeId());
 
             while (rsForFee.next()) {
-                StudentDetailsModel.Row row = new StudentDetailsModel.Row();
-                row.setFeeDesc(rsForFee.getString("FeeDescription"));
+                StudentDetailsModel.FeeRow feeRow = new StudentDetailsModel.FeeRow();
+                feeRow.setFeeDesc(rsForFee.getString("FeeDescription"));
                 float total = rsForFee.getFloat("total_Amt");
-                row.setTotal(total);
-                row.setPaid(0);
-                row.setBalance(total);
+                feeRow.setTotal(total);
+                feeRow.setPaid(0);
+                feeRow.setBalance(total);
 
-                rows.add(row);
+                feeRows.add(feeRow);
             }
 
-            studentDetailsModel.setFeeDetails(rows);
+            studentDetailsModel.setFeeDetails(feeRows);
         }
 
         Statement stmtForAttendance = conn.createStatement();
@@ -276,52 +277,103 @@ public class StudentDetailsViewModel extends ViewModel {
 
         studentDetailsModel.setTotalClass(totalClass);
         studentDetailsModel.setTotalPresents(totalPresents);
+
+        Statement stmtForMarks = conn.createStatement();
+        ResultSet rsForMarks = stmtForMarks.executeQuery("SELECT * FROM View_MarksReport WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
+
+        ArrayList<StudentDetailsModel.MarksRow> marksRows = new ArrayList<>();
+        ArraySet<String> examNames = new ArraySet<>();
+
+        while (rsForMarks.next()) {
+            StudentDetailsModel.MarksRow marksRow = new StudentDetailsModel.MarksRow();
+
+            marksRow.setExamName(rsForMarks.getString("ExamName"));
+            marksRow.setSubjectName(rsForMarks.getString("Subject"));
+            marksRow.setFacultyFirstName(rsForMarks.getString("FirstName"));
+            marksRow.setFacultyMiddleName(rsForMarks.getString("MiddleName"));
+            marksRow.setFacultyLastName(rsForMarks.getString("LastName"));
+            marksRow.setPassingMarks(rsForMarks.getFloat("passmark"));
+            marksRow.setObtainedMarks(rsForMarks.getFloat("marksObtained"));
+            marksRow.setMaxMarks(rsForMarks.getInt("maxmark"));
+            marksRow.setPercentage(rsForMarks.getFloat("percentage"));
+            marksRow.setStatus(rsForMarks.getString("status").toUpperCase());
+            examNames.add(rsForMarks.getString("ExamName"));
+
+            marksRows.add(marksRow);
+        }
+
+        studentDetailsModel.setMarksDetails(marksRows);
+        studentDetailsModel.setExamNames(examNames);
+
     }
 
     public StudentDetailsModel getStudent() {
         return studentDetailsModel;
+    }
+    
+    public static String getStudentFullName(StudentDetailsModel m) {
+        String fullName = "", first, middle, last;
+        
+        first = m.getFirstName();
+        middle = m.getMiddleName();
+        last = m.getLastName();
+
+        if(middle == null && last == null) {
+            fullName = first;
+        }
+        else if(last == null) {
+            fullName = first + " " + middle;
+        }
+        else if(middle == null) {
+            fullName = first + " " + last;
+        }
+        else {
+            fullName = first + " " + middle + " " + last;
+        }
+        
+        return fullName;
     }
 
     public ArrayList<String> getStudentPersonalDetails(StudentDetailsModel m){
         ArrayList<String> personalDetails = new ArrayList<>();
 
         personalDetails.add("For header");
-        personalDetails.add(m.getYearName());
-        personalDetails.add(m.getUniversityName());
-        personalDetails.add(m.getCourseName());
-        personalDetails.add(m.getBranchName());
-        personalDetails.add(m.getCombination());
-        personalDetails.add(m.getSemester());
+//        personalDetails.add(m.getYearName());
+//        personalDetails.add(m.getUniversityName());
+//        personalDetails.add(m.getCourseName());
+//        personalDetails.add(m.getBranchName());
+//        personalDetails.add(m.getCombination());
+//        personalDetails.add(m.getSemester());
         personalDetails.add(m.getSection());
         personalDetails.add(m.getRollNo());
-        personalDetails.add(m.getAdmissionType());
+//        personalDetails.add(m.getAdmissionType());
         personalDetails.add(m.getAdmissionNo());
         personalDetails.add(m.getQuotaName());
-        personalDetails.add(m.getFirstName());
-        personalDetails.add(m.getMiddleName());
-        personalDetails.add(m.getLastName());
+//        personalDetails.add(m.getFirstName());
+//        personalDetails.add(m.getMiddleName());
+//        personalDetails.add(m.getLastName());
         personalDetails.add(m.getDob());
         personalDetails.add(m.getPlaceofBirth());
         personalDetails.add(m.getGender());
         personalDetails.add(m.getReligion());
         personalDetails.add(m.getCaste());
         personalDetails.add(m.getSubCaste());
+        personalDetails.add(m.getCategory());
         personalDetails.add(m.getNationalityName());
         personalDetails.add(m.getMotherTounge());
-        personalDetails.add(m.getCategory());
         personalDetails.add(m.getMediumofInstruction());
         personalDetails.add(m.getUid());
-        personalDetails.add(m.getLastInstitute());
         personalDetails.add(m.getILanguage());
         personalDetails.add(m.getIILanguage());
         personalDetails.add(m.getIIILanguage());
-        personalDetails.add(m.getExampassedName());
-        personalDetails.add(m.getYearofPassing());
-        personalDetails.add(m.getNoofAttempts());
-        personalDetails.add(m.getMaxMarks());
-        personalDetails.add("" + m.getObtainedMarks());
-        personalDetails.add("" + m.getPercentage());
-        personalDetails.add(m.getGradeScored());
+//        personalDetails.add(m.getExampassedName());
+//        personalDetails.add(m.getYearofPassing());
+//        personalDetails.add(m.getNoofAttempts());
+//        personalDetails.add(m.getMaxMarks());
+//        personalDetails.add("" + m.getObtainedMarks());
+//        personalDetails.add("" + m.getPercentage());
+//        personalDetails.add(m.getGradeScored());
+        personalDetails.add(m.getLastInstitute());
         personalDetails.add(m.getTcno());
         personalDetails.add(m.getDiceNo());
         personalDetails.add(m.getSportsNational());

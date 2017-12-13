@@ -52,32 +52,28 @@
 
                             <TextView
                                 android:id="@+id/textView_header1"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:textColor="@color/textColorWhite"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
                                 android:text="Fee description"/>
 
                             <TextView
                                 android:id="@+id/textView_header2"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:textColor="@color/textColorWhite"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
                                 android:textAlignment="viewEnd"
                                 android:text="Total" />
 
                             <TextView
                                 android:id="@+id/textView_header3"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:textColor="@color/textColorWhite"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
                                 android:textAlignment="viewEnd"
                                 android:text="Paid"/>
 
                             <TextView
                                 android:id="@+id/textView_header4"
-                                style="@style/NedusoftTheme.TextViewLabel"
-                                android:layout_margin="12dp"
-                                android:textColor="@color/textColorWhite"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
                                 android:textAlignment="viewEnd"
                                 android:text="Balance"/>
 

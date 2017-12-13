@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
+import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
 import java.util.List;
 
@@ -83,8 +84,13 @@ public class PersonalAdapter extends ArrayAdapter<String> {
 
         switch (type) {
             case TYPE_PERSONAL_HEADER:
-                viewHolder.tvName.setText(StudentDetailsActivity.getStudentFullName(contents));
-                viewHolder.tvRollNo.setText(contents.get(8));
+                viewHolder.tvName.setText(StudentDetailsViewModel.getStudentFullName(StudentDetailsActivity.getStudent()));
+                int i = 0;
+                for (String l: labels){
+                    if(l.equals("Roll Number"))
+                        viewHolder.tvRollNo.setText(contents.get(i));
+                    i++;
+                }
                 break;
 
             case TYPE_PERSONAL:

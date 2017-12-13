@@ -9,30 +9,26 @@
 
     <TextView
         android:id="@+id/textView_fee_description"
-        style="@style/NedusoftTheme.TextViewLabel"
-        android:layout_width="150dp"
+        style="@style/NedusoftTheme.TextViewLabelTable"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
-        android:layout_margin="12dp"
         android:text="Miscellaneous" />
 
     <TextView
         android:id="@+id/textView_total_fee"
-        style="@style/NedusoftTheme.TextViewContent"
-        android:layout_margin="12dp"
+        style="@style/NedusoftTheme.TextViewContentTable"
         android:textAlignment="viewEnd"
         android:text="4634" />
 
     <TextView
         android:id="@+id/textView_paid_fee"
-        style="@style/NedusoftTheme.TextViewContent"
-        android:layout_margin="12dp"
+        style="@style/NedusoftTheme.TextViewContentTable"
         android:textAlignment="viewEnd"
         android:text="4643"/>
 
     <TextView
         android:id="@+id/textView_balance_fee"
-        style="@style/NedusoftTheme.TextViewContent"
-        android:layout_margin="12dp"
+        style="@style/NedusoftTheme.TextViewContentTable"
         android:textAlignment="viewEnd"
         android:text="8745"/>
 

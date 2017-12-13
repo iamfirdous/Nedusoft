@@ -33,7 +33,6 @@ import com.nexusinfo.nedusoft.ui.fragments.PersonalFragment;
 import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class StudentDetailsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,8 +94,8 @@ public class StudentDetailsActivity extends AppCompatActivity
         tvStudentName = header.findViewById(R.id.textView_student_name_drawer);
         tvRollNo = header.findViewById(R.id.textView_student_roll_no_drawer);
 
-        tvStudentName.setText(getStudentFullName(studentPersonalDetails));
-        tvRollNo.setText(studentPersonalDetails.get(8));
+        tvStudentName.setText(StudentDetailsViewModel.getStudentFullName(model));
+        tvRollNo.setText(studentPersonalDetails.get(2));
     }
 
     @Override
@@ -234,8 +233,12 @@ public class StudentDetailsActivity extends AppCompatActivity
         return viewModel.getStudentHospitalDetails(model);
     }
 
-    public static ArrayList<StudentDetailsModel.Row> getStudentFeeDetails() {
+    public static ArrayList<StudentDetailsModel.FeeRow> getStudentFeeDetails() {
         return model.getFeeDetails();
+    }
+
+    public static StudentDetailsModel getStudent() {
+        return model;
     }
 
     public static int[] getStudentAttendance() {
@@ -243,22 +246,11 @@ public class StudentDetailsActivity extends AppCompatActivity
         return a;
     }
 
-    public static String getStudentFullName(List<String> contents) {
-        String name;
-
-        if(contents.get(13) == null && contents.get(14) == null) {
-            name = contents.get(12);
-        }
-        else if(contents.get(14) == null) {
-            name = contents.get(12) + " " + contents.get(13);
-        }
-        else if(contents.get(13) == null) {
-            name = contents.get(12) + " " + contents.get(14);
-        }
-        else {
-            name = contents.get(12) + " " + contents.get(13) + " " + contents.get(14);
-        }
-
-        return name;
+    public static ArrayList getStudentMarksDetails() {
+        ArrayList a = new ArrayList();
+        a.add(model.getExamNames());
+        a.add(model.getMarksDetails());
+        return a;
     }
+
 }

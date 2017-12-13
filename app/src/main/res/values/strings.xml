@@ -28,42 +28,42 @@
 
     <string-array name="labels_personal">
         <item>For header</item>
-        <item>Year</item>
-        <item>University</item>
-        <item>Course</item>
-        <item>Syllabus</item>
-        <item>Level</item>
-        <item>Class</item>
+        <!--<item>Year</item>-->
+        <!--<item>University</item>-->
+        <!--<item>Course</item>-->
+        <!--<item>Syllabus</item>-->
+        <!--<item>Level</item>-->
+        <!--<item>Class</item>-->
         <item>Section</item>
         <item>Roll Number</item>
-        <item>Admission\nType</item>
+        <!--<item>Admission\nType</item>-->
         <item>Admission No.</item>
         <item>Quota</item>
-        <item>First Name</item>
-        <item>Middle Name</item>
-        <item>Last Name</item>
+        <!--<item>First Name</item>-->
+        <!--<item>Middle Name</item>-->
+        <!--<item>Last Name</item>-->
         <item>DOB</item>
         <item>Place of Birth</item>
         <item>Gender</item>
         <item>Religion</item>
         <item>Caste</item>
         <item>Sub Caste</item>
+        <item>Category</item>
         <item>Nationality</item>
         <item>Mother\nTongue</item>
-        <item>Category</item>
         <item>Medium of\nInstruction</item>
         <item>UID</item>
-        <item>Last Institute</item>
         <item>Language - I</item>
         <item>Language - II</item>
         <item>Language - III</item>
-        <item>ExamPassed</item>
-        <item>Year of\nPassing</item>
-        <item>No. of\nAttempts</item>
-        <item>Max Marks</item>
-        <item>Obtained Marks</item>
-        <item>Percentage</item>
-        <item>Grade Scored</item>
+        <!--<item>ExamPassed</item>-->
+        <!--<item>Year of\nPassing</item>-->
+        <!--<item>No. of\nAttempts</item>-->
+        <!--<item>Max Marks</item>-->
+        <!--<item>Obtained Marks</item>-->
+        <!--<item>Percentage</item>-->
+        <!--<item>Grade Scored</item>-->
+        <item>Last Institute</item>
         <item>TC No.</item>
         <item>Dice No.</item>
         <item>Sports National</item>

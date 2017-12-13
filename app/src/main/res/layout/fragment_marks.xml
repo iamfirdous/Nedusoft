@@ -17,6 +17,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
+                android:id="@+id/linearLayout_marks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
@@ -29,16 +30,99 @@
                     android:layout_marginTop="15dp"
                     android:src="@drawable/ic_menu_marks" />
 
-                <Spinner
-                    android:id="@+id/spinner"
+                <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:prompt="@string/select_exam_prompt">
+                    android:layout_height="wrap_content">
 
-                </Spinner>
+                    <TextView
+                        android:id="@+id/textView_exam_name_label"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="8dp"
+                        android:textColor="@color/colorTextBlack"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:text="Exam: " />
+
+                    <Spinner
+                        android:id="@+id/spinner_exam_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_toEndOf="@+id/textView_exam_name_label"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginBottom="16dp"
+                        android:layout_marginTop="16dp"
+                        android:prompt="@string/select_exam_prompt" />
+
+                </RelativeLayout>
 
             </LinearLayout>
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout_marks">
+
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TableLayout
+                        android:id="@+id/tableLayout_marks_details"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="6dp">
+
+                        <TableRow
+                            android:background="@color/colorPrimary">
+
+                            <TextView
+                                android:id="@+id/textView_header1"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:layout_width="75dp"
+                                android:textColor="@color/colorTextWhite"
+                                android:text="Subject"/>
+
+                            <TextView
+                                android:id="@+id/textView_header2"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
+                                android:textAlignment="center"
+                                android:text="Max.\nmarks" />
+
+                            <TextView
+                                android:id="@+id/textView_header3"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
+                                android:textAlignment="center"
+                                android:text="Obtnd\nmarks"/>
+
+                            <TextView
+                                android:id="@+id/textView_header4"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
+                                android:textAlignment="center"
+                                android:text="%"/>
+
+                            <TextView
+                                android:id="@+id/textView_header5"
+                                style="@style/NedusoftTheme.TextViewLabelTable"
+                                android:textColor="@color/colorTextWhite"
+                                android:textAlignment="center"
+                                android:text="Status"/>
+
+                        </TableRow>
+
+                    </TableLayout>
+
+                </HorizontalScrollView>
+
+            </ScrollView>
 
         </RelativeLayout>
 

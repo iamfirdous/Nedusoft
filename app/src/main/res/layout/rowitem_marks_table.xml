@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tableRow_marks_details"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    tools:context="com.nexusinfo.nedusoft.ui.fragments.FeeDetailsFragment"
+    tools:showIn="@layout/fragment_marks">
+
+    <TextView
+        android:id="@+id/textView_marks_subject"
+        style="@style/NedusoftTheme.TextViewLabelTable"
+        android:layout_width="75dp"
+        android:text="English" />
+
+    <TextView
+        android:id="@+id/textView_max_marks"
+        style="@style/NedusoftTheme.TextViewLabelTable"
+        android:textColor="#444444"
+        android:textAlignment="center"
+        android:text="25" />
+
+    <TextView
+        android:id="@+id/textView_obtained_marks"
+        style="@style/NedusoftTheme.TextViewLabelTable"
+        android:textColor="#444444"
+        android:textAlignment="center"
+        android:text="18"/>
+
+    <TextView
+        android:id="@+id/textView_marks_percentage"
+        style="@style/NedusoftTheme.TextViewLabelTable"
+        android:textColor="#444444"
+        android:textAlignment="center"
+        android:text="72%"/>
+
+    <TextView
+        android:id="@+id/textView_marks_status"
+        style="@style/NedusoftTheme.TextViewLabelTable"
+        android:textColor="#444444"
+        android:textAlignment="center"
+        android:text="Pass"/>
+
+</TableRow>

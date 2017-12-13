@@ -239,13 +239,31 @@ class StudentDetailsModel {
     var admissionTypeID: Int? = null
     var admissionType: String? = null
 
-    var feeDetails: ArrayList<Row>? = null
+    var feeDetails: ArrayList<FeeRow>? = null
+
+    var examNames: android.support.v4.util.ArraySet<String>? = null
+    var marksDetails: ArrayList<MarksRow>? = null
 
     //Row for fee details
-    class Row {
+    class FeeRow {
         var feeDesc: String? = null
         var total: Float = 0.toFloat()
         var paid: Float = 0.toFloat()
         var balance: Float = 0.toFloat()
+
+    }
+
+    //Row for marks details
+    class MarksRow{
+        var examName: String? = null
+        var subjectName: String? = null
+        var facultyFirstName: String? = null
+        var facultyMiddleName: String? = null
+        var facultyLastName: String? = null
+        var passingMarks: Float = 0.toFloat()
+        var obtainedMarks: Float = 0.toFloat()
+        var maxMarks: Int = 0
+        var percentage: Float = 0.toFloat()
+        var status: String? = null
     }
 }

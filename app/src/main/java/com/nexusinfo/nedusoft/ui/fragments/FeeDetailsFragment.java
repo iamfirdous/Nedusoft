@@ -38,19 +38,19 @@ public class FeeDetailsFragment extends Fragment {
 
         TableLayout tl = view.findViewById(R.id.tableLayout_fee_details);
 
-        ArrayList<StudentDetailsModel.Row> rows = StudentDetailsActivity.getStudentFeeDetails();
+        ArrayList<StudentDetailsModel.FeeRow> feeRows = StudentDetailsActivity.getStudentFeeDetails();
 
-        for (StudentDetailsModel.Row row : rows) {
+        for (StudentDetailsModel.FeeRow feeRow : feeRows) {
             tableRow = (TableRow) inflater.inflate(R.layout.rowitem_fee_details_table, container, false);
             tvFeeDesc = tableRow.findViewById(R.id.textView_fee_description);
             tvTotal = tableRow.findViewById(R.id.textView_total_fee);
             tvPaid = tableRow. findViewById(R.id.textView_paid_fee);
             tvBalance = tableRow. findViewById(R.id.textView_balance_fee);
 
-            tvFeeDesc.setText(row.getFeeDesc());
-            tvTotal.setText("" + row.getTotal());
-            tvPaid.setText("" + row.getPaid());
-            tvBalance.setText("" + row.getBalance());
+            tvFeeDesc.setText(feeRow.getFeeDesc());
+            tvTotal.setText("" + feeRow.getTotal());
+            tvPaid.setText("" + feeRow.getPaid());
+            tvBalance.setText("" + feeRow.getBalance());
 
             tl.addView(tableRow);
         }
