@@ -28,7 +28,19 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="15dp"
                     android:layout_marginBottom="5dp"
-                    android:src="@drawable/ic_receipt_grey_24dp" />
+                    android:src="@drawable/ic_menu_fee_master_black_24dp" />
+
+                <TextView
+                    android:id="@+id/textView_no_fee_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/NedusoftTheme.TextViewLabel"
+                    android:layout_marginTop="2dp"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_gravity="center"
+                    android:text="Fee details not available"
+                    android:visibility="gone"/>
 
             </LinearLayout>
 
@@ -45,7 +57,8 @@
                         android:id="@+id/tableLayout_fee_details"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
+                        android:layout_margin="4dp"
+                        android:visibility="gone">
 
                         <TableRow
                             android:background="@color/colorPrimary">

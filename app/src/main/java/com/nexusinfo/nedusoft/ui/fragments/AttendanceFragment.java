@@ -23,7 +23,8 @@ public class AttendanceFragment extends Fragment {
         // Required empty public constructor
     }
 
-    TextView tvTaken, tvAttended, tvPercentage;
+    private TextView tvTaken, tvAttended, tvPercentage;
+    private DecimalFormat df = new DecimalFormat("###.##");
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,9 +37,6 @@ public class AttendanceFragment extends Fragment {
         int[] a = StudentDetailsActivity.getStudentAttendance();
         int taken = a[0], attended = a[1];
         float p = ((float)attended/(float)taken)*100;
-
-        DecimalFormat df = new DecimalFormat();
-        df.setMaximumFractionDigits(2);
 
         tvTaken = view.findViewById(R.id.textView_class_taken_content);
         tvAttended = view.findViewById(R.id.textView_class_attended_content);

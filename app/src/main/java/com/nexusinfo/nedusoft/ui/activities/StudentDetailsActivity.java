@@ -130,6 +130,12 @@ public class StudentDetailsActivity extends AppCompatActivity
                 finish();
                 break;
 
+            case R.id.action_refresh:
+                Intent refresh = new Intent(this, MainActivity.class);
+                startActivity(refresh);
+                finish();
+                break;
+
             case R.id.action_settings:
                 break;
         }
@@ -246,11 +252,9 @@ public class StudentDetailsActivity extends AppCompatActivity
         return a;
     }
 
-    public static ArrayList getStudentMarksDetails() {
-        ArrayList a = new ArrayList();
-        a.add(model.getExamNames());
-        a.add(model.getMarksDetails());
-        return a;
+    public static Object[] getStudentMarksDetails() {
+        Object[] o = {model.getExamNames(), model.getMarksDetails()};
+        return o;
     }
 
 }

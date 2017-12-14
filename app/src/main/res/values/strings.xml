@@ -25,6 +25,7 @@
     <string name="errorMessageForInternet">Please check your Internet connection!</string>
     <string name="errorMessageForWrongCredentials">Incorrect login name or password</string>
     <string name="select_exam_prompt">Select exam</string>
+    <string name="action_refresh">Refresh</string>
 
     <string-array name="labels_personal">
         <item>For header</item>
@@ -90,7 +91,7 @@
         <item>Qualification</item>
         <item>Profession</item>
         <item>Income</item>
-        <item>Company\nName</item>
+        <item>Company</item>
         <item>Company\nAddress</item>
         <item>Mobile</item>
         <item>Email</item>
@@ -100,7 +101,7 @@
         <item>Qualification</item>
         <item>Profession</item>
         <item>Income</item>
-        <item>Company\nName</item>
+        <item>Company</item>
         <item>Company\nAddress</item>
         <item>Mobile</item>
         <item>Email</item>

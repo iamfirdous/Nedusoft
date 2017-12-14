@@ -51,15 +51,14 @@ public class MarksFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_marks, container, false);
 
         tl = view.findViewById(R.id.tableLayout_marks_details);
-        tl.setVisibility(View.GONE);
 
         spinner = view.findViewById(R.id.spinner_exam_name);
 
-        ArrayList a = StudentDetailsActivity.getStudentMarksDetails();
+        Object[] o = StudentDetailsActivity.getStudentMarksDetails();
 
-        marksRows = (ArrayList<StudentDetailsModel.MarksRow>) a.get(1);
+        marksRows = (ArrayList<StudentDetailsModel.MarksRow>) o[1];
 
-        ArraySet<String> examNames = (ArraySet<String>) a.get(0);
+        ArraySet<String> examNames = (ArraySet<String>) o[0];
         examNamesList = new ArrayList<>();
         examNamesList.add("Select exam");
         examNamesList.addAll(examNames);
@@ -69,11 +68,10 @@ public class MarksFragment extends Fragment {
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            public void onItemSelected(AdapterView<?> adapterView, View view1, int i, long l) {
 
-                int count = tl.getChildCount();
-                for(int c = 1; c < count; c++)
-                    tl.removeViewAt(c);
+                while (tl.getChildCount() > 1)
+                    tl.removeView(tl.getChildAt(tl.getChildCount() - 1));
 
                 for(StudentDetailsModel.MarksRow marksRow: marksRows) {
                     if(marksRow.getExamName().equals(examNamesList.get(i))) {

@@ -26,7 +26,7 @@ public class FeeDetailsFragment extends Fragment {
         // Required empty public constructor
     }
 
-    private TextView tvFeeDesc, tvTotal, tvPaid, tvBalance;
+    private TextView tvFeeDesc, tvTotal, tvPaid, tvBalance, tvNoFee;
     private TableRow tableRow;
 
     @Override
@@ -37,22 +37,30 @@ public class FeeDetailsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fee_details, container, false);
 
         TableLayout tl = view.findViewById(R.id.tableLayout_fee_details);
+        tvNoFee = view.findViewById(R.id.textView_no_fee_details);
 
         ArrayList<StudentDetailsModel.FeeRow> feeRows = StudentDetailsActivity.getStudentFeeDetails();
 
-        for (StudentDetailsModel.FeeRow feeRow : feeRows) {
-            tableRow = (TableRow) inflater.inflate(R.layout.rowitem_fee_details_table, container, false);
-            tvFeeDesc = tableRow.findViewById(R.id.textView_fee_description);
-            tvTotal = tableRow.findViewById(R.id.textView_total_fee);
-            tvPaid = tableRow. findViewById(R.id.textView_paid_fee);
-            tvBalance = tableRow. findViewById(R.id.textView_balance_fee);
+        if (feeRows.size() != 0) {
+            tl.setVisibility(View.VISIBLE);
+            tvNoFee.setVisibility(View.GONE);
+            for (StudentDetailsModel.FeeRow feeRow : feeRows) {
+                tableRow = (TableRow) inflater.inflate(R.layout.rowitem_fee_details_table, container, false);
+                tvFeeDesc = tableRow.findViewById(R.id.textView_fee_description);
+                tvTotal = tableRow.findViewById(R.id.textView_total_fee);
+                tvPaid = tableRow. findViewById(R.id.textView_paid_fee);
+                tvBalance = tableRow. findViewById(R.id.textView_balance_fee);
 
-            tvFeeDesc.setText(feeRow.getFeeDesc());
-            tvTotal.setText("" + feeRow.getTotal());
-            tvPaid.setText("" + feeRow.getPaid());
-            tvBalance.setText("" + feeRow.getBalance());
+                tvFeeDesc.setText(feeRow.getFeeDesc());
+                tvTotal.setText("" + feeRow.getTotal());
+                tvPaid.setText("" + feeRow.getPaid());
+                tvBalance.setText("" + feeRow.getBalance());
 
-            tl.addView(tableRow);
+                tl.addView(tableRow);
+            }
+        }
+        else {
+            tvNoFee.setVisibility(View.VISIBLE);
         }
 
         return view;
