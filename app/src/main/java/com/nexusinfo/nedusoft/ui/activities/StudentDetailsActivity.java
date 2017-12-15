@@ -136,7 +136,9 @@ public class StudentDetailsActivity extends AppCompatActivity
                 finish();
                 break;
 
-            case R.id.action_settings:
+            case R.id.action_change_password:
+                Intent changePassword = new Intent(this, ChangePasswordActivity.class);
+                startActivity(changePassword);
                 break;
         }
 

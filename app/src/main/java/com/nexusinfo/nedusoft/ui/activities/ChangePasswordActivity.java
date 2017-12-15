@@ -23,38 +23,39 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
-public class LoginActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
+public class ChangePasswordActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
     private TextView tvError, tvForgotPassword;
-    private EditText etLoginName, etPassword;
-    private Button buttonLogin;
+    private EditText etCurrentPassword, etNewPassword, etReNewPassword;
+    private Button buttonSave;
     private ProgressBar progressBar;
 
     private UserModel user;
     private DatabaseConnection databaseConnection;
 
-    private String loginName, password;
+    private String currentPassword, newPassword, reNewPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_change_password);
 
-        tvError = findViewById(R.id.textView_error_loginActivity);
-        tvForgotPassword = findViewById(R.id.textView_forgot_password_login);
-        etLoginName = findViewById(R.id.editText_login_name);
-        etPassword = findViewById(R.id.editText_password);
-        buttonLogin = findViewById(R.id.button_login);
-        progressBar = findViewById(R.id.progressBar_login);
+        tvError = findViewById(R.id.textView_error_change_password_activity);
+        tvForgotPassword = findViewById(R.id.textView_forgot_password_change_password);
+        etCurrentPassword = findViewById(R.id.editText_current_password);
+        etNewPassword = findViewById(R.id.editText_new_password);
+        etReNewPassword = findViewById(R.id.editText_re_new_password);
+        buttonSave = findViewById(R.id.button_save_changed_password);
+        progressBar = findViewById(R.id.progressBar_change_password);
 
-        progressBar.setVisibility(View.INVISIBLE);
+        progressBar.setVisibility(View.GONE);
 
-        user = (UserModel) getIntent().getSerializableExtra("User");
+        user = LocalDBHelper.getInstance(this).getUser();
         databaseConnection = new DatabaseConnection(user.getSchoolDBName());
 
         showError(InternetConnectivityReceiver.isConnected());
 
-        buttonLogin.setOnClickListener(view -> {
+        buttonSave.setOnClickListener(view -> {
 
             if(!InternetConnectivityReceiver.isConnected()){
                 tvError.setVisibility(View.VISIBLE);
@@ -64,7 +65,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 tvError.setVisibility(View.INVISIBLE);
                 Log.e("Available", "Internet Available....  :) :) :D");
 
-                LoginTask task = new LoginTask();
+                ChangePasswordTask task = new ChangePasswordTask();
                 task.execute("");
             }
 
@@ -94,26 +95,37 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         showError(isConnected);
     }
 
-    class LoginTask extends AsyncTask<String, String, UserModel>{
+    class ChangePasswordTask extends AsyncTask<String, String, UserModel> {
 
         @Override
         protected void onPreExecute() {
-            loginName = etLoginName.getText().toString().trim();
-            password = etPassword.getText().toString().trim();
+            currentPassword = etCurrentPassword.getText().toString().trim();
+            newPassword = etNewPassword.getText().toString().trim();
+            reNewPassword = etReNewPassword.getText().toString().trim();
 
-            boolean notEmpty = true;
+            boolean notEmpty = true, passwordMatched = true;
 
-            if(loginName.equals("")){
+            if(currentPassword.equals("")){
                 notEmpty = false;
-                etLoginName.setError("Enter your login name");
+                etCurrentPassword.setError("Enter your current password");
                 cancel(true);
             }
-            if(password.equals("")){
+            if(newPassword.equals("")){
                 notEmpty = false;
-                etPassword.setError("Enter your password");
+                etNewPassword.setError("Enter a new password");
                 cancel(true);
             }
-            if(notEmpty){
+            if(reNewPassword.equals("")){
+                notEmpty = false;
+                etReNewPassword.setError("Re-enter your new password");
+                cancel(true);
+            }
+            if(!newPassword.equals(reNewPassword)){
+                passwordMatched = false;
+                etReNewPassword.setError("Passwords do not match");
+                cancel(true);
+            }
+            if(notEmpty && passwordMatched){
                 loadStart();
             }
         }
@@ -178,17 +190,19 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         private void loadStart(){
             progressBar.setVisibility(View.VISIBLE);
-            etLoginName.setEnabled(false);
-            etPassword.setEnabled(false);
-            buttonLogin.setEnabled(false);
+            etCurrentPassword.setEnabled(false);
+            etNewPassword.setEnabled(false);
+            etReNewPassword.setEnabled(false);
+            buttonSave.setEnabled(false);
             tvForgotPassword.setEnabled(false);
         }
 
         private void loadFinish(){
             progressBar.setVisibility(View.INVISIBLE);
-            etLoginName.setEnabled(true);
-            etPassword.setEnabled(true);
-            buttonLogin.setEnabled(true);
+            etCurrentPassword.setEnabled(true);
+            etNewPassword.setEnabled(true);
+            etReNewPassword.setEnabled(false);
+            buttonSave.setEnabled(true);
             tvForgotPassword.setEnabled(true);
         }
     }

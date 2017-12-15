@@ -307,6 +307,10 @@ public class StudentDetailsViewModel extends ViewModel {
 
     }
 
+    public void setStudent(StudentDetailsModel model) {
+        studentDetailsModel = model;
+    }
+
     public StudentDetailsModel getStudent() {
         return studentDetailsModel;
     }

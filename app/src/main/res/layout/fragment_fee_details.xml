@@ -16,38 +16,31 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:id="@+id/linearLayout_fee_details_imageview"
+            <ImageView
+                android:id="@+id/imageView_fee_header"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_menu_fee_master_black_24dp" />
+
+            <TextView
+                android:id="@+id/textView_no_fee_details"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginBottom="5dp"
-                    android:src="@drawable/ic_menu_fee_master_black_24dp" />
-
-                <TextView
-                    android:id="@+id/textView_no_fee_details"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    style="@style/NedusoftTheme.TextViewLabel"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_gravity="center"
-                    android:text="Fee details not available"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
+                android:layout_below="@+id/imageView_fee_header"
+                style="@style/NedusoftTheme.TextViewLabel"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="0dp"
+                android:gravity="center"
+                android:text="Fee details not available"
+                android:visibility="gone" />
 
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/linearLayout_fee_details_imageview">
+                android:layout_below="@+id/imageView_fee_header">
 
                 <HorizontalScrollView
                     android:layout_width="match_parent"

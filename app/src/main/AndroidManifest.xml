@@ -31,11 +31,11 @@
         <activity
             android:name=".ui.activities.SchoolCodeRequestActivity"
             android:label="@string/title_activity_school_code_request"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.LoginActivity"
             android:label="@string/title_activity_login"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <receiver
             android:name=".receivers.InternetConnectivityReceiver"
@@ -47,6 +47,7 @@
             </intent-filter>
         </receiver>
 
+        <activity android:name=".ui.activities.ChangePasswordActivity"></activity>
     </application>
 
 </manifest>
