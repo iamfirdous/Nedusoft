@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.MainActivity;
 import com.nexusinfo.nedusoft.MyApplication;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
@@ -39,6 +40,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+
+        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowHomeEnabled(true);
 
         tvError = findViewById(R.id.textView_error_change_password_activity);
         tvForgotPassword = findViewById(R.id.textView_forgot_password_change_password);
@@ -103,7 +108,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
             newPassword = etNewPassword.getText().toString().trim();
             reNewPassword = etReNewPassword.getText().toString().trim();
 
-            boolean notEmpty = true, passwordMatched = true;
+            boolean notEmpty = true, passwordMatched = true, passwordLength = true;
 
             if(currentPassword.equals("")){
                 notEmpty = false;
@@ -123,9 +128,18 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
             if(!newPassword.equals(reNewPassword)){
                 passwordMatched = false;
                 etReNewPassword.setError("Passwords do not match");
+                etReNewPassword.requestFocus();
                 cancel(true);
             }
-            if(notEmpty && passwordMatched){
+            if(passwordMatched && !newPassword.equals("")) {
+                if (newPassword.length() < 8) {
+                    passwordLength = false;
+                    etNewPassword.setError("Password should have at least 8 characters");
+                    etNewPassword.requestFocus();
+                    cancel(true);
+                }
+            }
+            if(notEmpty && passwordMatched && passwordLength){
                 loadStart();
             }
         }
@@ -134,20 +148,29 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
         protected UserModel doInBackground(String... strings) {
 
             try{
+                String loginName = user.getUserID();
+                Log.e("RollNo", loginName);
+                Log.e("CurrentPassword", currentPassword);
+
                 Connection conn = databaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
+                Statement stmtUpdate = conn.createStatement();
 
-                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + password + "' AND " + DatabaseConnection.COL_STATUS + " = 'Regular'";
+                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + currentPassword + "'";
+                Log.e("Query", query);
                 ResultSet rs = stmt.executeQuery(query);
 
                 boolean wrongCredentials = true;
 
                 while (rs.next()){
-                    user.setUserID(rs.getString(DatabaseConnection.COL_ROLLNO));
                     wrongCredentials = false;
                 }
 
-                if(wrongCredentials){
+                if(!wrongCredentials){
+                    String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "'";
+                    stmtUpdate.executeUpdate(sql);
+                }
+                else {
                     publishProgress("WrongCredentials");
                     cancel(true);
                 }
@@ -165,27 +188,23 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                Toast.makeText(LoginActivity.this, "Some error occurred.", Toast.LENGTH_LONG).show();
+                Toast.makeText(ChangePasswordActivity.this, "Some error occurred while changing the password.\nPlease try again or check your connection.", Toast.LENGTH_LONG).show();
                 loadFinish();
             }
             if(values[0].equals("WrongCredentials")){
                 tvError.setVisibility(View.VISIBLE);
-                tvError.setText(R.string.errorMessageForWrongCredentials);
+                tvError.setText(R.string.errorMessageIncorrectCurrentPassword);
                 loadFinish();
             }
         }
 
         @Override
         protected void onPostExecute(UserModel userModel) {
-            if (LocalDBHelper.getInstance(LoginActivity.this).addData(user)) {
-                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
-                Intent studentDetailsIntent = new Intent(LoginActivity.this, StudentDetailsActivity.class);
-                startActivity(studentDetailsIntent);
-                finish();
-            }
-            else {
-                Log.e("LocalDBProblem", "Data not added");
-            }
+            Toast.makeText(ChangePasswordActivity.this, "Password changed successfully, you need to login after password change", Toast.LENGTH_LONG).show();
+            LocalDBHelper.getInstance(ChangePasswordActivity.this).deleteData();
+            Intent logout = new Intent(ChangePasswordActivity.this, MainActivity.class);
+            startActivity(logout);
+            finish();
         }
 
         private void loadStart(){
@@ -201,7 +220,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
             progressBar.setVisibility(View.INVISIBLE);
             etCurrentPassword.setEnabled(true);
             etNewPassword.setEnabled(true);
-            etReNewPassword.setEnabled(false);
+            etReNewPassword.setEnabled(true);
             buttonSave.setEnabled(true);
             tvForgotPassword.setEnabled(true);
         }

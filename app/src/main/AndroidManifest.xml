@@ -47,7 +47,18 @@
             </intent-filter>
         </receiver>
 
-        <activity android:name=".ui.activities.ChangePasswordActivity"></activity>
+        <activity
+            android:name=".ui.activities.ChangePasswordActivity"
+            android:label="Change password"
+            android:screenOrientation="portrait"
+            android:parentActivityName=".ui.activities.StudentDetailsActivity" >
+
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.StudentDetailsActivity" />
+
+        </activity>
+
     </application>
 
 </manifest>

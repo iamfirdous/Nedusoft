@@ -36,17 +36,17 @@
         </menu>
     </item>
 
-    <!--<item android:title="Communicate">-->
-        <!--<menu>-->
-            <!--<item-->
-                <!--android:id="@+id/nav_share"-->
-                <!--android:icon="@drawable/ic_menu_share"-->
-                <!--android:title="Share" />-->
-            <!--<item-->
-                <!--android:id="@+id/nav_send"-->
-                <!--android:icon="@drawable/ic_menu_send"-->
-                <!--android:title="Send" />-->
-        <!--</menu>-->
-    <!--</item>-->
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_lesson_updates"
+                android:icon="@drawable/ic_lesson_update"
+                android:title="Lesson updates" />
+            <item
+                android:id="@+id/nav_feedback"
+                android:icon="@drawable/ic_feedback"
+                android:title="Want to say something?" />
+        </menu>
+    </item>
 
 </menu>
