@@ -78,4 +78,10 @@
         <item name="android:padding">5dp</item>
     </style>
 
+    <style name="NedusoftTheme.DatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
 </resources>

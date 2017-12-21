@@ -174,7 +174,8 @@ public class StudentDetailsActivity extends AppCompatActivity
                 mManager.beginTransaction().replace(R.id.content_main, new MarksFragment()).commit();
                 break;
             case R.id.nav_lesson_updates:
-
+                Intent lessonUpdateIntent = new Intent(StudentDetailsActivity.this, LessonUpdatesActivity.class);
+                startActivity(lessonUpdateIntent);
                 break;
             case R.id.nav_feedback:
 

@@ -50,13 +50,21 @@
         <activity
             android:name=".ui.activities.ChangePasswordActivity"
             android:label="Change password"
-            android:screenOrientation="portrait"
-            android:parentActivityName=".ui.activities.StudentDetailsActivity" >
-
+            android:parentActivityName=".ui.activities.StudentDetailsActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.StudentDetailsActivity" />
+        </activity>
 
+        <activity
+            android:name=".ui.activities.LessonUpdatesActivity"
+            android:label="Lesson updates"
+            android:parentActivityName=".ui.activities.StudentDetailsActivity"
+            android:screenOrientation="portrait">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ui.activities.StudentDetailsActivity" />
         </activity>
 
     </application>
