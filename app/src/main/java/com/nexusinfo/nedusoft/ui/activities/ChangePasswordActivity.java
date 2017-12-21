@@ -166,13 +166,13 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
                     wrongCredentials = false;
                 }
 
-                if(!wrongCredentials){
-                    String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "'";
-                    stmtUpdate.executeUpdate(sql);
-                }
-                else {
+                if(wrongCredentials){
                     publishProgress("WrongCredentials");
                     cancel(true);
+                }
+                else {
+                    String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "'";
+                    stmtUpdate.executeUpdate(sql);
                 }
 
             }

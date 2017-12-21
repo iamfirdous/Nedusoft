@@ -173,12 +173,12 @@ public class StudentDetailsActivity extends AppCompatActivity
             case R.id.nav_marks:
                 mManager.beginTransaction().replace(R.id.content_main, new MarksFragment()).commit();
                 break;
-//            case R.id.nav_share:
-//
-//                break;
-//            case R.id.nav_send:
-//
-//                break;
+            case R.id.nav_lesson_updates:
+
+                break;
+            case R.id.nav_feedback:
+
+                break;
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
