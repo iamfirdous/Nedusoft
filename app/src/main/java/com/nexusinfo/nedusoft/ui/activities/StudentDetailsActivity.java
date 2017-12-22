@@ -175,6 +175,7 @@ public class StudentDetailsActivity extends AppCompatActivity
                 break;
             case R.id.nav_lesson_updates:
                 Intent lessonUpdateIntent = new Intent(StudentDetailsActivity.this, LessonUpdatesActivity.class);
+                lessonUpdateIntent.putExtra("SectionID", model.getSectionID());
                 startActivity(lessonUpdateIntent);
                 break;
             case R.id.nav_feedback:

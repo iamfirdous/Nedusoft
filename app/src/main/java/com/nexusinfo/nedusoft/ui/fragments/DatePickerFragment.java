@@ -17,23 +17,38 @@ import java.util.Calendar;
 
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
+    private EditText etFromDate, etToDate;
+
+    private static final String FROM_DATE = "FromDate", TO_DATE = "ToDate";
+
+    private int day, month, year;
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         // Use the current date as the default date in the picker
         final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+        month = c.get(Calendar.MONTH);
+        year = c.get(Calendar.YEAR);
 
         // Create a new instance of DatePickerDialog and return it
         return new DatePickerDialog(getActivity(), R.style.NedusoftTheme_DatePicker, this, year, month, day);
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Do something with the date chosen by the user
-//        TextView tv1= (TextView) getActivity().findViewById(R.id.textview1);
-//        tv1.setText("Year: "+view.getYear()+" Month: "+view.getMonth()+" Day: "+view.getDayOfMonth());
-        EditText et = getActivity().findViewById(R.id.editText_from_date);
-        et.setText(view.getYear()+"/"+view.getMonth()+"/"+view.getDayOfMonth());
+
+        String tag = getTag();
+
+        etFromDate = getActivity().findViewById(R.id.editText_from_date);
+        etToDate = getActivity().findViewById(R.id.editText_to_date);
+
+        this.day = view.getDayOfMonth();
+        this.month = view.getMonth();
+        this.year = view.getYear();
+
+        if (tag.equals(FROM_DATE))
+            etFromDate.setText(this.day+"/"+(this.month+1)+"/"+this.year);
+
+        if (tag.equals(TO_DATE))
+            etToDate.setText(this.day+"/"+(this.month+1)+"/"+this.year);
     }
 }

@@ -26,7 +26,7 @@
                 android:id="@+id/textView_select_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="8dp"
+                android:layout_marginLeft="12dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="0dp"
                 style="@style/NedusoftTheme.TextViewLabel"
@@ -48,12 +48,12 @@
                     android:hint="From Date"/>
 
                 <EditText
+                    android:id="@+id/editText_to_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="right"
                     android:layout_margin="8dp"
                     android:layout_weight="5"
-                    android:inputType="none"
                     android:hint="To Date"/>
 
             </LinearLayout>
