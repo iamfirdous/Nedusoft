@@ -16,5 +16,6 @@ class LessonUpdatesModel {
         var topic: String? = null
         var notes: String? = null
         var fileName: String? = null
+        var isFileAvailable: Boolean? = null
     }
 }

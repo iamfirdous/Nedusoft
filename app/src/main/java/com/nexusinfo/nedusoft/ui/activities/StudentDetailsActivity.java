@@ -94,7 +94,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         tvStudentName = header.findViewById(R.id.textView_student_name_drawer);
         tvRollNo = header.findViewById(R.id.textView_student_roll_no_drawer);
 
-        tvStudentName.setText(StudentDetailsViewModel.getStudentFullName(model));
+        tvStudentName.setText(StudentDetailsViewModel.getFullName(model));
         tvRollNo.setText(studentPersonalDetails.get(2));
     }
 

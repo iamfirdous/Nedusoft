@@ -84,7 +84,7 @@ public class PersonalAdapter extends ArrayAdapter<String> {
 
         switch (type) {
             case TYPE_PERSONAL_HEADER:
-                viewHolder.tvName.setText(StudentDetailsViewModel.getStudentFullName(StudentDetailsActivity.getStudent()));
+                viewHolder.tvName.setText(StudentDetailsViewModel.getFullName(StudentDetailsActivity.getStudent()));
                 int i = 0;
                 for (String l: labels){
                     if(l.equals("Roll Number"))

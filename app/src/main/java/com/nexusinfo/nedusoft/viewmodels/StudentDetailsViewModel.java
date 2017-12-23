@@ -23,14 +23,12 @@ import java.util.ArrayList;
 public class StudentDetailsViewModel extends ViewModel {
 
     private StudentDetailsModel studentDetailsModel;
-    private Context context;
 
     public void setStudent(Context context) throws Exception{
 
-        this.context = context;
         studentDetailsModel = new StudentDetailsModel();
-        Field fields[] = StudentDetailsModel.class.getDeclaredFields();
-        StringBuffer buffer = new StringBuffer();
+//        Field fields[] = StudentDetailsModel.class.getDeclaredFields();
+//        StringBuffer buffer = new StringBuffer();
 
 //        for(Field f : fields){
 //            buffer.append("model.set"+f.getName().replaceFirst(f.getName().substring(0, 1), f.getName().substring(0, 1).toUpperCase())+"();\n");
@@ -45,7 +43,7 @@ public class StudentDetailsViewModel extends ViewModel {
             String query2 = "SELECT * FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " " +
                                 "LEFT JOIN MSemester ON View_StudentDetailsForReport.ExamPassed = MSemester.SemesterID " +
                                 "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
-            Log.e("Query2: ", query2);
+//            Log.e("Query2: ", query2);
             ResultSet rsForEP = stmt2.executeQuery(query2);
 
             Statement stmt1 = conn.createStatement();
@@ -54,7 +52,7 @@ public class StudentDetailsViewModel extends ViewModel {
                                 "LEFT JOIN MSemester ON View_StudentDetailsForReport.SemesterID = MSemester.SemesterID " +
                                 "LEFT JOIN CSystemType ON View_StudentDetailsForReport.AdmissionTypeID = CSystemType.TypeID " +
                                 "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
-            Log.e("Query1: ", query1);
+//            Log.e("Query1: ", query1);
             ResultSet rs = stmt1.executeQuery(query1);
 
             while (rs.next()){
@@ -96,10 +94,10 @@ public class StudentDetailsViewModel extends ViewModel {
 
                 while (rsForEP.next()) {
                     studentDetailsModel.setExampassedName(rsForEP.getString(DatabaseConnection.COL_SEMESTER));
-                    if (studentDetailsModel.getExampassedName() != null)
-                        Log.e("Value", studentDetailsModel.getExampassedName());
-                    else
-                        Log.e("Value", "Null");
+//                    if (studentDetailsModel.getExampassedName() != null)
+//                        Log.e("Value", studentDetailsModel.getExampassedName());
+//                    else
+//                        Log.e("Value", "Null");
                 }
 
                 studentDetailsModel.setExt(rs.getString(DatabaseConnection.COL_EXT));
@@ -315,7 +313,7 @@ public class StudentDetailsViewModel extends ViewModel {
         return studentDetailsModel;
     }
     
-    public static String getStudentFullName(StudentDetailsModel m) {
+    public static String getFullName(StudentDetailsModel m) {
         String fullName = "", first, middle, last;
         
         first = m.getFirstName();
