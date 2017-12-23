@@ -54,7 +54,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_details);
 
-        viewModel =  ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
+        viewModel = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
 
         FetchData task = new FetchData();
         task.execute();

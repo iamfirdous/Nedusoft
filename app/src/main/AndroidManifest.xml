@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -56,7 +58,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".ui.activities.StudentDetailsActivity" />
         </activity>
-
         <activity
             android:name=".ui.activities.LessonUpdatesActivity"
             android:label="Lesson updates"
@@ -67,6 +68,10 @@
                 android:value=".ui.activities.StudentDetailsActivity" />
         </activity>
 
+        <service
+            android:name=".services.DownloadLessonService"
+            android:enabled="true"
+            android:exported="true"></service>
     </application>
 
 </manifest>

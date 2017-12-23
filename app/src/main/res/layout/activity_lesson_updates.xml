@@ -28,35 +28,60 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginBottom="0dp"
                 style="@style/NedusoftTheme.TextViewLabel"
-                android:text="Select date"/>
+                android:text="Select dates"/>
 
             <LinearLayout
+                android:id="@+id/linearLayout_dates"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="10"
                 android:layout_below="@+id/textView_select_date">
 
-                <EditText
-                    android:id="@+id/editText_from_date"
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:layout_weight="5"
-                    android:hint="From Date"/>
+                    android:layout_weight="5">
 
-                <EditText
-                    android:id="@+id/editText_to_date"
+                    <EditText
+                        android:id="@+id/editText_from_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:hint="From"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:layout_margin="8dp"
-                    android:layout_weight="5"
-                    android:hint="To Date"/>
+                    android:layout_weight="5">
+
+                    <EditText
+                        android:id="@+id/editText_to_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:hint="To"/>
+
+                </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
+
+            <Button
+                android:id="@+id/button_fetch_lesson_updates"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                style="@style/NedusoftTheme.ButtonOk"
+                android:layout_below="@+id/linearLayout_dates"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="12dp"
+                android:textSize="14dp"
+                android:text="Fetch lessons" />
 
         </RelativeLayout>
 
@@ -79,6 +104,57 @@
             android:layout_height="match_parent"
             tools:listitem="@layout/listitem_lesson_updates"
             android:scrollbars="none"/>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_lessonUpdatesProgress"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ProgressBar
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </ProgressBar>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:textColor="@color/colorPrimary"
+                android:text="Loading.. Please wait."/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearLayout_noLessonUpdates"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/ic_lesson_update" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/NedusoftTheme.TextViewLabel"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="0dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="No lessons found for\ngiven dates."/>
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

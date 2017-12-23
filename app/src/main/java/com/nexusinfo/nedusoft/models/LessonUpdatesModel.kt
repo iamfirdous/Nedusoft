@@ -7,9 +7,10 @@ import java.util.*
  */
 class LessonUpdatesModel {
 
-    var lessonUpdates: ArrayList<Lesson>? = null
+    var lessons: ArrayList<Lesson>? = null
 
     class Lesson {
+        var topicId: Int = 0
         var date: Date? = null
         var facultyName: String? = null
         var subject: String? = null
@@ -17,5 +18,6 @@ class LessonUpdatesModel {
         var notes: String? = null
         var fileName: String? = null
         var isFileAvailable: Boolean? = null
+        var data: ByteArray? = null
     }
 }

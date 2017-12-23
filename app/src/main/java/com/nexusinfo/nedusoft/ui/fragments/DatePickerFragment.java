@@ -46,9 +46,9 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         this.year = view.getYear();
 
         if (tag.equals(FROM_DATE))
-            etFromDate.setText(this.day+"/"+(this.month+1)+"/"+this.year);
+            etFromDate.setText(this.day+"-"+(this.month+1)+"-"+this.year);
 
         if (tag.equals(TO_DATE))
-            etToDate.setText(this.day+"/"+(this.month+1)+"/"+this.year);
+            etToDate.setText(this.day+"-"+(this.month+1)+"-"+this.year);
     }
 }
