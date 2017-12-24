@@ -1,8 +1,10 @@
 package com.nexusinfo.nedusoft.ui.adapters;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.models.LessonUpdatesModel;
 
+import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -78,6 +81,8 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
 
             viewHolder.buttonDownload.setOnClickListener(view -> {
                 Toast.makeText(getContext(), "Downloading file for " + lesson.getTopic() + ", " + lesson.getSubject(), Toast.LENGTH_LONG).show();
+                DowmloadTask task = new DowmloadTask();
+                task.execute(lesson);
             });
         }
         else {
@@ -93,5 +98,30 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
         public TextView tvTopic, tvNotes, tvSubject, tvFaculty, tvDate, tvFileName;
         public ImageView ivAttachment;
         public Button buttonDownload;
+    }
+
+    class DowmloadTask extends AsyncTask<LessonUpdatesModel.Lesson, String, String> {
+
+        private static final String PATH = "/storage/emulated/0/Download/";
+
+
+
+        @Override
+        protected String doInBackground(LessonUpdatesModel.Lesson... lessons) {
+
+            try {
+                LessonUpdatesModel.Lesson lesson = lessons[0];
+
+                FileOutputStream fos = new FileOutputStream(PATH + lesson.getFileName());
+                fos.write(lesson.getData());
+                fos.close();
+
+            }
+            catch (Exception e) {
+                Log.e("Error", e.toString());
+            }
+
+            return null;
+        }
     }
 }

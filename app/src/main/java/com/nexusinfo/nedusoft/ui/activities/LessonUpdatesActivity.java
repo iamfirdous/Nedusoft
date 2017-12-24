@@ -1,9 +1,14 @@
 package com.nexusinfo.nedusoft.ui.activities;
 
+import android.Manifest;
 import android.app.DialogFragment;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
@@ -26,12 +31,15 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class LessonUpdatesActivity extends AppCompatActivity {
+public class LessonUpdatesActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
 
     private EditText etFromDate, etToDate;
     private Button buttonFetch;
     private ListView listViewlessons;
     private LinearLayout loading, noLessons;
+    private View mLayout;
+
+    private Snackbar snackbar;
 
     private DialogFragment newFragment = new DatePickerFragment();
 
@@ -43,6 +51,8 @@ public class LessonUpdatesActivity extends AppCompatActivity {
 
     private LessonUpdatesViewModel viewModel;
     private LessonUpdatesModel model;
+
+    private static final int PERMISSION_REQUEST_WRITE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +73,11 @@ public class LessonUpdatesActivity extends AppCompatActivity {
         listViewlessons = findViewById(R.id.listView_lesson_updates);
         loading = findViewById(R.id.linearLayout_lessonUpdatesProgress);
         noLessons = findViewById(R.id.linearLayout_noLessonUpdates);
+        mLayout = findViewById(R.id.relativeLayout_lesson_update);
+
+        snackbar = Snackbar.make(mLayout, "", Snackbar.LENGTH_INDEFINITE);
+
+        request();
 
         etFromDate.setInputType(InputType.TYPE_NULL);
         etToDate.setInputType(InputType.TYPE_NULL);
@@ -86,6 +101,62 @@ public class LessonUpdatesActivity extends AppCompatActivity {
             FetchLessons taskFromButton = new FetchLessons();
             taskFromButton.execute();
         });
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        if (requestCode == PERMISSION_REQUEST_WRITE) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                snackbar.setAction("DISMISS", view -> {
+                    snackbar.dismiss();
+                });
+                snackbar.setText("Write permission was granted");
+                snackbar.show();
+            }
+            else {
+                snackbar.setAction("DISMISS", view -> {
+                    snackbar.dismiss();
+                });
+                snackbar.setText("Write permission request was denied. You cannot download the attachments.");
+                snackbar.show();
+            }
+        }
+    }
+
+    private void request() {
+        // BEGIN_INCLUDE(startCamera)
+        // Check if the Camera permission has been granted
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+                == PackageManager.PERMISSION_GRANTED) {
+            // Permission is already available, start camera preview
+            snackbar.setAction("DISMISS", view -> {
+                snackbar.dismiss();
+            });
+            snackbar.setText("Write permission is available. You can download the attachments.");
+            snackbar.show();
+        } else {
+            // Permission is missing and must be requested.
+            requestWritePermission();
+        }
+        // END_INCLUDE(startCamera)
+    }
+
+    public void requestWritePermission() {
+        if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+            snackbar.setAction("GRANT\nPERMISSION", view -> {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_WRITE);
+            });
+            snackbar.setText("Write permission is required for downloading the attachments");
+            snackbar.show();
+        }
+        else {
+            snackbar.setAction("DISMISS", view -> {
+                snackbar.dismiss();
+            });
+            snackbar.setText("Permission is not available. Requesting write permission.");
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST_WRITE);
+        }
     }
 
     class FetchLessons extends AsyncTask<String, String, String> {
@@ -155,5 +226,9 @@ public class LessonUpdatesActivity extends AppCompatActivity {
         } catch (ParseException e) {
             return null;
         }
+    }
+
+    public static LessonUpdatesActivity getInstance() {
+        return new LessonUpdatesActivity();
     }
 }

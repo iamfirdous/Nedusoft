@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    android:id="@+id/relativeLayout_lesson_update"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -73,6 +74,7 @@
                 android:id="@+id/button_fetch_lesson_updates"
                 android:layout_width="wrap_content"
                 android:layout_height="35dp"
+                android:background="@color/colorPrimary"
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 style="@style/NedusoftTheme.ButtonOk"
