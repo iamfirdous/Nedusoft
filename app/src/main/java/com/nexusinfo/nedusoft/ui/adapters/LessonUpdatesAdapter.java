@@ -1,9 +1,13 @@
 package com.nexusinfo.nedusoft.ui.adapters;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +20,7 @@ import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.models.LessonUpdatesModel;
+import com.nexusinfo.nedusoft.ui.activities.LessonUpdatesActivity;
 
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
@@ -29,12 +34,14 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
 
     private List<LessonUpdatesModel.Lesson> lessons;
     private LayoutInflater inflater;
+    private Snackbar snackbar;
 
     public LessonUpdatesAdapter(@NonNull Context context, List<LessonUpdatesModel.Lesson> lessons) {
         super(context, R.layout.listitem_lesson_updates, lessons);
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.lessons = lessons;
+        snackbar = Snackbar.make(LessonUpdatesActivity.mLayout, "", Snackbar.LENGTH_INDEFINITE);
     }
 
     @NonNull
@@ -80,7 +87,6 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
             viewHolder.tvFileName.setText(lesson.getFileName());
 
             viewHolder.buttonDownload.setOnClickListener(view -> {
-                Toast.makeText(getContext(), "Downloading file for " + lesson.getTopic() + ", " + lesson.getSubject(), Toast.LENGTH_LONG).show();
                 DowmloadTask task = new DowmloadTask();
                 task.execute(lesson);
             });
@@ -95,26 +101,43 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
     }
 
     public static class ViewHolder {
+
         public TextView tvTopic, tvNotes, tvSubject, tvFaculty, tvDate, tvFileName;
         public ImageView ivAttachment;
         public Button buttonDownload;
     }
-
     class DowmloadTask extends AsyncTask<LessonUpdatesModel.Lesson, String, String> {
 
         private static final String PATH = "/storage/emulated/0/Download/";
 
+        @Override
+        protected void onPreExecute() {
 
+        }
 
         @Override
         protected String doInBackground(LessonUpdatesModel.Lesson... lessons) {
 
             try {
-                LessonUpdatesModel.Lesson lesson = lessons[0];
 
-                FileOutputStream fos = new FileOutputStream(PATH + lesson.getFileName());
-                fos.write(lesson.getData());
-                fos.close();
+                if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                    LessonUpdatesModel.Lesson lesson = lessons[0];
+                    publishProgress("Downloading", lesson.getTopic(), lesson.getSubject());
+
+                    FileOutputStream fos = new FileOutputStream(PATH + lesson.getFileName());
+                    fos.write(lesson.getData());
+                    fos.close();
+
+                }
+                else {
+                    snackbar.setAction("DISMISS", view -> {
+                        snackbar.dismiss();
+                    });
+                    snackbar.setText("Write permission isn't available." +
+                            " To grant write permissions goto Settings -> Apps -> Nedusoft -> Permissions and enable the Storage permissions");
+                    snackbar.show();
+                    cancel(true);
+                }
 
             }
             catch (Exception e) {
@@ -122,6 +145,17 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
             }
 
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            if(values[0].equals("Downloading"))
+                Toast.makeText(getContext(), "Downloading file for " + values[1] + ", " + values[2], Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            Toast.makeText(getContext(), "Download complete.", Toast.LENGTH_LONG).show();
         }
     }
 }

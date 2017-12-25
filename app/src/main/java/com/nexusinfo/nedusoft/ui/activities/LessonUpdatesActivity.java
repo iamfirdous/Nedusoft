@@ -37,7 +37,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
     private Button buttonFetch;
     private ListView listViewlessons;
     private LinearLayout loading, noLessons;
-    private View mLayout;
+    public static View mLayout;
 
     private Snackbar snackbar;
 
@@ -127,7 +127,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
     private void request() {
         // BEGIN_INCLUDE(startCamera)
         // Check if the Camera permission has been granted
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
             // Permission is already available, start camera preview
             snackbar.setAction("DISMISS", view -> {
