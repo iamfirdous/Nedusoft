@@ -44,7 +44,7 @@
                 android:title="Lesson updates" />
             <item
                 android:id="@+id/nav_feedback"
-                android:icon="@drawable/ic_feedback"
+                android:icon="@drawable/ic_feedback_black"
                 android:title="Want to say something?" />
         </menu>
     </item>

@@ -104,6 +104,18 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
     }
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        viewModel.setLessonUpdates(model);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        model = viewModel.getLessonUpdates();
+    }
+
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 
         if (requestCode == PERMISSION_REQUEST_WRITE) {

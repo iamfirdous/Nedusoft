@@ -19,10 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.R;
+import com.nexusinfo.nedusoft.connection.DatabaseConnection;
 import com.nexusinfo.nedusoft.models.LessonUpdatesModel;
 import com.nexusinfo.nedusoft.ui.activities.LessonUpdatesActivity;
 
 import java.io.FileOutputStream;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -106,6 +110,7 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
         public ImageView ivAttachment;
         public Button buttonDownload;
     }
+
     class DowmloadTask extends AsyncTask<LessonUpdatesModel.Lesson, String, String> {
 
         private static final String PATH = "/storage/emulated/0/Download/";
@@ -118,30 +123,45 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
         @Override
         protected String doInBackground(LessonUpdatesModel.Lesson... lessons) {
 
+            Context context = getContext();
             try {
 
-                if(ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                if(ActivityCompat.checkSelfPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+
                     LessonUpdatesModel.Lesson lesson = lessons[0];
+
                     publishProgress("Downloading", lesson.getTopic(), lesson.getSubject());
 
+                    DatabaseConnection databaseConnection = new DatabaseConnection(context);
+                    Connection conn = databaseConnection.getConnection();
+
+                    String query = "SELECT Data FROM View_LessonUpdate WHERE TopicId = " + lesson.getTopicId();
+                    Log.e("QueryForData", query);
+
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery(query);
+
+                    byte[] data = null;
+
+                    while (rs.next()) {
+                        data = rs.getBytes("Data");
+                    }
+
                     FileOutputStream fos = new FileOutputStream(PATH + lesson.getFileName());
-                    fos.write(lesson.getData());
+                    fos.write(data);
                     fos.close();
 
                 }
                 else {
-                    snackbar.setAction("DISMISS", view -> {
-                        snackbar.dismiss();
-                    });
-                    snackbar.setText("Write permission isn't available." +
-                            " To grant write permissions goto Settings -> Apps -> Nedusoft -> Permissions and enable the Storage permissions");
-                    snackbar.show();
+                    publishProgress("NoPermission");
                     cancel(true);
                 }
 
             }
             catch (Exception e) {
                 Log.e("Error", e.toString());
+                publishProgress("Exception");
+                cancel(true);
             }
 
             return null;
@@ -151,6 +171,19 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Downloading"))
                 Toast.makeText(getContext(), "Downloading file for " + values[1] + ", " + values[2], Toast.LENGTH_SHORT).show();
+
+            if(values[0].equals("NoPermission")) {
+                Toast.makeText(getContext(), "Write permission isn't available.", Toast.LENGTH_LONG).show();
+                snackbar.setAction("DISMISS", view -> {
+                    snackbar.dismiss();
+                });
+                snackbar.setText("Goto Settings -> Apps -> Nedusoft -> Permissions to enable the Storage permissions");
+                snackbar.show();
+            }
+
+            if(values[0].equals("Exception")) {
+                Toast.makeText(getContext(), "Some error occurred while downloading the file.", Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override

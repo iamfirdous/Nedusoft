@@ -13,10 +13,10 @@
         android:id="@+id/cardView_lesson_updates1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginBottom="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="4dp"
         app:cardCornerRadius="@dimen/card_corner_radius">
 
         <RelativeLayout
@@ -93,10 +93,10 @@
         android:id="@+id/cardView_lesson_updates2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="12dp"
-        android:layout_marginRight="12dp"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="3dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
         app:cardCornerRadius="@dimen/card_corner_radius"
         android:layout_below="@+id/cardView_lesson_updates1">
 

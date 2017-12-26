@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="12dp">
+
+        <ImageView
+            android:id="@+id/imageView_feedback"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginRight="12dp"
+            android:src="@drawable/nedusoft_slider_logo" />
+
+        <TextView
+            android:id="@+id/textView_feedback_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/imageView_feedback"
+            android:layout_toEndOf="@+id/imageView_feedback"
+            android:layout_alignRight="@id/imageView_attachment1"
+            android:layout_marginRight="28dp"
+            android:textColor="@color/colorTextBlack"
+            android:textSize="16sp"
+            android:text="Give feedback to Nedusoft" />
+
+        <TextView
+            android:id="@+id/textView_feedback_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView_feedback_title"
+            android:layout_toEndOf="@+id/imageView_feedback"
+            android:layout_marginRight="28dp"
+            android:layout_marginBottom="8dp"
+            android:text="We need your help to improve ourselves." />
+
+    </RelativeLayout>
+
+</android.support.design.widget.CoordinatorLayout>

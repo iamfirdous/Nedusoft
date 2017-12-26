@@ -67,6 +67,18 @@ public class StudentDetailsActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        viewModel.setStudent(model);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        model = viewModel.getStudent();
+    }
+
     public void initializeUI () {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -179,7 +191,8 @@ public class StudentDetailsActivity extends AppCompatActivity
                 startActivity(lessonUpdateIntent);
                 break;
             case R.id.nav_feedback:
-
+                Intent feedbackIntent = new Intent(StudentDetailsActivity.this, FeedbackActivity.class);
+                startActivity(feedbackIntent);
                 break;
         }
 

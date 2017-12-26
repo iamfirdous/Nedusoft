@@ -53,7 +53,6 @@ public class LessonUpdatesViewModel extends ViewModel {
             lesson.setNotes(rs.getString("Notes"));
             lesson.setFileName(rs.getString("Extension"));
             lesson.setFileAvailable(rs.getString("Extension") != null);
-            lesson.setData(rs.getBytes("Data"));
 
             lessons.add(lesson);
         }
