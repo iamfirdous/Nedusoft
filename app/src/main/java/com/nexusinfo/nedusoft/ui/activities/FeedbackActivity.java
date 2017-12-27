@@ -13,6 +13,7 @@ import android.widget.ListView;
 import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.adapters.FeedbackAdapter;
+import com.nexusinfo.nedusoft.utils.Util;
 import com.nexusinfo.nedusoft.viewmodels.FeedbackViewModel;
 
 public class FeedbackActivity extends AppCompatActivity {
@@ -52,6 +53,7 @@ public class FeedbackActivity extends AppCompatActivity {
                     emailIntent.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
                     emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Feedback");
 
+                    Util.showCustomToast(this, "Please select an email client.\nFor eg., Gmail");
                     startActivity(Intent.createChooser(emailIntent,"Please select an email client... For eg., Gmail"));
                     break;
                 case FeedbackViewModel.FEEDBACK_NEDUSOFT:
