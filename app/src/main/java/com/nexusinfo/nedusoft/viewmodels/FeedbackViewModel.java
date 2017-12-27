@@ -15,16 +15,21 @@ public class FeedbackViewModel extends ViewModel {
 
     private ArrayList<FeedbackModel> list;
 
-    public ArrayList<FeedbackModel> getFeedbacks() {
+    public static final int FEEDBACK_SCHOOL = 1;
+    public static final int FEEDBACK_NEDUSOFT = 2;
 
+    public ArrayList<FeedbackModel> getFeedbacks() {
         list = new ArrayList<>();
 
         FeedbackModel model1 = new FeedbackModel();
         FeedbackModel model2 = new FeedbackModel();
 
+        model1.setFeedbackId(FEEDBACK_SCHOOL);
         model1.setTitle("Give feedback to school");
         model1.setDesc("Tell us, what you think about the school and the faculties");
         model1.setImage(R.drawable.ic_school_black_24dp);
+
+        model2.setFeedbackId(FEEDBACK_NEDUSOFT);
         model2.setTitle("Give feedback to Nedusoft");
         model2.setDesc("We need your help to improve our app and our service.");
         model2.setImage(R.drawable.nedusoft_slider_logo);

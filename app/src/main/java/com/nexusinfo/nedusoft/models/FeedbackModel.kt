@@ -5,6 +5,7 @@ package com.nexusinfo.nedusoft.models
  */
 
 class FeedbackModel {
+    var feedbackId: Int? = 0
     var title: String? = null
     var desc: String? = null
     var image: Int = 0

@@ -29,7 +29,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
     private EditText etSchoolCode;
     private TextView tvError;
 
-    private String schoolCode, dbName;
+    private String schoolCode, dbName, schoolEmail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,21 +108,25 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
             try{
                 user = new UserModel();
 
+                String query = "SELECT * FROM " + SchoolCodeConnection.TABLE_NEDUSOFT + " WHERE " + SchoolCodeConnection.COL_UNIQUE_ID + " = '" + schoolCode + "'";
+
                 SchoolCodeConnection schoolCodeConnection = new SchoolCodeConnection();
 
                 Connection conn = schoolCodeConnection.getConnection();
                 Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery("SELECT * FROM " + SchoolCodeConnection.TABLE_NEDUSOFT + " WHERE " + SchoolCodeConnection.COL_UNIQUE_ID + " = '" + schoolCode + "'");
+                ResultSet rs = stmt.executeQuery(query);
                 if(rs != null){
                     int count = 0;
                     while (rs.next()){
                         schoolCode = rs.getString(SchoolCodeConnection.COL_UNIQUE_ID);
                         dbName = rs.getString(SchoolCodeConnection.COL_DATABASE_NAME);
+                        schoolEmail = rs.getString(SchoolCodeConnection.COL_EMAIL);
                         count++;
                     }
 
                     user.setSchoolCode(schoolCode);
                     user.setSchoolDBName(dbName);
+                    user.setSchoolEmail(schoolEmail);
 
                     if(count < 1) {
                         publishProgress("NoData");

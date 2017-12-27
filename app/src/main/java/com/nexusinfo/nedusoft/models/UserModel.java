@@ -8,12 +8,13 @@ import java.io.Serializable;
 
 public class UserModel implements Serializable{
 
-    private String userID, schoolCode, schoolDBName;
+    private String userID, schoolCode, schoolDBName, schoolEmail;
 
-    public UserModel(String user, String schoolCode, String schoolDBName) {
+    public UserModel(String user, String schoolCode, String schoolDBName, String schoolEmail) {
         this.userID = user;
         this.schoolCode = schoolCode;
         this.schoolDBName = schoolDBName;
+        this.schoolEmail = schoolEmail;
     }
 
     public UserModel() {
@@ -41,5 +42,13 @@ public class UserModel implements Serializable{
 
     public void setSchoolDBName(String schoolDBName) {
         this.schoolDBName = schoolDBName;
+    }
+
+    public String getSchoolEmail() {
+        return schoolEmail;
+    }
+
+    public void setSchoolEmail(String schoolEmail) {
+        this.schoolEmail = schoolEmail;
     }
 }
