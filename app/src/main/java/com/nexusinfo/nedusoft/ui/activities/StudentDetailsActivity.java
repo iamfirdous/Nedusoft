@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.MainActivity;
@@ -33,6 +32,8 @@ import com.nexusinfo.nedusoft.ui.fragments.PersonalFragment;
 import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
 import java.util.ArrayList;
+
+import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
 public class StudentDetailsActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -60,7 +61,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         task.execute();
 
         if(task.isCancelled()){
-            Toast.makeText(this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
+            showCustomToast(this, "Some error occurred, Check your internet connection.",1);
             //TODO: Try without finish()
             finish();
             return;
@@ -230,7 +231,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
                 layout.setVisibility(View.GONE);
-                Toast.makeText(StudentDetailsActivity.this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
+                showCustomToast(StudentDetailsActivity.this, "Some error occurred, Check your internet connection.",1);
                 //TODO: Try without finish()
                 finish();
             }

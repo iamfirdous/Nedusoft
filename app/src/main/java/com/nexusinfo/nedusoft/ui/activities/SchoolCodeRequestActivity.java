@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.MyApplication;
 import com.nexusinfo.nedusoft.R;
@@ -21,6 +20,8 @@ import com.nexusinfo.nedusoft.receivers.InternetConnectivityReceiver;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
 public class SchoolCodeRequestActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
@@ -149,7 +150,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                Toast.makeText(SchoolCodeRequestActivity.this, "Some error occurred.", Toast.LENGTH_LONG).show();
+                showCustomToast(SchoolCodeRequestActivity.this, "Some error occurred.",1);
                 loadFinish();
             }
             if(values[0].equals("NoData")){

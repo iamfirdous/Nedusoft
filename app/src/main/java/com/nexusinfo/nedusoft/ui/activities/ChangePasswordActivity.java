@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.MainActivity;
@@ -23,6 +22,8 @@ import com.nexusinfo.nedusoft.receivers.InternetConnectivityReceiver;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
 public class ChangePasswordActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
@@ -74,6 +75,11 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
                 task.execute("");
             }
 
+        });
+
+        tvForgotPassword.setOnClickListener(view -> {
+            Intent forgotIntent = new Intent(ChangePasswordActivity.this, ForgotPasswordActivity.class);
+            startActivity(forgotIntent);
         });
     }
 
@@ -188,7 +194,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                Toast.makeText(ChangePasswordActivity.this, "Some error occurred while changing the password.\nPlease try again or check your connection.", Toast.LENGTH_LONG).show();
+                showCustomToast(ChangePasswordActivity.this, "Some error occurred while changing the password.\nPlease try again or check your connection.",1);
                 loadFinish();
             }
             if(values[0].equals("WrongCredentials")){
@@ -200,7 +206,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
 
         @Override
         protected void onPostExecute(UserModel userModel) {
-            Toast.makeText(ChangePasswordActivity.this, "Password changed successfully, you need to login after password change", Toast.LENGTH_LONG).show();
+            showCustomToast(ChangePasswordActivity.this, "Password changed successfully, you need to login after password change",1);
             LocalDBHelper.getInstance(ChangePasswordActivity.this).deleteData();
             Intent logout = new Intent(ChangePasswordActivity.this, MainActivity.class);
             startActivity(logout);

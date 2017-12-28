@@ -10,9 +10,10 @@ import com.nexusinfo.nedusoft.models.LessonUpdatesModel;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.nexusinfo.nedusoft.utils.Util.dateToStringForDB;
 
 /**
  * Created by firdous on 12/22/2017.
@@ -21,7 +22,6 @@ import java.util.Date;
 public class LessonUpdatesViewModel extends ViewModel {
 
     private LessonUpdatesModel model;
-    private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     public void setLessonUpdates(Context context, int sectionId, Date fromDate, Date toDate) throws Exception{
 
@@ -30,11 +30,11 @@ public class LessonUpdatesViewModel extends ViewModel {
         DatabaseConnection databaseConnection = new DatabaseConnection(context);
         Connection conn = databaseConnection.getConnection();
 
-        String from = sdf.format(fromDate), to = sdf.format(toDate);
+        String from = dateToStringForDB(fromDate), to = dateToStringForDB(toDate);
 
 //        Log.e("From and To", from + " and " + to);
 
-        String query = "SELECT * FROM View_LessonUpdate WHERE SectionID = " + sectionId + " AND CAST(LessonDate as DATE) BETWEEN '" + from + "' AND '" + to + "'";
+        String query = "SELECT TopicId, LessonDate, FirstName, MiddleName, LastName, Subject, Topic, Notes, Extension FROM View_LessonUpdate WHERE SectionID = " + sectionId + " AND CAST(LessonDate as DATE) BETWEEN '" + from + "' AND '" + to + "'";
         Log.e("Query", query);
 
         Statement stmt = conn.createStatement();

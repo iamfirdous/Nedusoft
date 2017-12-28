@@ -18,7 +18,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.models.LessonUpdatesModel;
@@ -26,10 +25,12 @@ import com.nexusinfo.nedusoft.ui.adapters.LessonUpdatesAdapter;
 import com.nexusinfo.nedusoft.ui.fragments.DatePickerFragment;
 import com.nexusinfo.nedusoft.viewmodels.LessonUpdatesViewModel;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+
+import static com.nexusinfo.nedusoft.utils.Util.dateToString;
+import static com.nexusinfo.nedusoft.utils.Util.parseDate;
+import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
 public class LessonUpdatesActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback{
 
@@ -44,7 +45,6 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
     private DialogFragment newFragment = new DatePickerFragment();
 
     private static final String FROM_DATE = "FromDate", TO_DATE = "ToDate";
-    private SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 
     private String from, to;
     private int sectionId;
@@ -82,7 +82,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
         etFromDate.setInputType(InputType.TYPE_NULL);
         etToDate.setInputType(InputType.TYPE_NULL);
 
-        String today = sdf.format(new Date());
+        String today = dateToString(new Date());
         etFromDate.setText(today);
         etToDate.setText(today);
 
@@ -120,6 +120,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
 
         if (requestCode == PERMISSION_REQUEST_WRITE) {
             if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                snackbar.setDuration(Snackbar.LENGTH_LONG);
                 snackbar.setAction("DISMISS", view -> {
                     snackbar.dismiss();
                 });
@@ -127,6 +128,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
                 snackbar.show();
             }
             else {
+                snackbar.setDuration(Snackbar.LENGTH_LONG);
                 snackbar.setAction("DISMISS", view -> {
                     snackbar.dismiss();
                 });
@@ -137,21 +139,18 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
     }
 
     private void request() {
-        // BEGIN_INCLUDE(startCamera)
-        // Check if the Camera permission has been granted
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED) {
-            // Permission is already available, start camera preview
+
+            snackbar.setDuration(Snackbar.LENGTH_LONG);
             snackbar.setAction("DISMISS", view -> {
                 snackbar.dismiss();
             });
             snackbar.setText("Write permission is available. You can download the attachments.");
             snackbar.show();
         } else {
-            // Permission is missing and must be requested.
             requestWritePermission();
         }
-        // END_INCLUDE(startCamera)
     }
 
     public void requestWritePermission() {
@@ -163,6 +162,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
             snackbar.show();
         }
         else {
+            snackbar.setDuration(Snackbar.LENGTH_LONG);
             snackbar.setAction("DISMISS", view -> {
                 snackbar.dismiss();
             });
@@ -204,7 +204,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
                 loading.setVisibility(View.GONE);
                 listViewlessons.setVisibility(View.GONE);
                 noLessons.setVisibility(View.GONE);
-                Toast.makeText(LessonUpdatesActivity.this, "Some error occurred, Check your internet connection.", Toast.LENGTH_LONG).show();
+                showCustomToast(LessonUpdatesActivity.this, "Some error occurred, Check your internet connection.",1);
             }
         }
 
@@ -229,14 +229,6 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
                     listViewlessons.setAdapter(adapter);
                 }
             }
-        }
-    }
-
-    public static Date parseDate(String date) {
-        try {
-            return new SimpleDateFormat("dd-MM-yyyy").parse(date);
-        } catch (ParseException e) {
-            return null;
         }
     }
 

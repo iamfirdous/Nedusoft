@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.LocalDBHelper;
 import com.nexusinfo.nedusoft.MyApplication;
@@ -22,6 +21,8 @@ import com.nexusinfo.nedusoft.receivers.InternetConnectivityReceiver;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+
+import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
 public class LoginActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
@@ -153,7 +154,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                Toast.makeText(LoginActivity.this, "Some error occurred.", Toast.LENGTH_LONG).show();
+                showCustomToast(LoginActivity.this, "Some error occurred.",1);
                 loadFinish();
             }
             if(values[0].equals("WrongCredentials")){
@@ -166,7 +167,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         @Override
         protected void onPostExecute(UserModel userModel) {
             if (LocalDBHelper.getInstance(LoginActivity.this).addData(user)) {
-                Toast.makeText(LoginActivity.this, "Login successful", Toast.LENGTH_LONG).show();
+                showCustomToast(LoginActivity.this, "Login successful",1);
                 Intent studentDetailsIntent = new Intent(LoginActivity.this, StudentDetailsActivity.class);
                 startActivity(studentDetailsIntent);
                 finish();

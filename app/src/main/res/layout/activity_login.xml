@@ -108,7 +108,8 @@
                     android:gravity="center"
                     android:text="Forgot password?"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:visibility="visible"/>
 
                 <ProgressBar
                     android:id="@+id/progressBar_login"

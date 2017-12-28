@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +17,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
@@ -27,8 +27,10 @@ import java.io.FileOutputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.List;
+
+import static com.nexusinfo.nedusoft.utils.Util.dateToString;
+import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
 /**
  * Created by firdous on 12/23/2017.
@@ -76,8 +78,7 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
 
         LessonUpdatesModel.Lesson lesson = lessons.get(position);
 
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        String date = sdf.format(lesson.getDate());
+        String date = dateToString(lesson.getDate());
 
         viewHolder.tvTopic.setText(lesson.getTopic());
         viewHolder.tvNotes.setText(lesson.getNotes());
@@ -170,10 +171,10 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Downloading"))
-                Toast.makeText(getContext(), "Downloading file for " + values[1] + ", " + values[2], Toast.LENGTH_SHORT).show();
+                showCustomToast(getContext(), "Downloading file for " + values[1] + ", " + values[2],1);
 
             if(values[0].equals("NoPermission")) {
-                Toast.makeText(getContext(), "Write permission isn't available.", Toast.LENGTH_LONG).show();
+                showCustomToast(getContext(), "Write permission isn't available.",1, Gravity.BOTTOM, 0, 230);
                 snackbar.setAction("DISMISS", view -> {
                     snackbar.dismiss();
                 });
@@ -182,13 +183,13 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
             }
 
             if(values[0].equals("Exception")) {
-                Toast.makeText(getContext(), "Some error occurred while downloading the file.", Toast.LENGTH_LONG).show();
+                showCustomToast(getContext(), "Some error occurred while downloading the file.",1);
             }
         }
 
         @Override
         protected void onPostExecute(String s) {
-            Toast.makeText(getContext(), "Download complete.", Toast.LENGTH_LONG).show();
+            showCustomToast(getContext(), "Download completed. Your attachment for the lesson is saved at \"" + PATH + "\"",2);
         }
     }
 }
