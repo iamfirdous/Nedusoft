@@ -12,7 +12,7 @@ import com.nexusinfo.nedusoft.models.UserModel;
  * Created by firdous on 11/28/2017.
  */
 
-public class LocalDBHelper extends SQLiteOpenHelper {
+public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "LocalDB";
 
@@ -23,18 +23,18 @@ public class LocalDBHelper extends SQLiteOpenHelper {
     private static final String COLUMN_SCHOOL_DATABASE = "SchoolDatabaseName";
     private static final String COLUMN_SCHOOL_EMAIL = "SchoolEmail";
 
-    private static LocalDBHelper mInstance;
+    private static LocalDatabaseHelper mInstance;
 
-    public static LocalDBHelper getInstance(Context context) {
+    public static LocalDatabaseHelper getInstance(Context context) {
 
         if(mInstance == null){
-            mInstance = new LocalDBHelper(context);
+            mInstance = new LocalDatabaseHelper(context);
         }
         return mInstance;
     }
 
 
-    public LocalDBHelper(Context context) {
+    public LocalDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, 2);
     }
 

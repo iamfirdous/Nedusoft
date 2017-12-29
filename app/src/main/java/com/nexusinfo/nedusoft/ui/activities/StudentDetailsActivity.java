@@ -18,7 +18,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.MainActivity;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.models.StudentDetailsModel;
@@ -137,7 +137,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_logout:
-                LocalDBHelper.getInstance(this).deleteData();
+                LocalDatabaseHelper.getInstance(this).deleteData();
                 Intent logout = new Intent(this, MainActivity.class);
                 startActivity(logout);
                 finish();

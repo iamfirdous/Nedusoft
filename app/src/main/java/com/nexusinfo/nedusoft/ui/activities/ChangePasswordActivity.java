@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.MainActivity;
 import com.nexusinfo.nedusoft.MyApplication;
 import com.nexusinfo.nedusoft.R;
@@ -48,15 +48,15 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
 
         tvError = findViewById(R.id.textView_error_change_password_activity);
         tvForgotPassword = findViewById(R.id.textView_forgot_password_change_password);
-        etCurrentPassword = findViewById(R.id.editText_current_password);
-        etNewPassword = findViewById(R.id.editText_new_password);
-        etReNewPassword = findViewById(R.id.editText_re_new_password);
-        buttonSave = findViewById(R.id.button_save_changed_password);
+        etCurrentPassword = findViewById(R.id.editText_current_password_change);
+        etNewPassword = findViewById(R.id.editText_new_password_change);
+        etReNewPassword = findViewById(R.id.editText_re_new_password_change);
+        buttonSave = findViewById(R.id.button_save_changed_password_change);
         progressBar = findViewById(R.id.progressBar_change_password);
 
         progressBar.setVisibility(View.GONE);
 
-        user = LocalDBHelper.getInstance(this).getUser();
+        user = LocalDatabaseHelper.getInstance(this).getUser();
         databaseConnection = new DatabaseConnection(user.getSchoolDBName());
 
         showError(InternetConnectivityReceiver.isConnected());
@@ -207,7 +207,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
         @Override
         protected void onPostExecute(UserModel userModel) {
             showCustomToast(ChangePasswordActivity.this, "Password changed successfully, you need to login after password change",1);
-            LocalDBHelper.getInstance(ChangePasswordActivity.this).deleteData();
+            LocalDatabaseHelper.getInstance(ChangePasswordActivity.this).deleteData();
             Intent logout = new Intent(ChangePasswordActivity.this, MainActivity.class);
             startActivity(logout);
             finish();

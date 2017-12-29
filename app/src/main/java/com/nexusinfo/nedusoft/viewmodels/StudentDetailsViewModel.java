@@ -3,13 +3,11 @@ package com.nexusinfo.nedusoft.viewmodels;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.support.v4.util.ArraySet;
-import android.util.Log;
 
-import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
 import com.nexusinfo.nedusoft.models.StudentDetailsModel;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -35,7 +33,7 @@ public class StudentDetailsViewModel extends ViewModel {
 //        }
 //        System.out.println(buffer.toString());
 
-            String userID = LocalDBHelper.getInstance(context).getUser().getUserID();
+            String userID = LocalDatabaseHelper.getInstance(context).getUser().getUserID();
             DatabaseConnection databaseConnection = new DatabaseConnection(context);
             Connection conn = databaseConnection.getConnection();
 

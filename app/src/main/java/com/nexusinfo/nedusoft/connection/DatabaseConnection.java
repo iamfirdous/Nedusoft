@@ -4,7 +4,7 @@ import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
 
-import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -246,7 +246,7 @@ public class DatabaseConnection extends BaseConnection {
 
 
     public DatabaseConnection(Context context) {
-        DB = LocalDBHelper.getInstance(context).getUser().getSchoolDBName();
+        DB = LocalDatabaseHelper.getInstance(context).getUser().getSchoolDBName();
     }
 
     public DatabaseConnection(String databaseName) {

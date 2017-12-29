@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         cardView = findViewById(R.id.cardView_no_internet_connection);
         ivRefresh = findViewById(R.id.imageView_refresh_main);
 
-        if(LocalDBHelper.getInstance(this).isDataExist()){
+        if(LocalDatabaseHelper.getInstance(this).isDataExist()){
 
             checkForInternet(InternetConnectivityReceiver.isConnected());
 

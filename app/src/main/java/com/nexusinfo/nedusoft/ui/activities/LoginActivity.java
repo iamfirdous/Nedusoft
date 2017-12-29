@@ -11,7 +11,7 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.MyApplication;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
@@ -166,7 +166,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
 
         @Override
         protected void onPostExecute(UserModel userModel) {
-            if (LocalDBHelper.getInstance(LoginActivity.this).addData(user)) {
+            if (LocalDatabaseHelper.getInstance(LoginActivity.this).addData(user)) {
                 showCustomToast(LoginActivity.this, "Login successful",1);
                 Intent studentDetailsIntent = new Intent(LoginActivity.this, StudentDetailsActivity.class);
                 startActivity(studentDetailsIntent);

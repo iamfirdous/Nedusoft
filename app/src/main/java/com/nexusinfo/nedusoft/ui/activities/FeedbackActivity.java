@@ -11,7 +11,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.widget.ListView;
 
-import com.nexusinfo.nedusoft.LocalDBHelper;
+import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.ui.adapters.FeedbackAdapter;
 import com.nexusinfo.nedusoft.viewmodels.FeedbackViewModel;
@@ -44,7 +44,7 @@ public class FeedbackActivity extends AppCompatActivity {
 
             switch (feedbackId){
                 case FeedbackViewModel.FEEDBACK_SCHOOL:
-                    LocalDBHelper db = LocalDBHelper.getInstance(this);
+                    LocalDatabaseHelper db = LocalDatabaseHelper.getInstance(this);
                     String email = db.getUser().getSchoolEmail();
 
                     Log.e("Email", "" + email);
