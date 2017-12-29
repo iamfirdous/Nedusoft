@@ -90,11 +90,10 @@
                 <Button
                     android:id="@+id/button_login"
                     style="@style/NedusoftTheme.ButtonOk"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
                     android:layout_below="@+id/textInputLayout_password"
-                    android:layout_marginLeft="120dp"
-                    android:layout_marginRight="120dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/title_activity_login" />
 

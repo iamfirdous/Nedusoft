@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -65,7 +66,6 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
 
         etFromDate = findViewById(R.id.editText_from_date);
         etToDate = findViewById(R.id.editText_to_date);
@@ -101,6 +101,20 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
             FetchLessons taskFromButton = new FetchLessons();
             taskFromButton.execute();
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 
     @Override

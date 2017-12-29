@@ -52,31 +52,19 @@
         <activity
             android:name=".ui.activities.ChangePasswordActivity"
             android:label="Change password"
-            android:parentActivityName=".ui.activities.StudentDetailsActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.StudentDetailsActivity" />
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.LessonUpdatesActivity"
             android:label="Lesson updates"
-            android:parentActivityName=".ui.activities.StudentDetailsActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.StudentDetailsActivity" />
-        </activity>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".ui.activities.FeedbackActivity"
             android:label="Feedback"
-            android:parentActivityName=".ui.activities.StudentDetailsActivity"
-            android:screenOrientation="portrait">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.activities.StudentDetailsActivity" />
-        </activity>
-        <activity android:name=".ui.activities.ForgotPasswordActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ui.activities.ForgotPasswordActivity"
+            android:label="Forgot Password"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

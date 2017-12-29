@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.MenuItem;
 import android.widget.ListView;
 
 import com.nexusinfo.nedusoft.LocalDatabaseHelper;
@@ -30,7 +31,6 @@ public class FeedbackActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
 
         FeedbackViewModel viewModel = ViewModelProviders.of(this).get(FeedbackViewModel.class);
 
@@ -73,5 +73,19 @@ public class FeedbackActivity extends AppCompatActivity {
                     break;
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 }

@@ -3,8 +3,10 @@ package com.nexusinfo.nedusoft.ui.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,9 +44,8 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
 
-        android.support.v7.app.ActionBar actionBar = getSupportActionBar();
+        ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowHomeEnabled(true);
 
         tvError = findViewById(R.id.textView_error_change_password_activity);
         tvForgotPassword = findViewById(R.id.textView_forgot_password_change_password);
@@ -81,6 +82,20 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
             Intent forgotIntent = new Intent(ChangePasswordActivity.this, ForgotPasswordActivity.class);
             startActivity(forgotIntent);
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 
     @Override
