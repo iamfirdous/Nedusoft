@@ -109,7 +109,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
                 
                 SendOTPTask task = new SendOTPTask();
                 String url = "http://bulksms.nexusinfo.com/api/sendmsg.php?user=7676276763&pass=123&sender=IPGHSB&phone=" + fatherMobile + "&text=" + message + "&priority=sdnd&stype=normal";
-                Log.e("URL", url);
                 task.execute(url);
             }
         });
