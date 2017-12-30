@@ -3,15 +3,16 @@ package com.nexusinfo.nedusoft.ui.activities;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.MyApplication;
 import com.nexusinfo.nedusoft.R;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
@@ -24,7 +25,7 @@ import java.sql.Statement;
 
 import static com.nexusinfo.nedusoft.utils.Util.showCustomToast;
 
-public class LoginActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
+public class PreForgotPasswordActivity extends AppCompatActivity implements InternetConnectivityReceiver.InternetConnectivityReceiverListener {
 
     private TextView tvError, tvForgotPassword;
     private EditText etLoginName, etPassword;
@@ -41,6 +42,9 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+
         tvError = findViewById(R.id.textView_error_loginActivity);
         tvForgotPassword = findViewById(R.id.textView_forgot_password_login);
         etLoginName = findViewById(R.id.editText_login_name);
@@ -49,6 +53,12 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         progressBar = findViewById(R.id.progressBar_login);
 
         progressBar.setVisibility(View.INVISIBLE);
+
+        showCustomToast(this, "Enter your login name to proceed.", 1);
+        tvForgotPassword.setVisibility(View.INVISIBLE);
+        etPassword.setHint("");
+        etPassword.setVisibility(View.GONE);
+        buttonLogin.setText("Proceed");
 
         user = (UserModel) getIntent().getSerializableExtra("User");
         databaseConnection = new DatabaseConnection(user.getSchoolDBName());
@@ -65,17 +75,26 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 tvError.setVisibility(View.INVISIBLE);
                 Log.e("Available", "Internet Available....  :) :) :D");
 
-                LoginTask task = new LoginTask();
-                task.execute("");
+                ForgotLoginTask task = new ForgotLoginTask();
+                task.execute();
             }
 
         });
 
-        tvForgotPassword.setOnClickListener(view -> {
-            Intent preForgotIntent = new Intent(this, PreForgotPasswordActivity.class);
-            preForgotIntent.putExtra("User", user);
-            startActivity(preForgotIntent);
-        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        int id = item.getItemId();
+
+        switch (id) {
+            case android.R.id.home:
+                finish();
+                break;
+        }
+
+        return true;
     }
 
     @Override
@@ -101,23 +120,17 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         showError(isConnected);
     }
 
-    class LoginTask extends AsyncTask<String, String, UserModel>{
+    class ForgotLoginTask extends AsyncTask<String, String, UserModel> {
 
         @Override
         protected void onPreExecute() {
             loginName = etLoginName.getText().toString().trim();
-            password = etPassword.getText().toString().trim();
 
             boolean notEmpty = true;
 
             if(loginName.equals("")){
                 notEmpty = false;
                 etLoginName.setError("Enter your login name");
-                cancel(true);
-            }
-            if(password.equals("")){
-                notEmpty = false;
-                etPassword.setError("Enter your password");
                 cancel(true);
             }
             if(notEmpty){
@@ -132,7 +145,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 Connection conn = databaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
 
-                String query = "SELECT " + DatabaseConnection.COL_ROLLNO + ", " + DatabaseConnection.COL_FATHERMOBILE + " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + password + "' AND " + DatabaseConnection.COL_STATUS + " = 'Regular'";
+                String query = "SELECT " + DatabaseConnection.COL_ROLLNO + ", " + DatabaseConnection.COL_FATHERMOBILE + " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_STATUS + " = 'Regular'";
                 ResultSet rs = stmt.executeQuery(query);
 
                 boolean wrongCredentials = true;
@@ -161,27 +174,23 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                showCustomToast(LoginActivity.this, "Some error occurred.",1);
+                showCustomToast(PreForgotPasswordActivity.this, "Some error occurred.",1);
                 loadFinish();
             }
             if(values[0].equals("WrongCredentials")){
                 tvError.setVisibility(View.VISIBLE);
-                tvError.setText(R.string.errorMessageForWrongCredentials);
+                tvError.setText("Incorrect login name");
                 loadFinish();
             }
         }
 
         @Override
         protected void onPostExecute(UserModel userModel) {
-            if (LocalDatabaseHelper.getInstance(LoginActivity.this).addData(user)) {
-                showCustomToast(LoginActivity.this, "Login successful",1);
-                Intent studentDetailsIntent = new Intent(LoginActivity.this, StudentDetailsActivity.class);
-                startActivity(studentDetailsIntent);
-                finish();
-            }
-            else {
-                Log.e("LocalDBProblem", "Data not added");
-            }
+
+            Intent forgotIntent = new Intent(PreForgotPasswordActivity.this, ForgotPasswordActivity.class);
+            forgotIntent.putExtra("KEY", 1);
+            forgotIntent.putExtra("UserModel", userModel);
+            startActivity(forgotIntent);
         }
 
         private void loadStart(){

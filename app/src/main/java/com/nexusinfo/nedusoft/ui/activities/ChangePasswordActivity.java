@@ -80,6 +80,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
 
         tvForgotPassword.setOnClickListener(view -> {
             Intent forgotIntent = new Intent(ChangePasswordActivity.this, ForgotPasswordActivity.class);
+            forgotIntent.putExtra("KEY", 2);
             startActivity(forgotIntent);
         });
     }

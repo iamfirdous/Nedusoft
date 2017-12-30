@@ -65,6 +65,7 @@
             android:name=".ui.activities.ForgotPasswordActivity"
             android:label="Forgot Password"
             android:screenOrientation="portrait" />
+        <activity android:name=".ui.activities.PreForgotPasswordActivity"></activity>
     </application>
 
 </manifest>
