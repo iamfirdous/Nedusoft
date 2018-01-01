@@ -1,6 +1,8 @@
 package com.nexusinfo.nedusoft.ui.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.Space;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.nexusinfo.nedusoft.R;
+import com.nexusinfo.nedusoft.models.StudentDetailsModel;
 import com.nexusinfo.nedusoft.ui.activities.StudentDetailsActivity;
 import com.nexusinfo.nedusoft.viewmodels.StudentDetailsViewModel;
 
@@ -84,7 +87,16 @@ public class PersonalAdapter extends ArrayAdapter<String> {
 
         switch (type) {
             case TYPE_PERSONAL_HEADER:
-                viewHolder.tvName.setText(StudentDetailsViewModel.getFullName(StudentDetailsActivity.getStudent()));
+                StudentDetailsModel model = StudentDetailsActivity.getStudent();
+                viewHolder.tvName.setText(StudentDetailsViewModel.getFullName(model));
+
+                byte[] photoData = model.getPhotoData();
+
+                if(photoData != null) {
+                    Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+                    viewHolder.ivPhoto.setImageBitmap(bmp);
+                }
+
                 int i = 0;
                 for (String l: labels){
                     if(l.equals("Roll Number"))

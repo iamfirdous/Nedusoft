@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -79,6 +80,14 @@ public class PreForgotPasswordActivity extends AppCompatActivity implements Inte
                 task.execute();
             }
 
+        });
+
+        etLoginName.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                buttonLogin.performClick();
+                return true;
+            }
+            return false;
         });
 
     }

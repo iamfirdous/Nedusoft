@@ -2,6 +2,8 @@ package com.nexusinfo.nedusoft.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -15,6 +17,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -45,6 +48,7 @@ public class StudentDetailsActivity extends AppCompatActivity
 
     private View header;
     private TextView tvStudentName, tvRollNo;
+    private ImageView ivStudentPhoto;
 
     public static StudentDetailsViewModel viewModel;
     public static StudentDetailsModel model;
@@ -109,6 +113,15 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         tvStudentName.setText(StudentDetailsViewModel.getFullName(model));
         tvRollNo.setText(studentPersonalDetails.get(2));
+
+        byte[] photoData = model.getPhotoData();
+
+        if(photoData != null) {
+            Bitmap bmp = BitmapFactory.decodeByteArray(photoData, 0, photoData.length);
+            ivStudentPhoto = header.findViewById(R.id.imageView_student_photo_drawer);
+            ivStudentPhoto.setImageBitmap(bmp);
+        }
+
     }
 
     @Override

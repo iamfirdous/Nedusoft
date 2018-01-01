@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -112,29 +113,37 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
                 task.execute(url);
             }
         });
-        
+
         buttonVerify.setOnClickListener(view -> {
             String enteredOTP = etOTP.getText().toString().trim();
-            
+
             progressBar.setVisibility(View.VISIBLE);
-            
+
             if(enteredOTP.equals(OTP)) {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    buttonSendOTP.setEnabled(false);
-                    buttonVerify.setEnabled(false);
-                    etOTP.setEnabled(false);
-                    tvCountdown.setVisibility(View.INVISIBLE);
-                    
-                    etNewPassword.setVisibility(View.VISIBLE);
-                    etReNewPassword.setVisibility(View.VISIBLE);
-                    buttonSavePassword.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.INVISIBLE);
+                buttonSendOTP.setEnabled(false);
+                buttonVerify.setEnabled(false);
+                etOTP.setEnabled(false);
+                tvCountdown.setVisibility(View.INVISIBLE);
+
+                etNewPassword.setVisibility(View.VISIBLE);
+                etReNewPassword.setVisibility(View.VISIBLE);
+                buttonSavePassword.setVisibility(View.VISIBLE);
             }
             else {
-                    progressBar.setVisibility(View.INVISIBLE);
-                    etOTP.setError("Incorrect OTP");
+                progressBar.setVisibility(View.INVISIBLE);
+                etOTP.setError("Incorrect OTP");
             }
         });
-        
+
+        etOTP.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                buttonVerify.performClick();
+                return true;
+            }
+            return false;
+        });
+
         buttonSavePassword.setOnClickListener(view -> {
             if(!InternetConnectivityReceiver.isConnected()){
                 tvError.setVisibility(View.VISIBLE);
@@ -146,6 +155,14 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
                 ChangePasswordTask task = new ChangePasswordTask();
                 task.execute();
             }
+        });
+
+        etReNewPassword.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                buttonSavePassword.performClick();
+                return true;
+            }
+            return false;
         });
     }
 

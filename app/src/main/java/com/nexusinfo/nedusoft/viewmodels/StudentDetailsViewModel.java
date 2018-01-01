@@ -38,7 +38,7 @@ public class StudentDetailsViewModel extends ViewModel {
             Connection conn = databaseConnection.getConnection();
 
             Statement stmt2 = conn.createStatement();
-            String query2 = "SELECT * FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " " +
+            String query2 = "SELECT " + DatabaseConnection.COL_SEMESTER + " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " " +
                                 "LEFT JOIN MSemester ON View_StudentDetailsForReport.ExamPassed = MSemester.SemesterID " +
                                 "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
 //            Log.e("Query2: ", query2);
@@ -52,6 +52,10 @@ public class StudentDetailsViewModel extends ViewModel {
                                 "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
 //            Log.e("Query1: ", query1);
             ResultSet rs = stmt1.executeQuery(query1);
+
+            Statement stmt3 = conn.createStatement();
+            String query3 = "SELECT TypeId, TypeDesc FROM CSystemType WHERE ParentTypeId = 23";
+            ResultSet rsLang = stmt3.executeQuery(query3);
 
             while (rs.next()){
                 studentDetailsModel.setACross(rs.getString(DatabaseConnection.COL_CROSS));
@@ -122,14 +126,32 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setHospitalDetailsId(rs.getInt(DatabaseConnection.COL_HOSPITALDETAILSID));
                 studentDetailsModel.setHospitalname(rs.getString(DatabaseConnection.COL_HOSPITALNAME));
                 studentDetailsModel.setHostelFeeid(rs.getInt(DatabaseConnection.COL_HOSTELFEEID));
-                studentDetailsModel.setILanguage(rs.getString(DatabaseConnection.COL_LANGUAGE_I));
-                studentDetailsModel.setIILanguage(rs.getString(DatabaseConnection.COL_LANGUAGEII));
-                studentDetailsModel.setIIILanguage(rs.getString(DatabaseConnection.COL_LANGAUGEIII));
+
+                while (rsLang.next()){
+                    int id = rsLang.getInt("TypeId");
+                    String desc = rsLang.getString("TypeDesc");
+                    if(rs.getInt("LanguageID_I") == id){
+                        studentDetailsModel.setILanguage(desc);
+                    }
+                    if(rs.getInt("LanguageID_II") == id){
+                        studentDetailsModel.setIILanguage(desc);
+                    }
+                    if(rs.getInt("LanguageID_III") == id){
+                        studentDetailsModel.setIIILanguage(desc);
+                    }
+                    if(rs.getInt("MediumofInstruction") == id){
+                        studentDetailsModel.setMediumofInstruction(desc);
+                    }
+                }
+
+//                studentDetailsModel.setILanguage(rs.getString(DatabaseConnection.COL_LANGUAGE_I));
+//                studentDetailsModel.setIILanguage(rs.getString(DatabaseConnection.COL_LANGUAGEII));
+//                studentDetailsModel.setIIILanguage(rs.getString(DatabaseConnection.COL_LANGAUGEIII));
 //                model.setInCase();
                 studentDetailsModel.setIncome(rs.getString(DatabaseConnection.COL_INCOME));
-                studentDetailsModel.setLanguageID_I(rs.getString(DatabaseConnection.COL_LANGUAGEID_I));
-                studentDetailsModel.setLanguageID_II(rs.getString(DatabaseConnection.COL_LANGUAGEID_II));
-                studentDetailsModel.setLanguageID_III(rs.getString(DatabaseConnection.COL_LANGUAGEID_III));
+//                studentDetailsModel.setLanguageID_I(rs.getString(DatabaseConnection.COL_LANGUAGEID_I));
+//                studentDetailsModel.setLanguageID_II(rs.getString(DatabaseConnection.COL_LANGUAGEID_II));
+//                studentDetailsModel.setLanguageID_III(rs.getString(DatabaseConnection.COL_LANGUAGEID_III));
                 studentDetailsModel.setLastInstitute(rs.getString(DatabaseConnection.COL_LASTINSTITUTE));
                 studentDetailsModel.setLastName(rs.getString(DatabaseConnection.COL_LASTNAME));
                 studentDetailsModel.setLastSyllabus(rs.getInt(DatabaseConnection.COL_LASTINST_BRANCHID));
@@ -137,8 +159,8 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setManualIncome(rs.getString(DatabaseConnection.COL_MANUALINCOME));
                 studentDetailsModel.setMaxMarks(rs.getString(DatabaseConnection.COL_MAXMARKS));
                 studentDetailsModel.setMedicalInsurance(rs.getString(DatabaseConnection.COL_MEDICALINSURANCE));
-                studentDetailsModel.setMediumofInst(rs.getString(DatabaseConnection.COL_MEDIUMOFINSTRUCTION));
-                studentDetailsModel.setMediumofInstruction(rs.getString(DatabaseConnection.COL_MEDIUMOFINSTRUCTION));
+//                studentDetailsModel.setMediumofInst(rs.getString(DatabaseConnection.COL_MEDIUMOFINSTRUCTION));
+//                studentDetailsModel.setMediumofInstruction(rs.getString(DatabaseConnection.COL_MEDIUMOFINSTRUCTION));
                 studentDetailsModel.setMiddleName(rs.getString(DatabaseConnection.COL_MIDDLENAME));
                 studentDetailsModel.setMotherCmpAddress(rs.getString(DatabaseConnection.COL_MOTHERCMPADDRESS));
                 studentDetailsModel.setMotherCmpName(rs.getString(DatabaseConnection.COL_MOTHERCMPNAME));
@@ -151,8 +173,13 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setMotherprofession(rs.getString(DatabaseConnection.COL_MOTHERPROFESSION));
                 studentDetailsModel.setMothersName(rs.getString(DatabaseConnection.COL_MOTHERSNAME));
 //                model.setMsg(rs.getString(DatabaseConnection.COL_FEEDBACK));
-                studentDetailsModel.setNationality(rs.getInt(DatabaseConnection.COL_NATIONALITY));
-//                model.setNationalityName(rs.getString(DatabaseConnection.COL_NATIONALITY));
+
+//                while (rsNat.next()) {
+//                    if (rs.getInt("Nationality") == rsNat.getInt("TypeId")) {
+//                        studentDetailsModel.setNationalityName(rsNat.getString("TypeDesc"));
+//                    }
+//                }
+
                 studentDetailsModel.setNoofAttempts(rs.getString(DatabaseConnection.COL_NOOFATTEMPTS));
                 studentDetailsModel.setObtainedMarks(rs.getInt(DatabaseConnection.COL_OBTAINEDMARKS));
                 studentDetailsModel.setOtherActivity(rs.getString(DatabaseConnection.COL_OTHERACTIVITY));
@@ -161,6 +188,17 @@ public class StudentDetailsViewModel extends ViewModel {
 //                model.setPercent(rs.getFloat(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPercentage(rs.getDouble(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPhotoID(rs.getInt(DatabaseConnection.COL_PHOTOID));
+
+                if (studentDetailsModel.getPhotoID() != 0) {
+                    Statement stmt4 = conn.createStatement();
+                    String query4 = "SELECT Data FROM MStudentPhoto WHERE PhotoID = " + studentDetailsModel.getPhotoID();
+                    ResultSet rsPhoto = stmt4.executeQuery(query4);
+
+                    while(rsPhoto.next()) {
+                        studentDetailsModel.setPhotoData(rsPhoto.getBytes("Data"));
+                    }
+                }
+
                 studentDetailsModel.setPlaceofBirth(rs.getString(DatabaseConnection.COL_PLACEOFBIRTH));
                 studentDetailsModel.setPolicy(rs.getString(DatabaseConnection.COL_POLICY));
                 studentDetailsModel.setPostalCode(rs.getString(DatabaseConnection.COL_POSTALCODE));
@@ -242,7 +280,7 @@ public class StudentDetailsViewModel extends ViewModel {
         }
         else {
             Statement stmtForFeeNull = conn.createStatement();
-            rsForFee = stmtForFeeNull.executeQuery("SELECT * FROM View_FeeMasterDetails WHERE FeeID = " + studentDetailsModel.getFeeId());
+            rsForFee = stmtForFeeNull.executeQuery("SELECT FeeDescription, total_Amt FROM View_FeeMasterDetails WHERE FeeID = " + studentDetailsModel.getFeeId());
 
             while (rsForFee.next()) {
                 StudentDetailsModel.FeeRow feeRow = new StudentDetailsModel.FeeRow();
@@ -259,7 +297,7 @@ public class StudentDetailsViewModel extends ViewModel {
         }
 
         Statement stmtForAttendance = conn.createStatement();
-        ResultSet rsForAttendance = stmtForAttendance.executeQuery("SELECT * FROM TStudentAttendance WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
+        ResultSet rsForAttendance = stmtForAttendance.executeQuery("SELECT StatusID FROM TStudentAttendance WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
 
         int totalClass = 0, totalPresents = 0;
 
@@ -275,7 +313,7 @@ public class StudentDetailsViewModel extends ViewModel {
         studentDetailsModel.setTotalPresents(totalPresents);
 
         Statement stmtForMarks = conn.createStatement();
-        ResultSet rsForMarks = stmtForMarks.executeQuery("SELECT * FROM View_MarksReport WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
+        ResultSet rsForMarks = stmtForMarks.executeQuery("SELECT ExamName, Subject, FirstName, MiddleName, LastName, passmark, marksObtained, maxmark, percentage, status, ExamName FROM View_MarksReport WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
 
         ArrayList<StudentDetailsModel.MarksRow> marksRows = new ArrayList<>();
         ArraySet<String> examNames = new ArraySet<>();

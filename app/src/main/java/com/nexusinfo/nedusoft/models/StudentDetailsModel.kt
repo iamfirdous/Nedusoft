@@ -118,6 +118,7 @@ class StudentDetailsModel {
     var familyID: Int = 0
     var addressId: Int = 0
     var photoID: Int = 0
+    var photoData: ByteArray? = null
     //[Display(Name = "Fathers Name")]
     //[Required(ErrorMessage = "Fathers Name is required")]
     var fathersName: String? = null
