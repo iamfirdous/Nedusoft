@@ -54,8 +54,8 @@ public class StudentDetailsViewModel extends ViewModel {
             ResultSet rs = stmt1.executeQuery(query1);
 
             Statement stmt3 = conn.createStatement();
-            String query3 = "SELECT TypeId, TypeDesc FROM CSystemType WHERE ParentTypeId = 23";
-            ResultSet rsLang = stmt3.executeQuery(query3);
+            String query3 = "SELECT TypeId, TypeDesc FROM CSystemType WHERE ParentTypeId = 1038 OR ParentTypeId = 23 OR ParentTypeId = 1";
+            ResultSet rsCSystemType = stmt3.executeQuery(query3);
 
             while (rs.next()){
                 studentDetailsModel.setACross(rs.getString(DatabaseConnection.COL_CROSS));
@@ -127,9 +127,9 @@ public class StudentDetailsViewModel extends ViewModel {
                 studentDetailsModel.setHospitalname(rs.getString(DatabaseConnection.COL_HOSPITALNAME));
                 studentDetailsModel.setHostelFeeid(rs.getInt(DatabaseConnection.COL_HOSTELFEEID));
 
-                while (rsLang.next()){
-                    int id = rsLang.getInt("TypeId");
-                    String desc = rsLang.getString("TypeDesc");
+                while (rsCSystemType.next()){
+                    int id = rsCSystemType.getInt("TypeId");
+                    String desc = rsCSystemType.getString("TypeDesc");
                     if(rs.getInt("LanguageID_I") == id){
                         studentDetailsModel.setILanguage(desc);
                     }
@@ -141,6 +141,12 @@ public class StudentDetailsViewModel extends ViewModel {
                     }
                     if(rs.getInt("MediumofInstruction") == id){
                         studentDetailsModel.setMediumofInstruction(desc);
+                    }
+                    if(rs.getInt("Nationality")  == id){
+                        studentDetailsModel.setNationalityName(desc);
+                    }
+                    if(rs.getInt("CountryStateId") == id){
+                        studentDetailsModel.setCountry(desc);
                     }
                 }
 
