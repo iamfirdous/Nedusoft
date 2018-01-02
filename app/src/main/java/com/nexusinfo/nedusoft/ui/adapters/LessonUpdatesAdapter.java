@@ -88,6 +88,7 @@ public class LessonUpdatesAdapter extends ArrayAdapter<LessonUpdatesModel.Lesson
 
         if(lesson.isFileAvailable()) {
             viewHolder.ivAttachment.setVisibility(View.VISIBLE);
+            viewHolder.buttonDownload.setVisibility(View.VISIBLE);
 
             viewHolder.tvFileName.setText(lesson.getFileName());
 
