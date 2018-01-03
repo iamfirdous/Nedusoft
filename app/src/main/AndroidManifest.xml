@@ -11,9 +11,9 @@
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_nedusoft_new"
+        android:icon="@mipmap/ic_nedusoft_new_hd"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_nedusoft_new"
+        android:roundIcon="@mipmap/ic_nedusoft_new_hd"
         android:supportsRtl="true"
         android:theme="@style/NedusoftTheme">
         <activity
