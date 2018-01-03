@@ -35,8 +35,8 @@
         <!--<item>Course</item>-->
         <!--<item>Syllabus</item>-->
         <!--<item>Level</item>-->
-        <!--<item>Class</item>-->
-        <item>Section</item>
+        <item>Class</item>
+        <!--<item>Section</item>-->
         <item>Roll Number</item>
         <!--<item>Admission\nType</item>-->
         <item>Admission No.</item>
