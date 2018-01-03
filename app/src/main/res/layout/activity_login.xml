@@ -32,10 +32,10 @@
                 <ImageView
                     android:id="@+id/imageView_nedusoft_logo"
                     android:layout_width="match_parent"
-                    android:layout_height="140dp"
+                    android:layout_height="150dp"
                     android:layout_below="@id/textView_error_loginActivity"
                     android:layout_marginTop="20dp"
-                    android:src="@mipmap/ic_nedusoft_new" />
+                    android:src="@mipmap/ic_nedusoft_new_hd" />
 
                 <TextView
                     android:id="@+id/textView_nedusoft_title"
