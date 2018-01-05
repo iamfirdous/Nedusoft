@@ -32,7 +32,7 @@ public class FeedbackViewModel extends ViewModel {
         model2.setFeedbackId(FEEDBACK_NEDUSOFT);
         model2.setTitle("Give feedback to Nedusoft");
         model2.setDesc("We need your help to improve our app and our service.");
-        model2.setImage(R.drawable.nedusoft_slider_logo);
+        model2.setImage(R.mipmap.ic_nedusoft_new);
 
         list.add(model1);
         list.add(model2);

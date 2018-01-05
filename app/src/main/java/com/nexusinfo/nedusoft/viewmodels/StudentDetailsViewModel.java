@@ -3,6 +3,7 @@ package com.nexusinfo.nedusoft.viewmodels;
 import android.arch.lifecycle.ViewModel;
 import android.content.Context;
 import android.support.v4.util.ArraySet;
+import android.util.Log;
 
 import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
@@ -23,7 +24,6 @@ public class StudentDetailsViewModel extends ViewModel {
     private StudentDetailsModel studentDetailsModel;
 
     public void setStudent(Context context) throws Exception{
-
         studentDetailsModel = new StudentDetailsModel();
 //        Field fields[] = StudentDetailsModel.class.getDeclaredFields();
 //        StringBuffer buffer = new StringBuffer();
@@ -56,6 +56,7 @@ public class StudentDetailsViewModel extends ViewModel {
             Statement stmt3 = conn.createStatement();
             String query3 = "SELECT TypeId, TypeDesc FROM CSystemType WHERE ParentTypeId = 1038 OR ParentTypeId = 23 OR ParentTypeId = 1";
             ResultSet rsCSystemType = stmt3.executeQuery(query3);
+
 
             while (rs.next()){
                 studentDetailsModel.setACross(rs.getString(DatabaseConnection.COL_CROSS));
@@ -130,6 +131,7 @@ public class StudentDetailsViewModel extends ViewModel {
                 while (rsCSystemType.next()){
                     int id = rsCSystemType.getInt("TypeId");
                     String desc = rsCSystemType.getString("TypeDesc");
+
                     if(rs.getInt("LanguageID_I") == id){
                         studentDetailsModel.setILanguage(desc);
                     }
@@ -194,7 +196,6 @@ public class StudentDetailsViewModel extends ViewModel {
 //                model.setPercent(rs.getFloat(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPercentage(rs.getDouble(DatabaseConnection.COL_PERCENTAGE));
                 studentDetailsModel.setPhotoID(rs.getInt(DatabaseConnection.COL_PHOTOID));
-
                 if (studentDetailsModel.getPhotoID() != 0) {
                     Statement stmt4 = conn.createStatement();
                     String query4 = "SELECT Data FROM MStudentPhoto WHERE PhotoID = " + studentDetailsModel.getPhotoID();

@@ -63,7 +63,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 tvError.setText(R.string.errorMessageForInternet);
             }
             else {
-                tvError.setVisibility(View.INVISIBLE);
+                tvError.setVisibility(View.GONE);
                 Log.e("Available", "Internet Available....  :) :) :D");
 
                 LoginTask task = new LoginTask();
@@ -100,7 +100,7 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
             tvError.setText(R.string.errorMessageForInternet);
         }
         else {
-            tvError.setVisibility(View.INVISIBLE);
+            tvError.setVisibility(View.GONE);
         }
 
     }

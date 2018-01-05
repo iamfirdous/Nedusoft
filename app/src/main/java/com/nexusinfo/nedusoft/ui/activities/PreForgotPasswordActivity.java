@@ -73,7 +73,7 @@ public class PreForgotPasswordActivity extends AppCompatActivity implements Inte
                 tvError.setText(R.string.errorMessageForInternet);
             }
             else {
-                tvError.setVisibility(View.INVISIBLE);
+                tvError.setVisibility(View.GONE);
                 Log.e("Available", "Internet Available....  :) :) :D");
 
                 ForgotLoginTask task = new ForgotLoginTask();
@@ -119,7 +119,7 @@ public class PreForgotPasswordActivity extends AppCompatActivity implements Inte
             tvError.setText(R.string.errorMessageForInternet);
         }
         else {
-            tvError.setVisibility(View.INVISIBLE);
+            tvError.setVisibility(View.GONE);
         }
 
     }

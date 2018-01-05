@@ -26,7 +26,7 @@
                     style="@style/NedusoftTheme.TextViewActivityError"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:visibility="invisible"
+                    android:visibility="gone"
                     android:text="This is an error" />
 
                 <ImageView
@@ -34,8 +34,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="150dp"
                     android:layout_below="@id/textView_error_loginActivity"
-                    android:layout_marginTop="20dp"
-                    android:src="@mipmap/ic_nedusoft_new_hd" />
+                    android:layout_marginTop="18dp"
+                    android:layout_marginBottom="6dp"
+                    android:src="@mipmap/ic_nedusoft_new" />
 
                 <TextView
                     android:id="@+id/textView_nedusoft_title"

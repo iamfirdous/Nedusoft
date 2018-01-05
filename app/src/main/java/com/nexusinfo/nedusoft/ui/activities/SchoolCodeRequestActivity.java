@@ -44,7 +44,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
         buttonSubmit = findViewById(R.id.button_school_code_submit);
         tvError = findViewById(R.id.textView_error_schoolCodeActivity);
 
-        tvError.setVisibility(View.INVISIBLE);
+        tvError.setVisibility(View.GONE);
 
         showError(InternetConnectivityReceiver.isConnected());
 
@@ -55,7 +55,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
                 tvError.setText(R.string.errorMessageForInternet);
             }
             else {
-                tvError.setVisibility(View.INVISIBLE);
+                tvError.setVisibility(View.GONE);
                 Log.e("Available", "Internet Available....  :) :) :D");
 
                 CheckSchoolCodeTask task = new CheckSchoolCodeTask();
@@ -86,7 +86,7 @@ public class SchoolCodeRequestActivity extends AppCompatActivity implements Inte
             tvError.setText(R.string.errorMessageForInternet);
         }
         else {
-            tvError.setVisibility(View.INVISIBLE);
+            tvError.setVisibility(View.GONE);
         }
 
     }

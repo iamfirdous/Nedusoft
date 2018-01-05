@@ -87,9 +87,10 @@ public class FamilyAdapter extends ArrayAdapter<String> {
         }
 
         if(position == 20){
-            viewHolder.imageViewHeader.setVisibility(View.INVISIBLE);
+            viewHolder.imageViewHeader.setVisibility(View.VISIBLE);
             viewHolder.tvLabelHeader.setVisibility(View.VISIBLE);
 
+            viewHolder.imageViewHeader.setImageResource(R.drawable.ic_siblings_face);
             viewHolder.tvLabelHeader.setText("Siblings");
 
             viewHolder.spaceTop.setVisibility(View.INVISIBLE);

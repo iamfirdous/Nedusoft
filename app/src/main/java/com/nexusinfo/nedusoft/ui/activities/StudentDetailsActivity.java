@@ -228,8 +228,9 @@ public class StudentDetailsActivity extends AppCompatActivity
         protected String doInBackground(String... strings) {
 
             try {
-                if(viewModel.getStudent() == null)
+                if(viewModel.getStudent() == null) {
                     viewModel.setStudent(StudentDetailsActivity.this);
+                }
             }
             catch (Exception e){
                 Log.e("Exception", e.toString());
