@@ -132,23 +132,29 @@ public class StudentDetailsViewModel extends ViewModel {
                     int id = rsCSystemType.getInt("TypeId");
                     String desc = rsCSystemType.getString("TypeDesc");
 
-                    if(rs.getInt("LanguageID_I") == id){
-                        studentDetailsModel.setILanguage(desc);
+                    if(rs.getObject("LanguageID_I") != null) {
+                        if (rs.getInt("LanguageID_I") == id)
+                            studentDetailsModel.setILanguage(desc);
                     }
-                    if(rs.getInt("LanguageID_II") == id){
-                        studentDetailsModel.setIILanguage(desc);
+                    if(rs.getObject("LanguageID_II") != null) {
+                        if (rs.getInt("LanguageID_II") == id)
+                            studentDetailsModel.setIILanguage(desc);
                     }
-                    if(rs.getInt("LanguageID_III") == id){
-                        studentDetailsModel.setIIILanguage(desc);
+                    if(rs.getObject("LanguageID_III") != null) {
+                        if (rs.getInt("LanguageID_III") == id)
+                            studentDetailsModel.setIIILanguage(desc);
                     }
-                    if(rs.getInt("MediumofInstruction") == id){
-                        studentDetailsModel.setMediumofInstruction(desc);
+                    if(rs.getObject("MediumofInstruction") != null) {
+                        if (rs.getInt("MediumofInstruction") == id)
+                            studentDetailsModel.setMediumofInstruction(desc);
                     }
-                    if(rs.getInt("Nationality")  == id){
-                        studentDetailsModel.setNationalityName(desc);
+                    if(rs.getObject("Nationality") != null) {
+                        if (rs.getInt("Nationality") == id)
+                            studentDetailsModel.setNationalityName(desc);
                     }
-                    if(rs.getInt("CountryStateId") == id){
-                        studentDetailsModel.setCountry(desc);
+                    if(rs.getObject("CountryStateId") != null) {
+                        if (rs.getInt("CountryStateId") == id)
+                            studentDetailsModel.setCountry(desc);
                     }
                 }
 
