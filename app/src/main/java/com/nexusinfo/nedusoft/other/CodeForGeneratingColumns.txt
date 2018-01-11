@@ -68,3 +68,214 @@
             return null;
         }
     }
+
+    class GenerateTask extends AsyncTask<String, String, String> {
+
+            @Override
+            protected void onPreExecute() {
+                progressBar.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            protected String doInBackground(String... strings) {
+
+                try {
+                    DatabaseConnection connection = new DatabaseConnection("HudMerge_DB");
+                    Connection conn = connection.getConnection();
+
+                    Statement stmt = conn.createStatement();
+                    ResultSet rs = stmt.executeQuery("SELECT RollNo, StudentID, SemesterID FROM MStudent");
+
+                    int[] i = {0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1};
+
+                    while(rs.next()){
+                        int semesterId = rs.getInt("SemesterID");
+                        int studentId = rs.getInt("StudentID");
+
+                        String rollNo;
+                        Statement stmtUpdate = conn.createStatement();
+                        stmtUpdate.executeUpdate("UPDATE MStudent SET Password = '" + generateOTP() + "' WHERE StudentID = " + studentId);
+
+                        switch (semesterId) {
+                            case 1:
+                                rollNo = "17-18HG-I-" + i[1];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[1]++;
+                                break;
+                            case 2:
+                                rollNo = "17-18HG-II-" + i[2];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[2]++;
+                                break;
+                            case 3:
+                                rollNo = "17-18HG-III-" + i[3];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[3]++;
+                                break;
+                            case 4:
+                                rollNo = "17-18HG-IV-" + i[4];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[4]++;
+                                break;
+                            case 5:
+                                rollNo = "17-18HG-V-" + i[5];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[5]++;
+                                break;
+                            case 6:
+                                rollNo = "17-18HG-VI-" + i[6];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[6]++;
+                                break;
+                            case 7:
+                                rollNo = "17-18HG-VII-" + i[7];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[7]++;
+                                break;
+                            case 8:
+                                rollNo = "17-18HG-VIII-" + i[8];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[8]++;
+                                break;
+                            case 9:
+                                rollNo = "17-18HG-IX-" + i[9];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[9]++;
+                                break;
+                            case 10:
+                                rollNo = "17-18HG-X-" + i[10];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[10]++;
+                                break;
+                            case 11:
+                                rollNo = "17-18HG-NUR-" + i[11];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[11]++;
+                                break;
+                            case 12:
+                                rollNo = "17-18HG-LKG-" + i[12];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[12]++;
+                                break;
+                            case 13:
+                                rollNo = "17-18HG-UKG-" + i[13];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[13]++;
+                                break;
+                            case 14:
+                                rollNo = "17-18HR-I-" + i[14];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[14]++;
+                                break;
+                            case 15:
+                                rollNo = "17-18HR-II-" + i[15];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[15]++;
+                                break;
+                            case 16:
+                                rollNo = "17-18HR-III-" + i[16];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[16]++;
+                                break;
+                            case 17:
+                                rollNo = "17-18HR-IV-" + i[17];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[17]++;
+                                break;
+                            case 18:
+                                rollNo = "17-18HR-V-" + i[18];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[18]++;
+                                break;
+                            case 19:
+                                rollNo = "17-18HR-VI-" + i[19];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[19]++;
+                                break;
+                            case 20:
+                                rollNo = "17-18HR-VII-" + i[20];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[20]++;
+                                break;
+                            case 21:
+                                rollNo = "17-18HR-VIII-" + i[21];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[21]++;
+                                break;
+                            case 22:
+                                rollNo = "17-18HR-IX-" + i[22];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[22]++;
+                                break;
+                            case 23:
+                                rollNo = "17-18HR-X-" + i[23];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[23]++;
+                                break;
+                            case 24:
+                                rollNo = "17-18HR-NUR-" + i[24];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[24]++;
+                                break;
+                            case 25:
+                                rollNo = "17-18HR-LKG-" + i[25];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[25]++;
+                                break;
+                            case 26:
+                                rollNo = "17-18HR-UKG-" + i[26];
+                                stmtUpdate = conn.createStatement();
+                                stmtUpdate.executeUpdate("UPDATE MStudent SET RollNo = '" + rollNo + "' WHERE StudentID = " + studentId);
+                                i[26]++;
+                                break;
+
+                        }
+                    }
+                }
+                catch (Exception e) {
+                    publishProgress("Exception");
+                    cancel(true);
+                    Log.e("Exception", e.toString());
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onProgressUpdate(String... values) {
+                if(values[0].equals("Exception")) {
+                    Toast.makeText(MainActivity.this, "Some error occurred", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                progressBar.setVisibility(View.INVISIBLE);
+                Toast.makeText(MainActivity.this, "Roll numbers generated successfully", Toast.LENGTH_SHORT).show();
+            }
+        }
