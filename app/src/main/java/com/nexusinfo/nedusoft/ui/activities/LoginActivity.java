@@ -141,14 +141,25 @@ public class LoginActivity extends AppCompatActivity implements InternetConnecti
                 Connection conn = databaseConnection.getConnection();
                 Statement stmt = conn.createStatement();
 
-                String query = "SELECT " + DatabaseConnection.COL_ROLLNO + ", " + DatabaseConnection.COL_FATHERMOBILE + " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + password + "' AND " + DatabaseConnection.COL_STATUS + " = 'Regular'";
+                String query = "SELECT " + DatabaseConnection.COL_ROLLNO + ", "
+                                         + DatabaseConnection.COL_FATHERMOBILE + ", "
+                                         + DatabaseConnection.COL_STUDENTID +
+                               " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT +
+                               " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND "
+                                         + DatabaseConnection.COL_PASSWORD + " = '" + password + "' AND "
+                                         + DatabaseConnection.COL_STATUS + " = 'Regular' AND "
+                                         + DatabaseConnection.COL_CMPID + " = '" + user.getCmpId() + "' AND "
+                                         + DatabaseConnection.COL_BRCODE + " = '" + user.getBrCode() + "'";
+                Log.e("LoginQuery", query);
+
                 ResultSet rs = stmt.executeQuery(query);
 
                 boolean wrongCredentials = true;
 
-                while (rs.next()){
+                if (rs.next()){
                     user.setUserID(rs.getString(DatabaseConnection.COL_ROLLNO));
                     user.setFatherMobile(rs.getString(DatabaseConnection.COL_FATHERMOBILE));
+                    user.setStudentID(rs.getInt(DatabaseConnection.COL_STUDENTID));
                     wrongCredentials = false;
                 }
 

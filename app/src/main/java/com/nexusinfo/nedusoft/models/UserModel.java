@@ -8,15 +8,8 @@ import java.io.Serializable;
 
 public class UserModel implements Serializable{
 
-    private String userID, fatherMobile, schoolCode, schoolDBName, schoolEmail;
-
-    public UserModel(String user, String fatherMobile, String schoolCode, String schoolDBName, String schoolEmail) {
-        this.userID = user;
-        this.fatherMobile = fatherMobile;
-        this.schoolCode = schoolCode;
-        this.schoolDBName = schoolDBName;
-        this.schoolEmail = schoolEmail;
-    }
+    private String userID, fatherMobile, schoolCode, schoolDBName, schoolEmail, schoolName, cmpId, brCode;
+    private int studentID;
 
     public UserModel() {
     }
@@ -27,6 +20,14 @@ public class UserModel implements Serializable{
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
     }
 
     public String getFatherMobile() {
@@ -59,5 +60,29 @@ public class UserModel implements Serializable{
 
     public void setSchoolEmail(String schoolEmail) {
         this.schoolEmail = schoolEmail;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
+    }
+
+    public String getCmpId() {
+        return cmpId;
+    }
+
+    public void setCmpId(String cmpId) {
+        this.cmpId = cmpId;
+    }
+
+    public String getBrCode() {
+        return brCode;
+    }
+
+    public void setBrCode(String brCode) {
+        this.brCode = brCode;
     }
 }

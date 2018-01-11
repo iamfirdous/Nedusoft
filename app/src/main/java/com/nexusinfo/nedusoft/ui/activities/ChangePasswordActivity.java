@@ -180,6 +180,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
 
             try{
                 String loginName = user.getUserID();
+                int studentID = user.getStudentID();
                 Log.e("RollNo", loginName);
                 Log.e("CurrentPassword", currentPassword);
 
@@ -187,7 +188,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
                 Statement stmt = conn.createStatement();
                 Statement stmtUpdate = conn.createStatement();
 
-                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "' AND " + DatabaseConnection.COL_PASSWORD + " = '" + currentPassword + "'";
+                String query = "SELECT * FROM " + DatabaseConnection.TABLE_MSTUDENT + " WHERE " + DatabaseConnection.COL_STUDENTID + " = " + studentID + " AND " + DatabaseConnection.COL_PASSWORD + " = '" + currentPassword + "'";
                 Log.e("Query", query);
                 ResultSet rs = stmt.executeQuery(query);
 
@@ -202,7 +203,7 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
                     cancel(true);
                 }
                 else {
-                    String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "'";
+                    String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_STUDENTID + " = " + studentID;
                     stmtUpdate.executeUpdate(sql);
                 }
 
@@ -233,9 +234,10 @@ public class ChangePasswordActivity extends AppCompatActivity implements Interne
         protected void onPostExecute(UserModel userModel) {
             showCustomToast(ChangePasswordActivity.this, "Password changed successfully, you need to login after password change",1);
             LocalDatabaseHelper.getInstance(ChangePasswordActivity.this).deleteData();
-            Intent logout = new Intent(ChangePasswordActivity.this, MainActivity.class);
+            Intent logout = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+            logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logout);
-            finish();
         }
 
         private void loadStart(){

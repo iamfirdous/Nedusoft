@@ -42,6 +42,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
     private DatabaseConnection databaseConnection;
     private UserModel userModel;
     private String loginName, fatherMobile;
+    private int studentID;
 
     private String OTP, newPassword, reNewPassword;
 
@@ -87,6 +88,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
         databaseConnection = new DatabaseConnection(userModel.getSchoolDBName());
 
         loginName = userModel.getUserID();
+        studentID = userModel.getStudentID();
         fatherMobile = userModel.getFatherMobile();
 
         if(fatherMobile == null || fatherMobile.equals("")){
@@ -105,11 +107,14 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
             else {
                 tvError.setVisibility(View.INVISIBLE);
 
+                String fatherMobile = "8220985622";
+
                 OTP = generateOTP();
                 String message = "OTP:%20" + OTP + ".%20If%20you%20did%20not%20try%20to%20change%20your%20password%20of%20your%20Nedusoft%20account,%20please%20ignore%20this%20message.";
                 
                 SendOTPTask task = new SendOTPTask();
                 String url = "http://bulksms.nexusinfo.com/api/sendmsg.php?user=7676276763&pass=123&sender=IPGHSB&phone=" + fatherMobile + "&text=" + message + "&priority=sdnd&stype=normal";
+                Log.e("URL", url);
                 task.execute(url);
             }
         });
@@ -207,6 +212,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
 
         @Override
         protected void onPreExecute() {
+            buttonSendOTP.setEnabled(false);
             progressBar.setVisibility(View.VISIBLE);
         }
 
@@ -308,7 +314,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
 
                 Statement stmtUpdate = conn.createStatement();
 
-                String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + loginName + "'";
+                String sql = "UPDATE " + DatabaseConnection.TABLE_MSTUDENT + " SET " + DatabaseConnection.COL_PASSWORD + " = '" + newPassword + "' WHERE " + DatabaseConnection.COL_STUDENTID + " = " + studentID;
                 stmtUpdate.executeUpdate(sql);
             }
             catch (Exception e){
@@ -332,9 +338,10 @@ public class ForgotPasswordActivity extends AppCompatActivity implements Interne
         protected void onPostExecute(String value) {
             showCustomToast(ForgotPasswordActivity.this, "Password changed successfully, login to continue",1);
             LocalDatabaseHelper.getInstance(ForgotPasswordActivity.this).deleteData();
-            Intent logout = new Intent(ForgotPasswordActivity.this, MainActivity.class);
+            Intent logout = getBaseContext().getPackageManager()
+                    .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+            logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(logout);
-            finish();
         }
 
         private void loadStart(){

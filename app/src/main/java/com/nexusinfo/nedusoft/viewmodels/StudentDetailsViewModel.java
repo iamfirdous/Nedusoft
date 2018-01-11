@@ -8,6 +8,8 @@ import android.util.Log;
 import com.nexusinfo.nedusoft.LocalDatabaseHelper;
 import com.nexusinfo.nedusoft.connection.DatabaseConnection;
 import com.nexusinfo.nedusoft.models.StudentDetailsModel;
+import com.nexusinfo.nedusoft.models.UserModel;
+import com.nexusinfo.nedusoft.utils.Util;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -33,14 +35,17 @@ public class StudentDetailsViewModel extends ViewModel {
 //        }
 //        System.out.println(buffer.toString());
 
-            String userID = LocalDatabaseHelper.getInstance(context).getUser().getUserID();
+        UserModel user = LocalDatabaseHelper.getInstance(context).getUser();
+            String userID = user.getUserID();
+            int studentID = user.getStudentID();
+
             DatabaseConnection databaseConnection = new DatabaseConnection(context);
             Connection conn = databaseConnection.getConnection();
 
             Statement stmt2 = conn.createStatement();
             String query2 = "SELECT " + DatabaseConnection.COL_SEMESTER + " FROM " + DatabaseConnection.VIEW_STUDENT_DETAILS_FOR_REPORT + " " +
                                 "LEFT JOIN MSemester ON View_StudentDetailsForReport.ExamPassed = MSemester.SemesterID " +
-                                "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
+                                "WHERE " + DatabaseConnection.COL_STUDENTID + " = " + studentID;
 //            Log.e("Query2: ", query2);
             ResultSet rsForEP = stmt2.executeQuery(query2);
 
@@ -49,7 +54,7 @@ public class StudentDetailsViewModel extends ViewModel {
                                 "LEFT JOIN MQuota ON View_StudentDetailsForReport.QuotaID = MQuota.QuotaID " +
                                 "LEFT JOIN MSemester ON View_StudentDetailsForReport.SemesterID = MSemester.SemesterID " +
                                 "LEFT JOIN CSystemType ON View_StudentDetailsForReport.AdmissionTypeID = CSystemType.TypeID " +
-                                "WHERE " + DatabaseConnection.COL_ROLLNO + " = '" + userID + "'";
+                                "WHERE " + DatabaseConnection.COL_STUDENTID + " = " + studentID;
 //            Log.e("Query1: ", query1);
             ResultSet rs = stmt1.executeQuery(query1);
 
@@ -58,7 +63,7 @@ public class StudentDetailsViewModel extends ViewModel {
             ResultSet rsCSystemType = stmt3.executeQuery(query3);
 
 
-            while (rs.next()){
+            if (rs.next()){
                 studentDetailsModel.setACross(rs.getString(DatabaseConnection.COL_CROSS));
                 studentDetailsModel.setAddressId(rs.getInt(DatabaseConnection.COL_ADDRESSID));
                 studentDetailsModel.setAddressLine1(rs.getString(DatabaseConnection.COL_ADDRESSLINE1));
@@ -133,28 +138,40 @@ public class StudentDetailsViewModel extends ViewModel {
                     String desc = rsCSystemType.getString("TypeDesc");
 
                     if(rs.getObject("LanguageID_I") != null) {
-                        if (rs.getInt("LanguageID_I") == id)
-                            studentDetailsModel.setILanguage(desc);
+                        if (!rs.getString("LanguageID_I").equals("")){
+                            if (rs.getInt("LanguageID_I") == id)
+                                studentDetailsModel.setILanguage(desc);
+                        }
                     }
                     if(rs.getObject("LanguageID_II") != null) {
-                        if (rs.getInt("LanguageID_II") == id)
-                            studentDetailsModel.setIILanguage(desc);
+                        if (!rs.getString("LanguageID_II").equals("")){
+                            if (rs.getInt("LanguageID_II") == id)
+                                studentDetailsModel.setIILanguage(desc);
+                        }
                     }
                     if(rs.getObject("LanguageID_III") != null) {
-                        if (rs.getInt("LanguageID_III") == id)
-                            studentDetailsModel.setIIILanguage(desc);
+                        if (!rs.getString("LanguageID_III").equals("")){
+                            if (rs.getInt("LanguageID_III") == id)
+                                studentDetailsModel.setIIILanguage(desc);
+                        }
                     }
                     if(rs.getObject("MediumofInstruction") != null) {
-                        if (rs.getInt("MediumofInstruction") == id)
-                            studentDetailsModel.setMediumofInstruction(desc);
+                        if (!rs.getString("MediumofInstruction").equals("")){
+                            if (rs.getInt("MediumofInstruction") == id)
+                                studentDetailsModel.setMediumofInstruction(desc);
+                        }
                     }
                     if(rs.getObject("Nationality") != null) {
-                        if (rs.getInt("Nationality") == id)
-                            studentDetailsModel.setNationalityName(desc);
+                        if (!rs.getString("Nationality").equals("")){
+                            if (rs.getInt("Nationality") == id)
+                                studentDetailsModel.setNationalityName(desc);
+                        }
                     }
                     if(rs.getObject("CountryStateId") != null) {
-                        if (rs.getInt("CountryStateId") == id)
-                            studentDetailsModel.setCountry(desc);
+                        if (!rs.getString("CountryStateId").equals("")){
+                            if (rs.getInt("CountryStateId") == id)
+                                studentDetailsModel.setCountry(desc);
+                        }
                     }
                 }
 
@@ -490,5 +507,4 @@ public class StudentDetailsViewModel extends ViewModel {
 
         return hospitalDetails;
     }
-
 }

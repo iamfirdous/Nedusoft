@@ -1,6 +1,7 @@
 package com.nexusinfo.nedusoft.ui.activities;
 
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -11,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -54,6 +56,8 @@ public class StudentDetailsActivity extends AppCompatActivity
     public static StudentDetailsModel model;
     public static ArrayList<String> studentPersonalDetails;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +86,11 @@ public class StudentDetailsActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         model = viewModel.getStudent();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+
     }
 
     public void initializeUI () {
@@ -150,10 +159,18 @@ public class StudentDetailsActivity extends AppCompatActivity
         //noinspection SimplifiableIfStatement
         switch (id) {
             case R.id.action_logout:
-                LocalDatabaseHelper.getInstance(this).deleteData();
-                Intent logout = new Intent(this, MainActivity.class);
-                startActivity(logout);
-                finish();
+                new AlertDialog.Builder(this)
+                        .setTitle("Logout")
+                        .setMessage("Are you sure you want to logout?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            LocalDatabaseHelper.getInstance(this).deleteData();
+                            Intent logout = getBaseContext().getPackageManager()
+                                    .getLaunchIntentForPackage( getBaseContext().getPackageName() );
+                            logout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(logout);
+                        })
+                        .setNegativeButton("No", null)
+                        .show();
                 break;
 
             case R.id.action_refresh:

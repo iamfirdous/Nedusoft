@@ -19,10 +19,14 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
     private static final String TABLE_NAME = "LocalTB";
 
     private static final String COLUMN_USER_ID = "UserID";
+    private static final String COLUMN_STUDENT_ID = "StudentID";
     private static final String COLUMN_FATHER_MOBILE = "FatherMobile";
     private static final String COLUMN_SCHOOL_CODE = "SchoolCode";
     private static final String COLUMN_SCHOOL_DATABASE = "SchoolDatabaseName";
     private static final String COLUMN_SCHOOL_EMAIL = "SchoolEmail";
+    private static final String COLUMN_SCHOOL_NAME = "SchoolName";
+    private static final String COLUMN_COMPANY_ID = "CompanyID";
+    private static final String COLUMN_BRANCH_CODE = "BranchCode";
 
     private static LocalDatabaseHelper mInstance;
 
@@ -36,12 +40,21 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
 
     public LocalDatabaseHelper(Context context) {
-        super(context, DATABASE_NAME, null, 3);
+        super(context, DATABASE_NAME, null, 5);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE " + TABLE_NAME + " ( " + COLUMN_USER_ID + " TEXT PRIMARY KEY, " + COLUMN_SCHOOL_CODE + " TEXT, " + COLUMN_SCHOOL_DATABASE + " TEXT, " + COLUMN_SCHOOL_EMAIL + " TEXT, " + COLUMN_FATHER_MOBILE + " TEXT )");
+        db.execSQL("CREATE TABLE " + TABLE_NAME + " " +
+                "( " + COLUMN_USER_ID + " TEXT PRIMARY KEY," +
+                " " + COLUMN_STUDENT_ID + " INTEGER," +
+                " " + COLUMN_SCHOOL_CODE + " TEXT," +
+                " " + COLUMN_SCHOOL_DATABASE + " TEXT," +
+                " " + COLUMN_SCHOOL_EMAIL + " TEXT," +
+                " " + COLUMN_FATHER_MOBILE + " TEXT," +
+                " " + COLUMN_SCHOOL_NAME + " TEXT," +
+                " " + COLUMN_COMPANY_ID + " TEXT," +
+                " " + COLUMN_BRANCH_CODE + " TEXT )");
     }
 
     @Override
@@ -56,10 +69,14 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
 
         cv.put(COLUMN_USER_ID, user.getUserID());
+        cv.put(COLUMN_STUDENT_ID, user.getStudentID());
         cv.put(COLUMN_SCHOOL_CODE, user.getSchoolCode());
         cv.put(COLUMN_SCHOOL_DATABASE, user.getSchoolDBName());
         cv.put(COLUMN_SCHOOL_EMAIL, user.getSchoolEmail());
         cv.put(COLUMN_FATHER_MOBILE, user.getFatherMobile());
+        cv.put(COLUMN_SCHOOL_NAME, user.getSchoolName());
+        cv.put(COLUMN_COMPANY_ID, user.getCmpId());
+        cv.put(COLUMN_BRANCH_CODE, user.getBrCode());
 
         return (db.insert(TABLE_NAME, null, cv) != -1);
     }
@@ -78,10 +95,14 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
         UserModel user = new UserModel();
         user.setUserID(cursor.getString(0));
-        user.setSchoolCode(cursor.getString(1));
-        user.setSchoolDBName(cursor.getString(2));
-        user.setSchoolEmail(cursor.getString(3));
-        user.setFatherMobile(cursor.getString(4));
+        user.setStudentID(cursor.getInt(1));
+        user.setSchoolCode(cursor.getString(2));
+        user.setSchoolDBName(cursor.getString(3));
+        user.setSchoolEmail(cursor.getString(4));
+        user.setFatherMobile(cursor.getString(5));
+        user.setSchoolName(cursor.getString(6));
+        user.setCmpId(cursor.getString(7));
+        user.setBrCode(cursor.getString(8));
 
         return user;
     }

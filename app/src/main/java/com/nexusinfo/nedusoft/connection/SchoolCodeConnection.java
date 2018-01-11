@@ -23,7 +23,7 @@ public class SchoolCodeConnection extends BaseConnection {
     public static final String COL_DATABASE_NAME = "DatabaseName";
     public static final String COL_SCHOOL_NAME = "SchoolName";
     public static final String COL_COMPANY_ID = "cmpid";
-    public static final String COL_BARCODE = "brcode";
+    public static final String COL_BRCODE = "brcode";
     public static final String COL_EMAIL = "Email";
 
     public SchoolCodeConnection() {
