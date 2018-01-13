@@ -218,7 +218,7 @@ public class LessonUpdatesActivity extends AppCompatActivity implements Activity
                 loading.setVisibility(View.GONE);
                 listViewlessons.setVisibility(View.GONE);
                 noLessons.setVisibility(View.GONE);
-                showCustomToast(LessonUpdatesActivity.this, "Some error occurred, Check your internet connection.",1);
+                showCustomToast(LessonUpdatesActivity.this, "Some error occurred, try again.",1);
             }
         }
 

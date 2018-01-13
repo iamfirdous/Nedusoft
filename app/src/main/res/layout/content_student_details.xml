@@ -10,28 +10,69 @@
     tools:showIn="@layout/app_bar_student_details"
     android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/linlaHeaderProgress"
+    <RelativeLayout
+        android:id="@+id/relativeLayout_load"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:gravity="center"
         android:orientation="vertical"
         android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView_nedusoft_logo"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_above="@+id/pbHeaderProgress"
+            android:src="@mipmap/ic_nedusoft_new" />
 
         <ProgressBar
             android:id="@+id/pbHeaderProgress"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true">
         </ProgressBar>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/pbHeaderProgress"
             android:textColor="@color/colorPrimary"
             android:text="Loading.. Please wait."/>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout_someError"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imageView_nedusoft_logo1"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_above="@+id/textView_someError"
+            android:src="@mipmap/ic_nedusoft_new" />
+
+        <TextView
+            android:id="@+id/textView_someError"
+            style="@style/NedusoftTheme.TextViewLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/imageView_refresh_stu"
+            android:text="Some error occurred. Try again"/>
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/ic_refresh_blue_24dp"
+            android:layout_centerInParent="true"
+            android:id="@+id/imageView_refresh_stu"/>
+
+    </RelativeLayout>
 
     <FrameLayout
         android:layout_width="match_parent"

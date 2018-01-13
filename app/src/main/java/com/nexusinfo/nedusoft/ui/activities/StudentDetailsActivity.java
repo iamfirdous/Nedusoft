@@ -1,7 +1,7 @@
 package com.nexusinfo.nedusoft.ui.activities;
 
+import android.app.Activity;
 import android.arch.lifecycle.ViewModelProviders;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -20,7 +20,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nexusinfo.nedusoft.LocalDatabaseHelper;
@@ -56,7 +56,10 @@ public class StudentDetailsActivity extends AppCompatActivity
     public static StudentDetailsModel model;
     public static ArrayList<String> studentPersonalDetails;
 
-
+    //For FetchData AsyncTask
+    public static RelativeLayout rlLoad, rlSomeErr;
+    public static View appBarLayout;
+    public static ImageView ivRetry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,13 +68,19 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         viewModel = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
 
-        FetchData task = new FetchData();
+        rlLoad = findViewById(R.id.relativeLayout_load);
+        rlSomeErr = findViewById(R.id.relativeLayout_someError);
+        appBarLayout = findViewById(R.id.appBarLayout);
+        ivRetry = findViewById(R.id.imageView_refresh_stu);
+
+        FetchData task = new FetchData(this);
         task.execute();
 
         if(task.isCancelled()){
-            showCustomToast(this, "Some error occurred, Check your internet connection.",1);
+            showCustomToast(this, "Some error occurred, try again.",1);
             //TODO: Try without finish()
-            finish();
+//            finish();
+            someError(this);
             return;
         }
     }
@@ -86,11 +95,6 @@ public class StudentDetailsActivity extends AppCompatActivity
     protected void onResume() {
         super.onResume();
         model = viewModel.getStudent();
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-
     }
 
     public void initializeUI () {
@@ -232,13 +236,18 @@ public class StudentDetailsActivity extends AppCompatActivity
         return true;
     }
 
-    class FetchData extends AsyncTask<String, String, String> {
+    static class FetchData extends AsyncTask<String, String, String> {
 
-        LinearLayout layout = findViewById(R.id.linlaHeaderProgress);
+        StudentDetailsActivity activity;
+
+        FetchData(Activity activity){
+            this.activity = (StudentDetailsActivity) activity;
+        }
 
         @Override
         protected void onPreExecute() {
-            layout.setVisibility(View.VISIBLE);
+            appBarLayout.setVisibility(View.GONE);
+            rlLoad.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -246,7 +255,7 @@ public class StudentDetailsActivity extends AppCompatActivity
 
             try {
                 if(viewModel.getStudent() == null) {
-                    viewModel.setStudent(StudentDetailsActivity.this);
+                    viewModel.setStudent(activity.getApplicationContext());
                 }
             }
             catch (Exception e){
@@ -261,18 +270,20 @@ public class StudentDetailsActivity extends AppCompatActivity
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                layout.setVisibility(View.GONE);
-                showCustomToast(StudentDetailsActivity.this, "Some error occurred, Check your internet connection.",1);
+                rlLoad.setVisibility(View.GONE);
+                showCustomToast(activity.getApplicationContext(), "Some error occurred, try again.",1);
                 //TODO: Try without finish()
-                finish();
+//                finish();
+                someError(activity);
             }
         }
 
         @Override
         protected void onPostExecute(String s) {
             model = viewModel.getStudent();
-            layout.setVisibility(View.GONE);
-            initializeUI();
+            rlLoad.setVisibility(View.GONE);
+            appBarLayout.setVisibility(View.VISIBLE);
+            activity.initializeUI();
         }
     }
 
@@ -304,6 +315,16 @@ public class StudentDetailsActivity extends AppCompatActivity
     public static Object[] getStudentMarksDetails() {
         Object[] o = {model.getExamNames(), model.getMarksDetails()};
         return o;
+    }
+
+    public static void someError(StudentDetailsActivity activity) {
+        rlSomeErr.setVisibility(View.VISIBLE);
+
+        ivRetry.setOnClickListener(view -> {
+            Intent refresh = new Intent(activity.getApplicationContext(), MainActivity.class);
+            activity.startActivity(refresh);
+            activity.finish();
+        });
     }
 
 }
