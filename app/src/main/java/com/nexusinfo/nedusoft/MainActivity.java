@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements InternetConnectiv
         if(isConnected){
             cardView.setVisibility(View.GONE);
 
-            Intent studentDetailsIntent = new Intent(MainActivity.this, StudentDetailsActivity.class);
+            Intent studentDetailsIntent = new   Intent(MainActivity.this, StudentDetailsActivity.class);
             startActivity(studentDetailsIntent);
             finish();
         }
