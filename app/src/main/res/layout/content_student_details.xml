@@ -62,7 +62,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_above="@+id/imageView_refresh_stu"
+            android:layout_above="@+id/imageView_refresh_home"
             android:text="Some error occurred. Try again"/>
 
         <ImageView
@@ -70,7 +70,7 @@
             android:layout_height="50dp"
             android:src="@drawable/ic_refresh_blue_24dp"
             android:layout_centerInParent="true"
-            android:id="@+id/imageView_refresh_stu"/>
+            android:id="@+id/imageView_refresh_home"/>
 
     </RelativeLayout>
 

@@ -1,12 +1,14 @@
 package com.nexusinfo.nedusoft.models
 
+import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by firdous on 12/1/2017.
  */
 
-class StudentDetailsModel {
+class StudentDetailsModel : Serializable{
     var studentID: Int = 0
     //[Display(Name = "Admission No.")]
     var admissionNo: String? = null
@@ -242,11 +244,11 @@ class StudentDetailsModel {
 
     var feeDetails: ArrayList<FeeRow>? = null
 
-    var examNames: android.support.v4.util.ArraySet<String>? = null
+    var examNames: ArrayList<String>? = null
     var marksDetails: ArrayList<MarksRow>? = null
 
     //Row for fee details
-    class FeeRow {
+    class FeeRow : Serializable{
         var feeDesc: String? = null
         var total: Float = 0.toFloat()
         var paid: Float = 0.toFloat()
@@ -255,7 +257,7 @@ class StudentDetailsModel {
     }
 
     //Row for marks details
-    class MarksRow{
+    class MarksRow : Serializable{
         var examName: String? = null
         var subjectName: String? = null
         var facultyFirstName: String? = null

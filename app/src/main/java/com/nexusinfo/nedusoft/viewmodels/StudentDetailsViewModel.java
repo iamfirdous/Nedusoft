@@ -16,6 +16,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by firdous on 12/1/2017.
@@ -346,7 +348,7 @@ public class StudentDetailsViewModel extends ViewModel {
         ResultSet rsForMarks = stmtForMarks.executeQuery("SELECT ExamName, Subject, FirstName, MiddleName, LastName, passmark, marksObtained, maxmark, percentage, status, ExamName FROM View_MarksReport WHERE StudentID = " + studentDetailsModel.getStudentID() + " AND YearID = " + studentDetailsModel.getYearID());
 
         ArrayList<StudentDetailsModel.MarksRow> marksRows = new ArrayList<>();
-        ArraySet<String> examNames = new ArraySet<>();
+        ArrayList<String> examNames = new ArrayList<>();
 
         while (rsForMarks.next()) {
             StudentDetailsModel.MarksRow marksRow = new StudentDetailsModel.MarksRow();
@@ -365,6 +367,12 @@ public class StudentDetailsViewModel extends ViewModel {
 
             marksRows.add(marksRow);
         }
+
+        Set<String> examNamesSet = new HashSet<>();
+
+        examNamesSet.addAll(examNames);
+        examNames.clear();
+        examNames.addAll(examNamesSet);
 
         studentDetailsModel.setMarksDetails(marksRows);
         studentDetailsModel.setExamNames(examNames);

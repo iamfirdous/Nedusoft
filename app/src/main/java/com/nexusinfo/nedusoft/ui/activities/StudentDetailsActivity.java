@@ -7,6 +7,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
@@ -57,7 +58,7 @@ public class StudentDetailsActivity extends AppCompatActivity
     public static ArrayList<String> studentPersonalDetails;
 
     //For FetchData AsyncTask
-    public static RelativeLayout rlLoad, rlSomeErr;
+    public static RelativeLayout relativeLayoutLoad, relativeLayoutSomeErr;
     public static View appBarLayout;
     public static ImageView ivRetry;
 
@@ -68,10 +69,14 @@ public class StudentDetailsActivity extends AppCompatActivity
 
         viewModel = ViewModelProviders.of(this).get(StudentDetailsViewModel.class);
 
-        rlLoad = findViewById(R.id.relativeLayout_load);
-        rlSomeErr = findViewById(R.id.relativeLayout_someError);
+        if (savedInstanceState != null){
+            viewModel.setStudent((StudentDetailsModel) savedInstanceState.getSerializable("model"));
+        }
+
+        relativeLayoutLoad = findViewById(R.id.relativeLayout_load);
+        relativeLayoutSomeErr = findViewById(R.id.relativeLayout_someError);
         appBarLayout = findViewById(R.id.appBarLayout);
-        ivRetry = findViewById(R.id.imageView_refresh_stu);
+        ivRetry = findViewById(R.id.imageView_refresh_home);
 
         FetchData task = new FetchData(this);
         task.execute();
@@ -83,6 +88,12 @@ public class StudentDetailsActivity extends AppCompatActivity
             someError(this);
             return;
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putSerializable("model", model);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -247,7 +258,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         @Override
         protected void onPreExecute() {
             appBarLayout.setVisibility(View.GONE);
-            rlLoad.setVisibility(View.VISIBLE);
+            relativeLayoutLoad.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -270,7 +281,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         @Override
         protected void onProgressUpdate(String... values) {
             if(values[0].equals("Exception")){
-                rlLoad.setVisibility(View.GONE);
+                relativeLayoutLoad.setVisibility(View.GONE);
                 showCustomToast(activity.getApplicationContext(), "Some error occurred, try again.",1);
                 //TODO: Try without finish()
 //                finish();
@@ -281,7 +292,7 @@ public class StudentDetailsActivity extends AppCompatActivity
         @Override
         protected void onPostExecute(String s) {
             model = viewModel.getStudent();
-            rlLoad.setVisibility(View.GONE);
+            relativeLayoutLoad.setVisibility(View.GONE);
             appBarLayout.setVisibility(View.VISIBLE);
             activity.initializeUI();
         }
@@ -318,7 +329,7 @@ public class StudentDetailsActivity extends AppCompatActivity
     }
 
     public static void someError(StudentDetailsActivity activity) {
-        rlSomeErr.setVisibility(View.VISIBLE);
+        relativeLayoutSomeErr.setVisibility(View.VISIBLE);
 
         ivRetry.setOnClickListener(view -> {
             Intent refresh = new Intent(activity.getApplicationContext(), MainActivity.class);
